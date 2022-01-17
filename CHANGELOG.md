@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.0...v0.1.1) (2022-01-17)
+
+
+### Miscellaneous
+
+* highlight that pre-build releases are available ([f93727a](https://www.github.com/contiamo/datahub-sap-hana/commit/f93727a350d108e14dfb0d2a824936509161347e))
+
 ## 0.1.0 (2022-01-17)
 
 
