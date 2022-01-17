@@ -1,0 +1,42 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      default_branch: regs/heads/master
+      python_version: 3.9
+      poetry_version: 1.0.0
+    steps:
+      # minimum setup
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.python_version }}
+
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: poetry-${{ runner.os }}-${{ env.python_version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Poetry version
+        run: poetry --version
+
+      - name: Install dependencies
+        run: poetry install

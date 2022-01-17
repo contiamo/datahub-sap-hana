@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "datahub-sap-hana"
+version = "0.1.0"
+description = "Linkedin DataHub ingestion source for SAP Hana"
+authors = ["Contiamo <developers@contiamo.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+SQLAlchemy = "1.3.24"
+acryl-datahub = {extras = ["sqlalchemy"], version = "^0.8.23"}
+
+[tool.poetry.dev-dependencies]
+black = "^21.12b0"
+mypy = "^0.931"
+pytest = "^6.2.5"
+flake8 = "^4.0.1"
+ipython = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
