@@ -37,6 +37,10 @@ jobs:
     needs: release-please
     runs-on: ubuntu-latest
     if: ${{ needs.release-please.outputs.release_created }}
+    env:
+      default_branch: regs/heads/master
+      python_version: 3.9
+      poetry_version: 1.0.0
     steps:
       # minimum setup
       - name: Check out repository code
