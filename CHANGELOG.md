@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.2](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.1...v0.1.2) (2022-01-17)
+
+
+### Bug Fixes
+
+* add missing env variables in the release flow ([2a50bfb](https://www.github.com/contiamo/datahub-sap-hana/commit/2a50bfb58c711bdd42de408eaa3ebcb66901c449))
+
 ### [0.1.1](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.0...v0.1.1) (2022-01-17)
 
 
