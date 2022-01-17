@@ -1,0 +1,71 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        id: release
+        with:
+          # use the CI token to pretend not to be a action
+          token: ${{ secrets.CONTIAMO_CI_TOKEN }}
+          release-type: python
+          package-name: ""
+          bump-minor-pre-major: true
+          changelog-types: |
+            [
+              {"type":"feat","section":"Features","hidden":false},
+              {"type":"fix","section":"Bug Fixes","hidden":false},
+              {"type":"chore","section":"Miscellaneous","hidden":false},
+              {"type":"docs","section":"Miscellaneous","hidden":false},
+              {"type":"refactor","section":"Miscellaneous","hidden":false}
+            ]
+      - name: Debug release output
+        run: |
+          echo '${{ toJSON(steps.release.outputs) }}'
+
+  release:
+    needs: release-please
+    runs-on: ubuntu-latest
+    if: ${{ needs.release-please.outputs.release_created }}
+    steps:
+      # minimum setup
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.python_version }}
+
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry
+          key: poetry-${{ runner.os }}-${{ env.python_version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Poetry version
+        run: poetry --version
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Build
+        run: poetry build
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/*
+          tag: ${{ needs.release-please.outputs.tag_name }}
+          overwrite: true
+          file_glob: true
