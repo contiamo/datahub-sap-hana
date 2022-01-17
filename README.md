@@ -2,6 +2,10 @@
 
 Add your SAP Hana databases to your Linkedin Datahub!
 
+## Installing
+
+Pre-build Wheels can be downloaded from the [Releases page](https://github.com/contiamo/datahub-sap-hana/releases/latest)
+
 ## Try it out
 
 1. You will need Python 3.9, [Poetry](https://python-poetry.org/docs/#installation), and [`pyenv`](https://github.com/pyenv/pyenv).
