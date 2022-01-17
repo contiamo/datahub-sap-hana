@@ -432,6 +432,14 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
 docs = ["sphinx"]
 
 [[package]]
+name = "hdbcli"
+version = "2.11.14"
+description = "SAP HANA Python Client"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1050,6 +1058,14 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "pyhdb"
+version = "0.3.4"
+description = "SAP HANA Database Client for Python"
+category = "main"
+optional = true
+python-versions = "*"
+
+[[package]]
 name = "pyparsing"
 version = "2.4.7"
 description = "Python parsing module"
@@ -1256,6 +1272,21 @@ postgresql_pg8000 = ["pg8000 (<1.16.6)"]
 postgresql_psycopg2binary = ["psycopg2-binary"]
 postgresql_psycopg2cffi = ["psycopg2cffi"]
 pymysql = ["pymysql (<1)", "pymysql"]
+
+[[package]]
+name = "sqlalchemy-hana"
+version = "0.5.0"
+description = "SQLAlchemy dialect for SAP HANA"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+sqlalchemy = ">=1.0.0"
+
+[package.extras]
+pyhdb = ["pyhdb (>=0.3.1)"]
+test = ["pytest (>=2.5.2)", "mock (>=1.0.1)"]
 
 [[package]]
 name = "stack-data"
@@ -1495,10 +1526,13 @@ python-versions = ">=3.7"
 docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
+[extras]
+pyhdb = ["pyhdb"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ca6bed23761ba239d3bd631c35c9b3106fdaf09e018c92d455a7d549e1f08bfc"
+content-hash = "bebe65687ecb28d6be8aeb8c16ac402ba681a9bc47c69f74ca708c5970f34a30"
 
 [metadata.files]
 acryl-datahub = [
@@ -1753,6 +1787,28 @@ greenlet = [
     {file = "greenlet-1.1.2-cp39-cp39-win32.whl", hash = "sha256:f70a9e237bb792c7cc7e44c531fd48f5897961701cdaa06cf22fc14965c496cf"},
     {file = "greenlet-1.1.2-cp39-cp39-win_amd64.whl", hash = "sha256:013d61294b6cd8fe3242932c1c5e36e5d1db2c8afb58606c5a67efce62c1f5fd"},
     {file = "greenlet-1.1.2.tar.gz", hash = "sha256:e30f5ea4ae2346e62cedde8794a56858a67b878dd79f7df76a0767e356b1744a"},
+]
+hdbcli = [
+    {file = "hdbcli-2.11.14-cp27-cp27m-macosx_10_7_x86_64.whl", hash = "sha256:ee4696d8cbf56887d6625c0739e5dcb81c8ce6d7de6dd787170568daf16d1118"},
+    {file = "hdbcli-2.11.14-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:2c5d091b9c0fe87a5fa4d0a4551acb56ad52248fbd689c29a09fa3d85edcd769"},
+    {file = "hdbcli-2.11.14-cp27-cp27m-manylinux2014_ppc64le.whl", hash = "sha256:bbc497747ce8474a435e5b2d567dbae90092674592acaf87c81cd240a59b7cdf"},
+    {file = "hdbcli-2.11.14-cp27-cp27m-win_amd64.whl", hash = "sha256:52d4710e817cdc6a29d663a1a657c76b7b5f69ccaf54b1956d43758d47fdde29"},
+    {file = "hdbcli-2.11.14-cp27-cp27mu-macosx_10_7_x86_64.whl", hash = "sha256:de043eb2e55a5c473476337b2555d6f50bfcd91804a1dcdc8303463419cf2ac6"},
+    {file = "hdbcli-2.11.14-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:ecc7f88c697f86eabd1ea83a0ea59686a2c797635b9b63849ac5b5b3f1c7abb4"},
+    {file = "hdbcli-2.11.14-cp27-cp27mu-manylinux2014_ppc64le.whl", hash = "sha256:c3151a7e449d36efc90aa77aa53e248a0b71a2327b7509a73752b6d462167048"},
+    {file = "hdbcli-2.11.14-cp34-abi3-macosx_10_7_x86_64.whl", hash = "sha256:6e43a891c7f52a0dd1203e06db9a0006a29ba399aa992f4a064015f2f432f236"},
+    {file = "hdbcli-2.11.14-cp34-abi3-manylinux1_x86_64.whl", hash = "sha256:de029e98c57c7a682e2d732ffb813b583a1b518dbc40813c79382cbcbad68c27"},
+    {file = "hdbcli-2.11.14-cp34-abi3-manylinux2014_ppc64le.whl", hash = "sha256:d0086709d511d96553b2863dcf9affb489998e425a1e53709ffad29df5b448d9"},
+    {file = "hdbcli-2.11.14-cp34-cp34m-win_amd64.whl", hash = "sha256:fa2645aa822a14ffa46fca1538647b2ff78c10c6cffde8562297107942adecbe"},
+    {file = "hdbcli-2.11.14-cp35-cp35m-win_amd64.whl", hash = "sha256:5b280f6028e88d3f04582388c87674c8805f4926624416ba84934c5f96a9893e"},
+    {file = "hdbcli-2.11.14-cp36-cp36m-win_amd64.whl", hash = "sha256:fe484e04dc01a4a6aeddeff64a6333cda9e88d9f01fba182375f23c615076fe8"},
+    {file = "hdbcli-2.11.14-cp37-cp37m-win_amd64.whl", hash = "sha256:1c9bb89fe47507bba6ee449243304f746694167559d44133174dc09ebd3d6ed9"},
+    {file = "hdbcli-2.11.14-cp38-cp38-win32.whl", hash = "sha256:3e8aa59bec43fcc2ec50de844ff753916194377bd6c83f6e462eefdbe48af0e8"},
+    {file = "hdbcli-2.11.14-cp38-cp38-win_amd64.whl", hash = "sha256:0466f62e58390c19ef7df6f8b5b3c1a8d25c47666880a8ae23d080e4e2eb2d8a"},
+    {file = "hdbcli-2.11.14-cp38-cp38m-win32.whl", hash = "sha256:344b7ae645931c0e2dedb77d7709ccdda842184f4774bff8d57c611233992fd1"},
+    {file = "hdbcli-2.11.14-cp38-cp38m-win_amd64.whl", hash = "sha256:d9bf41b9bdeead147069fa8a3ef9d74168f416c0afb8b13991f3ac39f7f060b1"},
+    {file = "hdbcli-2.11.14-cp39-cp39-win32.whl", hash = "sha256:8ecc4000289c5addbc0b028d16a469e33f4c6cee9abb0e49a0736ac8d28ebc42"},
+    {file = "hdbcli-2.11.14-cp39-cp39-win_amd64.whl", hash = "sha256:4a2e29dfd41e5045f85ae760239b0511aaf4ca43b6a57f43d0ae0f69361734cf"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -2107,6 +2163,9 @@ pygments = [
     {file = "Pygments-2.11.2-py3-none-any.whl", hash = "sha256:44238f1b60a76d78fc8ca0528ee429702aae011c265fe6a8dd8b63049ae41c65"},
     {file = "Pygments-2.11.2.tar.gz", hash = "sha256:4e426f72023d88d03b2fa258de560726ce890ff3b630f88c21cbb8b2503b8c6a"},
 ]
+pyhdb = [
+    {file = "pyhdb-0.3.4.tar.gz", hash = "sha256:6d1064a8d7f4972e14b91b6b1742e41e1e2972b8abf75a2714000be48831c1ba"},
+]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
@@ -2355,6 +2414,9 @@ sqlalchemy = [
     {file = "SQLAlchemy-1.3.24-cp39-cp39-win32.whl", hash = "sha256:ee5f5188edb20a29c1cc4a039b074fdc5575337c9a68f3063449ab47757bb064"},
     {file = "SQLAlchemy-1.3.24-cp39-cp39-win_amd64.whl", hash = "sha256:09083c2487ca3c0865dc588e07aeaa25416da3d95f7482c07e92f47e080aa17b"},
     {file = "SQLAlchemy-1.3.24.tar.gz", hash = "sha256:ebbb777cbf9312359b897bf81ba00dae0f5cb69fba2a18265dcc18a6f5ef7519"},
+]
+sqlalchemy-hana = [
+    {file = "sqlalchemy-hana-0.5.0.tar.gz", hash = "sha256:473fab3488fd885212aeb2dba2603091fe4d9212487f7ff826c59d8bf6ce4504"},
 ]
 stack-data = [
     {file = "stack_data-0.1.4-py3-none-any.whl", hash = "sha256:02cc0683cbc445ae4ca8c4e3a0e58cb1df59f252efb0aa016b34804a707cf9bc"},
