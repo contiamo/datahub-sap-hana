@@ -4,7 +4,9 @@ Add your SAP Hana databases to your Linkedin Datahub!
 
 ## Installing
 
-Pre-build Wheels can be downloaded from the [Releases page](https://github.com/contiamo/datahub-sap-hana/releases/latest)
+Pre-built Wheels can be downloaded from the [Releases page](https://github.com/contiamo/datahub-sap-hana/releases/latest)
+
+Otherwise, you must install from source.
 
 ## Try it out
 
