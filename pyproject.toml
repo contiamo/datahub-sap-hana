@@ -21,7 +21,19 @@ mypy = "^0.931"
 pytest = "^6.2.5"
 flake8 = "^4.0.1"
 ipython = "^8.0.0"
+pytest-docker = "^0.10.3"
+deepdiff = "^5.7.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests to only run in integration (deselect with '-m \"not integration\"')"
+]
+testpaths = [
+    "tests/unit",
+    "tests/integration",
+]

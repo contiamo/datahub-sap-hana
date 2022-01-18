@@ -1,3 +1,5 @@
+run_id: hana-test
+
 source:
   type: datahub_sap_hana.ingestion.HanaSource
   config:

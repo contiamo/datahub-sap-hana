@@ -18,13 +18,20 @@ Pre-build Wheels can be downloaded from the [Releases page](https://github.com/c
    poetry config virtualenvs.in-project true
    ```
 
-2. Install the project and dependencies
+2. Clone the project
+
+   ```sh
+   git clone git@github.com:contiamo/datahub-sap-hana.git
+   cd datahub-sap-hana
+   ```
+
+3. Install the project and dependencies
 
    ```sh
    poetry install
    ```
 
-3. Start the test foodmart db, this requires [Docker and Docker Compose](https://docs.docker.com/get-docker/)
+4. Start the test foodmart db, this requires [Docker and Docker Compose](https://docs.docker.com/get-docker/)
 
    ```sh
    docker-compose up -d
@@ -32,8 +39,28 @@ Pre-build Wheels can be downloaded from the [Releases page](https://github.com/c
 
    This is running the foodmart db from https://github.com/contiamo/foodmart-data
 
-4. Run the test sync
+5. Run the test sync
 
    ```sh
    poetry run datahub ingest run -c hana_recipe.yaml
    ```
+
+6. Inspect the contents of the `hana_mces.json` file that was created.
+
+## Development
+
+### Running the tests
+
+To run the unit tests, use
+
+```sh
+poetry run pytest -v -m 'not integration'
+```
+
+To run all of the tests, just use
+
+```sh
+poetry run pytest -v
+```
+
+Note that the integration test suite is still WIP.
