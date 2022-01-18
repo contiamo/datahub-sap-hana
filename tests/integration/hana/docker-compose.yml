@@ -1,0 +1,8 @@
+services:
+  foodmart:
+    image: eu.gcr.io/dev-and-test-env/foodmart-hana:v3.0.1
+    hostname: hana-db-server
+    container_name: testhanadb
+    ports:
+      # # db port here
+      - 39044:39044

@@ -44,3 +44,6 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
+
+      - name: Run unit tests
+        run: poetry run pytest -v -m 'not integration'
