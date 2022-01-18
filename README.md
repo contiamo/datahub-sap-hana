@@ -4,7 +4,9 @@ Add your SAP Hana databases to your Linkedin Datahub!
 
 ## Installing
 
-Pre-build Wheels can be downloaded from the [Releases page](https://github.com/contiamo/datahub-sap-hana/releases/latest)
+Pre-built Wheels can be downloaded from the [Releases page](https://github.com/contiamo/datahub-sap-hana/releases/latest)
+
+Otherwise, you must install from source.
 
 ## Try it out
 
@@ -38,6 +40,15 @@ Pre-build Wheels can be downloaded from the [Releases page](https://github.com/c
    ```
 
    This is running the foodmart db from https://github.com/contiamo/foodmart-data
+
+   This requires access to our DEV Docker registry. You need to be a Contiamo developer to use this.
+
+   Install the [`glcoud` CLI](https://cloud.google.com/sdk/docs/install) and then run these commands
+
+   ```sh
+   gcloud auth login
+   gcloud auth configure-docker
+   ```
 
 5. Run the test sync
 
