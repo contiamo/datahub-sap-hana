@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.1.3](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.2...v0.1.3) (2022-01-18)
+
+
+### Miscellaneous
+
+* add information about glcoud auth for docker ([7012614](https://www.github.com/contiamo/datahub-sap-hana/commit/7012614ae6fc264e3bbacfbda841e812ec21d7b3))
+* add unit testing ([#4](https://www.github.com/contiamo/datahub-sap-hana/issues/4)) ([5dfbab3](https://www.github.com/contiamo/datahub-sap-hana/commit/5dfbab3af5b9a9531b84265fcb62dddeb6e0be85))
+
 ### [0.1.2](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.1...v0.1.2) (2022-01-17)
 
 
