@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       default_branch: regs/heads/master
-      python_version: 3.9
+      python_version: 3.8
       poetry_version: 1.0.0
     steps:
       # minimum setup
