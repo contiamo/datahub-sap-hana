@@ -44,5 +44,8 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+      - name: Lint
+        run: make format lint
+
       - name: Run unit tests
-        run: poetry run pytest -v -m 'not integration'
+        run: make test

@@ -30,7 +30,7 @@ Otherwise, you must install from source.
 3. Install the project and dependencies
 
    ```sh
-   poetry install
+   make setup
    ```
 
 4. Start the test foodmart db, this requires [Docker and Docker Compose](https://docs.docker.com/get-docker/)
@@ -53,10 +53,20 @@ Otherwise, you must install from source.
 5. Run the test sync
 
    ```sh
-   poetry run datahub ingest run -c hana_recipe.yaml
+   poetry run datahub ingest run -c examples/hana_recipe.yaml
    ```
 
 6. Inspect the contents of the `hana_mces.json` file that was created.
+
+_Alternative_:
+You can use docker to run the ingestion like this
+
+```sh
+docker run -it --rm -v `pwd`:/opt \
+   --network datahub-sap-hana_default \
+   contiamo/datahub-sap-hana:latest \
+   ingest run -c /opt/examples/hana_compose.yaml
+```
 
 ## Development
 
@@ -65,7 +75,7 @@ Otherwise, you must install from source.
 To run the unit tests, use
 
 ```sh
-poetry run pytest -v -m 'not integration'
+make test
 ```
 
 To run all of the tests, just use

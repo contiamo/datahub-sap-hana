@@ -1,0 +1,20 @@
+source:
+  type: datahub_sap_hana.ingestion.HanaSource
+  config:
+    # Coordinates
+    host_port: foodmart:39044
+
+    # Credentials
+    username: pantheon
+    password: YDmB6vVbgUyfDT
+
+    schema_pattern:
+      allow:
+        - "pantheon"
+
+    # Options
+    profiling:
+      enabled: true
+
+sink:
+  type: console
