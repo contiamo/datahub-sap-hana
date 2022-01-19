@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datahub-sap-hana"
-version = "0.2.1"
+version = "0.2.2"
 description = "Linkedin DataHub ingestion source for SAP Hana"
 authors = ["Contiamo <developers@contiamo.com>"]
 
