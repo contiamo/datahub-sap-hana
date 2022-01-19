@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.1](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.0...v0.2.1) (2022-01-19)
+
+
+### Bug Fixes
+
+* set correct step order during releases ([08fc00f](https://www.github.com/contiamo/datahub-sap-hana/commit/08fc00f4ec842b306350bf6fec614e3efc7375cf))
+
 ## [0.2.0](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.2...v0.2.0) (2022-01-19)
 
 
