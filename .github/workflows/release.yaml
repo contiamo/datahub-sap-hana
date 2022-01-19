@@ -40,19 +40,19 @@ jobs:
       - name: Poetry version
         run: poetry --version
 
-      - name: Login to Docker Registry
-        uses: docker/login-action@v1
-        with:
-          username: ${{ steps.get_repo_owner.outputs.repo_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ${{ env.registry }}
-
       ### Generate metadata
       - name: Get Repo Owner
         id: get_repo_owner
         run: >
           echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} |
           tr '[:upper:]' '[:lower:]')
+
+      - name: Login to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ steps.get_repo_owner.outputs.repo_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{ env.registry }}
 
       - name: Docker meta
         id: docker_meta
