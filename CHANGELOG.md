@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.2...v0.2.0) (2022-01-19)
+
+
+### Features
+
+* create docker image and related ci/cd workflow ([7a61d18](https://www.github.com/contiamo/datahub-sap-hana/commit/7a61d18b4d6138ee20082885ed26e183f02908cc))
+
+
+### Bug Fixes
+
+* support installation on Mac M1 ([#7](https://www.github.com/contiamo/datahub-sap-hana/issues/7)) ([7a61d18](https://www.github.com/contiamo/datahub-sap-hana/commit/7a61d18b4d6138ee20082885ed26e183f02908cc))
+
+
+### Miscellaneous
+
+* add information about glcoud auth for docker ([7012614](https://www.github.com/contiamo/datahub-sap-hana/commit/7012614ae6fc264e3bbacfbda841e812ec21d7b3))
+* add unit testing ([#4](https://www.github.com/contiamo/datahub-sap-hana/issues/4)) ([5dfbab3](https://www.github.com/contiamo/datahub-sap-hana/commit/5dfbab3af5b9a9531b84265fcb62dddeb6e0be85))
+
 ### [0.1.2](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.1.1...v0.1.2) (2022-01-17)
 
 
