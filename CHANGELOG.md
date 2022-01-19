@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.2](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.1...v0.2.2) (2022-01-19)
+
+
+### Bug Fixes
+
+* use metadata action to get semver tag ([2daf62d](https://www.github.com/contiamo/datahub-sap-hana/commit/2daf62db09414e92ed5a72ee2ca3136a8fa45a62))
+
 ### [0.2.1](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.0...v0.2.1) (2022-01-19)
 
 
