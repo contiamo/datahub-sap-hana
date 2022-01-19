@@ -66,6 +66,10 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
 
+      - name: Get metadata
+        id: metadata
+        uses: contiamo/git-metadata-action@main
+
       ### Build steps
 
       - name: Install dependencies
@@ -85,13 +89,13 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
           tags: |
             ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}:latest
-            ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}:${{ github.event.ref_name }}
+            ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}:${{ steps.metadata.outputs.semver }}
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: dist/*
-          tag: ${{ github.event.ref_name }}
+          tag: ${{ steps.metadata.outputs.semver }}
           overwrite: true
           file_glob: true
