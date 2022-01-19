@@ -1,52 +1,29 @@
 name: Release
-
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - created
+
+permissions:
+  contents: write
+  packages: write
 
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-
-    steps:
-      - uses: GoogleCloudPlatform/release-please-action@v2
-        id: release
-        with:
-          # use the CI token to pretend not to be a action
-          token: ${{ secrets.CONTIAMO_CI_TOKEN }}
-          release-type: python
-          package-name: ""
-          bump-minor-pre-major: true
-          changelog-types: |
-            [
-              {"type":"feat","section":"Features","hidden":false},
-              {"type":"fix","section":"Bug Fixes","hidden":false},
-              {"type":"chore","section":"Miscellaneous","hidden":false},
-              {"type":"docs","section":"Miscellaneous","hidden":false},
-              {"type":"refactor","section":"Miscellaneous","hidden":false}
-            ]
-      - name: Debug release output
-        run: |
-          echo '${{ toJSON(steps.release.outputs) }}'
-
   release:
-    needs: release-please
     runs-on: ubuntu-latest
-    if: ${{ needs.release-please.outputs.release_created }}
     env:
       default_branch: regs/heads/master
-      python_version: 3.9
+      python_version: 3.8
       poetry_version: 1.0.0
+      registry: ghcr.io
+      name: datahub-sap-hana
     steps:
-      # minimum setup
+      # minimum python setup
       - name: Check out repository code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -63,17 +40,58 @@ jobs:
       - name: Poetry version
         run: poetry --version
 
+      - name: Login to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ steps.get_repo_owner.outputs.repo_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{ env.registry }}
+
+      ### Generate metadata
+      - name: Get Repo Owner
+        id: get_repo_owner
+        run: >
+          echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} |
+          tr '[:upper:]' '[:lower:]')
+
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
+      ### Build steps
+
       - name: Install dependencies
         run: poetry install
 
       - name: Build
         run: poetry build
 
+      ### Push artifacts
+      - name: Docker build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          outputs: "type=registry,push=true"
+          platforms: linux/amd64
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          tags: |
+            ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}:latest
+            ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}:${{ github.event.ref_name }}
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: dist/*
-          tag: ${{ needs.release-please.outputs.tag_name }}
+          tag: ${{ github.event.ref_name }}
           overwrite: true
           file_glob: true
