@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.3](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.2...v0.2.3) (2022-01-20)
+
+
+### Miscellaneous
+
+* generate checksums during releases ([8a3f09b](https://www.github.com/contiamo/datahub-sap-hana/commit/8a3f09b46616354c47b4c2c192b880c698c27f55))
+
 ### [0.2.2](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.1...v0.2.2) (2022-01-19)
 
 
