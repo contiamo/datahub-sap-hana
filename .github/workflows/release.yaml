@@ -78,6 +78,10 @@ jobs:
       - name: Build
         run: poetry build
 
+      - name: Checksums
+        working-directory: ./dist
+        run: shasum -a 256 * > checksums.txt
+
       ### Push artifacts
       - name: Docker build
         uses: docker/build-push-action@v2
