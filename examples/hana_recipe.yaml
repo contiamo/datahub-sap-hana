@@ -5,12 +5,12 @@ source:
     host_port: localhost:39044
 
     # Credentials
-    username: pantheon
-    password: YDmB6vVbgUyfDT
+    username: joe_cool
+    password: something_secret
 
     schema_pattern:
       allow:
-        - "pantheon"
+        - "options_schema_name"
 
     # Options
     profiling:

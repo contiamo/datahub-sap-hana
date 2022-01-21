@@ -22,8 +22,6 @@ mypy = "^0.931"
 pytest = "^6.2.5"
 flake8 = "^4.0.1"
 ipython = "^8.0.0"
-pytest-docker = "^0.10.3"
-deepdiff = "^5.7.0"
 sqlalchemy-stubs = "^0.4"
 
 [build-system]

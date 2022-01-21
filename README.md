@@ -33,22 +33,11 @@ Otherwise, you must install from source.
    make setup
    ```
 
-4. Start the test foodmart db, this requires [Docker and Docker Compose](https://docs.docker.com/get-docker/)
+4. Edit the `examples/hana_recipe.yaml` to set the connection details to your SAP Hana database.
 
-   ```sh
-   docker-compose up -d
-   ```
-
-   This is running the foodmart db from https://github.com/contiamo/foodmart-data
-
-   This requires access to our DEV Docker registry. You need to be a Contiamo developer to use this.
-
-   Install the [`glcoud` CLI](https://cloud.google.com/sdk/docs/install) and then run these commands
-
-   ```sh
-   gcloud auth login
-   gcloud auth configure-docker
-   ```
+   If you just want to do a local test, SAP offers [SAP Hana Express](https://www.sap.com/products/hana/express-trial.html) as a
+   free trial version of Hana. There is also [a Docker image](https://developers.sap.com/tutorials/hxe-ua-install-using-docker.html)
+   that makes this very easy, this is our recommendation.
 
 5. Run the test sync
 
@@ -58,15 +47,17 @@ Otherwise, you must install from source.
 
 6. Inspect the contents of the `hana_mces.json` file that was created.
 
-_Alternative_:
-You can use docker to run the ingestion like this
+### Docker image
+
+A Docker image with datahub and this package preinstalled is provided via the [Github Container Registry, see here](https://github.com/contiamo/datahub-sap-hana/pkgs/container/datahub-sap-hana)
 
 ```sh
 docker run -it --rm -v `pwd`:/opt \
-   --network datahub-sap-hana_default \
-   contiamo/datahub-sap-hana:latest \
-   ingest run -c /opt/examples/hana_compose.yaml
+   ghcr.io/contiamo/datahub-sap-hana:latest \
+   ingest run -c /opt/examples/ha.yaml
 ```
+
+Note that you may need to set the `--network` flag if you are using the Hana Express Docker image.
 
 ## Development
 
@@ -83,5 +74,3 @@ To run all of the tests, just use
 ```sh
 poetry run pytest -v
 ```
-
-Note that the integration test suite is still WIP.
