@@ -18,7 +18,7 @@ format:
 	poetry run black .
 
 test:
-	poetry run pytest -v -m 'not integration'
+	poetry run pytest -v
 
 lint:
 	poetry run flake8 .

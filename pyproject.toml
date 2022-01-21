@@ -30,12 +30,8 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.pytest.ini_options]
-markers = [
-    "integration: marks tests to only run in integration (deselect with '-m \"not integration\"')"
-]
 testpaths = [
     "tests/unit",
-    "tests/integration",
 ]
 
 [tool.mypy]
