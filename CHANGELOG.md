@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.3...v0.3.0) (2023-01-28)
+
+
+### Features
+
+* add MIT license ([9c5c137](https://www.github.com/contiamo/datahub-sap-hana/commit/9c5c1373af82c0e1c79f4567c9b5f24d403c4954))
+
+
+### Miscellaneous
+
+* add email to License ([4ae6be1](https://www.github.com/contiamo/datahub-sap-hana/commit/4ae6be174a3cc6530761095ecc9ff157e7c8e156))
+* remove any instructions for SAP Hana express ([9c5c137](https://www.github.com/contiamo/datahub-sap-hana/commit/9c5c1373af82c0e1c79f4567c9b5f24d403c4954))
+
 ### [0.2.3](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.2...v0.2.3) (2022-01-20)
 
 
