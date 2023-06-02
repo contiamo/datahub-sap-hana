@@ -18,24 +18,23 @@ jobs:
       registry: ghcr.io
       name: datahub-sap-hana
     steps:
-      # minimum python setup
       - name: Check out repository code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
+      - name: Install poetry
+        run: pipx install poetry
+        
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.python_version }}
+          python-version-file: '.python-version'
+          cache: 'poetry'
 
-      - name: Setup Poetry
-        uses: Gr1N/setup-poetry@v7
-
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.cache/pypoetry
-          key: poetry-${{ runner.os }}-${{ env.python_version }}-${{ hashFiles('poetry.lock') }}
+          key: poetry-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
 
       - name: Poetry version
         run: poetry --version

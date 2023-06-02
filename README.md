@@ -8,29 +8,39 @@ Pre-built Wheels can be downloaded from the [Releases page](https://github.com/c
 
 Otherwise, you must install from source.
 
+### Requirements
+You need the following tools pre-installed
+* [Task](https://taskfile.dev/#/installation)
+* [Poetry](https://python-poetry.org/docs/#installation)
+* [Pyenv](https://github.com/pyenv/pyenv#installation)
+  * Make sure to have the [required build packages installed for your OS](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
+  * And the [shims for your shell](https://github.com/pyenv/pyenv#set-up-your-shell-environment-for-pyenv)
+
+
 ## Try it out
 
-1. You will need Python 3.9, [Poetry](https://python-poetry.org/docs/#installation), and [`pyenv`](https://github.com/pyenv/pyenv).
-
-   Once you have `pyenv` and Poetry installed, you should run
-
-   ```sh
-   pyenv install 3.9.7
-   pyenv local 3.9.7
-   poetry config virtualenvs.in-project true
-   ```
-
-2. Clone the project
+1. Clone the project
 
    ```sh
    git clone git@github.com:contiamo/datahub-sap-hana.git
    cd datahub-sap-hana
    ```
 
+2. You will need Python 3.10 or higher
+
+   Once you have `pyenv` and Poetry installed, you should run
+
+   ```sh
+   pyenv install 3.10.10
+   pyenv local 3.10.10
+   poetry config virtualenvs.in-project true
+   ```
+
+
 3. Install the project and dependencies
 
    ```sh
-   make setup
+   task setup
    ```
 
 4. Edit the `examples/hana_recipe.yaml` to set the connection details to your SAP Hana database.
@@ -54,7 +64,7 @@ A Docker image with datahub and this package preinstalled is provided via the [G
 ```sh
 docker run -it --rm -v `pwd`:/opt \
    ghcr.io/contiamo/datahub-sap-hana:latest \
-   ingest run -c /opt/examples/ha.yaml
+   ingest run -c /opt/examples/hana_recipe.yaml
 ```
 
 Note that you may need to set the `--network` flag if you are using the Hana Express Docker image.
@@ -66,11 +76,11 @@ Note that you may need to set the `--network` flag if you are using the Hana Exp
 To run the unit tests, use
 
 ```sh
-make test
+task test
 ```
 
 To run all of the tests, just use
 
 ```sh
-poetry run pytest -v
+task test -- -v
 ```

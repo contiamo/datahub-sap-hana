@@ -1,0 +1,77 @@
+version: 3
+
+
+vars:
+  REGISTRY: contiamo
+  COMPONENT: datahub-sap-hana
+  SHA:
+    sh: git rev-parse --short HEAD 2>/dev/null
+  VERSION:
+    sh:  git describe --tags --always --dirty 2>/dev/null || echo "0.0.0"
+
+tasks:
+  check_poetry:
+    desc: Check if poetry is installed
+    silent: true
+    vars:
+      poetry_version: "1.4.2"
+    cmds:
+      - echo "you should install poetry version {{.poetry_version}}"
+    status:
+      - poetry --version | grep "{{.poetry_version}}"
+
+  setup:
+    desc: Create a python 3 virtualenv
+    deps:
+      - check_poetry
+    cmds:
+      - poetry install
+    sources:
+      - pyproject.toml
+    generates:
+      - .venv/*
+
+  lint:
+    desc: Run linters
+    deps:
+      - setup
+    cmds:
+      - poetry run pyright
+      - poetry run ruff check .
+      - poetry run black --check .
+
+  fix:
+    desc: Fix linters
+    deps:
+      - setup
+    cmds:
+      - poetry run black .
+      - poetry run ruff --fix-only .
+
+
+  test:
+    desc: Run unit tests
+    deps:
+      - setup
+    cmds:
+      - poetry run pytest {{.CLI_ARGS}}
+
+  build:
+    desc: Build the package
+    deps:
+      - setup
+    cmds:
+      - rm -r dist
+      - poetry build
+    generates:
+      - dist/*
+    sources:
+      - datahub_sap_hana/*.py
+      - pyproject.toml
+
+  docker:
+    desc: Build the docker image
+    deps:
+      - build
+    cmds:
+      - docker build --build-arg VERSION={{.VERSION}} --build-arg SHA=$(SHA) -t {{.REGISTRY}}/{{.COMPONENT}}:latest .
