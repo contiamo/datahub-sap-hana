@@ -55,7 +55,7 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ env.registry }}/${{ steps.get_repo_owner.outputs.repo_owner }}/${{ env.name }}
           # generate Docker tags based on the following events/attributes
