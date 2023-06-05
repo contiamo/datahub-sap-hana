@@ -19,7 +19,7 @@ jobs:
       name: datahub-sap-hana
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install poetry
