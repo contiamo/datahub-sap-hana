@@ -3784,4 +3784,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "97b7fa8e00152996e3a7901a662152c1adcef72ba861b73935838f38198e6d07"
+content-hash = "8ff7872ea1366d74570a6328e7c93dfb48127faae85676d3065144805c2547df"
