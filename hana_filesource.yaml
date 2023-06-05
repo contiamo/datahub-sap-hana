@@ -1,0 +1,19 @@
+---
+version: 1
+lineage:
+  - entity:
+      name: product_sales_1997 #in datahub, dependent_object_name
+      type: dataset
+      env: DEV
+      platform: sap-hana # not sure if this is the right name
+    upstream:
+      - entity:
+          name: sales_fact_1997 #in datahub, base_object_name
+          type: dataset
+          env: DEV
+          platform: sap-hana
+      - entity:
+          name: product
+          type: dataset
+          env: DEV
+          platform: sap-hana
