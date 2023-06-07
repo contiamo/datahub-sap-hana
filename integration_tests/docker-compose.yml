@@ -9,7 +9,7 @@ services:
     ports:
       - 39013:39013
       - 39017:39017
-      - 39042-39045:39042-39045
+      - 39041-39045:39041-39045
       - 1128-1129:1128-1129
       - 59013-59014:59013-59014 
     volumes:
@@ -26,8 +26,6 @@ services:
       - --master-password
       - HXEHana1 
 volumes:
-  setup:
-    driver: local
-  post_start:
-    driver: local
+  data:
+  
 

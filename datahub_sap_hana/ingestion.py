@@ -3,6 +3,9 @@ from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple, Union
 
 import sqlalchemy_hana.types as custom_types
+from datahub.configuration.common import AllowDenyPattern
+from datahub.emitter import mce_builder
+from datahub.emitter.mcp_builder import mcps_from_mce
 from datahub.ingestion.api.common import PipelineContext
 from datahub.ingestion.api.decorators import (
     config_class,  # type: ignore
@@ -16,14 +19,11 @@ from datahub.ingestion.source.sql.sql_common import (
 )
 from datahub.ingestion.source.sql.sql_config import BasicSQLAlchemyConfig
 from datahub.metadata.com.linkedin.pegasus2avro import schema
+from pydantic import BaseModel, Field
+from sqlalchemy import create_engine
 
 register_custom_type(custom_types.TINYINT, schema.NumberType)
 
-from datahub.configuration.common import AllowDenyPattern
-from datahub.emitter import mce_builder
-from datahub.emitter.mcp_builder import mcps_from_mce
-from pydantic import BaseModel, Field
-from sqlalchemy import create_engine
 
 logger: logging.Logger = logging.getLogger(__name__)
 

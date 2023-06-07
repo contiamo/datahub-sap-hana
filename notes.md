@@ -127,8 +127,6 @@ lineage:
           platform: hana
 ```
 
-
-
 ### SAP HANA recipe config for the foodmart db
 ```yaml
 source:
