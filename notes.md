@@ -104,31 +104,6 @@ results = conn.execute("SELECT STATEMENT HERE")
 ```
 
 
-### Table lineage structure
-
-```yaml
-version: 1
-lineage:
-  - entity:
-      name: product_sales_1997 #in datahub, dependent_object_name
-      type: dataset
-      env: DEV
-      platform: hana # not sure if this is the right name
-    upstream:
-      - entity:
-          name: sales_fact_1997 #in datahub, base_object_name
-          type: dataset
-          env: DEV
-          platform: hana
-      - entity:
-          name: product #in datahub, base_object_name
-          type: dataset
-          env: DEV
-          platform: hana
-```
-
-
-
 ### SAP HANA recipe config for the foodmart db
 ```yaml
 source:
