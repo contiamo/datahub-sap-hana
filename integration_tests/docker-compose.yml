@@ -1,0 +1,33 @@
+# Attention Hana pull requires that you are logged into Docker Hub prior to pulling the images (requirement by SAP as image provider)
+# Copied from datahub's tests for hana integration https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml
+version: '3.4'
+services:
+  testhana:
+    image: "saplabs/hanaexpress:2.00.061.00.20220519.1"
+    container_name: "testhana"
+    restart: "unless-stopped"
+    ports:
+      - 39013:39013
+      - 39017:39017
+      - 39042-39045:39042-39045
+      - 1128-1129:1128-1129
+      - 59013-59014:59013-59014 
+    volumes:
+      - ./post_start:/hana/hooks/post_start/
+      - ./setup:/hana/mounts/setup/
+    environment: 
+      - SCHEMA_NAME=HOTEL
+      - DUMP_FILE=setup.sql
+      - SCHEMA_PWD=Localdev1
+    command:
+      - --agree-to-sap-license
+      - --dont-check-system
+      - --dont-check-mount-points
+      - --master-password
+      - HXEHana1 
+volumes:
+  setup:
+    driver: local
+  post_start:
+    driver: local
+
