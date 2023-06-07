@@ -1,8 +1,0 @@
-version: 1
-source:
-  type: datahub-lineage-file
-  config:
-    # Path to file/folder
-     path: hana_filesource.yaml
-sink:
-  type: console

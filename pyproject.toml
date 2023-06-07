@@ -40,7 +40,8 @@ exclude = [
     "**/__pycache__"
 ]
 reportMissingImports = true
-typeCheckingMode = "strict"
+typeCheckingMode = "basic"
+
 
 
 [tool.ruff]

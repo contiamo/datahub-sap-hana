@@ -66,7 +66,6 @@ docker run -it --rm -v `pwd`:/opt \
    ghcr.io/contiamo/datahub-sap-hana:latest \
    ingest run -c /opt/examples/hana_recipe.yaml
 ```
-
 Note that you may need to set the `--network` flag if you are using the Hana Express Docker image.
 
 ## Development

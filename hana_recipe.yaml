@@ -1,0 +1,16 @@
+source:
+  type: datahub_sap_hana.ingestion.HanaSource
+  config:
+    username: admin
+    password: password123
+    database: db_name
+    host_port: localhost:39001
+    schema_pattern:
+      deny: 
+        - .*
+    include_view_lineage: true
+sink:
+  type: file
+  config: 
+    filename: ./sink_results.json
+  
