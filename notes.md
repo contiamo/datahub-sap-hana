@@ -1,20 +1,26 @@
 
 ## Notes on SAP Hana file lineage ingestion  
 
+- This is a package enables the ingestion of table level lineage from SAP HANA db to Datahub.
+It  captures not only the object dependency between tables and views, but also the foreign-key dependencies between tables.
+
 ### Connecting to SAP Hana
 
-1. Run the datahub-sap-hana-example database using ```docker-compose up -d```. Follow instructions [here].(https://github.com/contiamo/datahub-sap-hana-example)
+1. Run a SAP Hana db. If there is no SAP HANA db, SAP HANA gives a free trial for development [here].(https://www.sap.com/germany/products/technology-platform/hana/express-trial.html)
+The company also has instructions on how to run
 
 2. Follow the instructions in the [repo](https://github.com/contiamo/datahub-sap-hana) to install basic datahub_sap_hana metadata ingestion.
 
-3. In the folder where the repo datahub-sap-hana, use ipython to query the database. In the command line:
-```
 
-4. To create a connection to the db using python:
+### Connecting using Python
+
+1. In the folder where the repo datahub-sap-hana, use ipython to query the database. In the command line:
+``` poetry run ipython ```
+
+2. To create a connection to the db using python:
 
 [Connect to SAP HANA from Python](https://help.sap.com/docs/SAP_HANA_PLATFORM/0eec0d68141541d1b07893a39944924e/d12c86af7cb442d1b9f8520e2aba7758.html)
 
-  
 
 ``` from hdbcli import dbapi
 
@@ -22,7 +28,7 @@ conn = dbapi.connect(address='localhost', port=39044, user='pantheon', password=
 
 ```  
 
-### Querying data
+#### Querying data
 
 In ipython, the general format to execute a query and see the results is:
 
@@ -86,7 +92,7 @@ To see the table/s dependent on another table such as 'sales_fact_1997':
 
 [Documentation](https://help.sap.com/docs/HANA_SERVICE_CF/7c78579ce9b14a669c1f3295b0d8ca16/20cbd12e7519101489c7cfcd0f32868d.html) for object dependencies.
 
-### Connecting with sqlalchemy 
+### Connecting using sqlalchemy 
 
 - The credentials for the db should be used to create a sql_url for the engine object to establish connection with the SAP HANA db. 
 
@@ -96,6 +102,8 @@ engine = create_engine("hana://username:password@localhost:host_port/database_na
 conn = engine.connect()
 results = conn.execute("SELECT STATEMENT HERE")
 ```
+
+
 ### Table lineage structure
 
 ```yaml
@@ -119,5 +127,24 @@ lineage:
           platform: hana
 ```
 
-# Other info: 
-- The script not only captures the object dependency between tables and views, it also considers the foreign-key dependencies between tables
+
+
+### SAP HANA recipe config for the foodmart db
+```yaml
+source:
+  type: datahub_sap_hana.ingestion.HanaSource
+  config:
+    username: pantheon
+    password: YDmB6vVbgUyfDT
+    database: foodmart
+    host_port: localhost:39044
+    schema_pattern:
+      deny: 
+        - .*SYS*
+    include_view_lineage: true
+sink:
+  type: file
+  config: 
+    filename: ./sink_results.json
+  
+```
