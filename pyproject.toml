@@ -46,7 +46,12 @@ reportMissingImports = true
 typeCheckingMode = "basic"
 
 
-
 [tool.ruff]
 # See https://beta.ruff.rs/docs/configuration/
 select = ["E", "F", "I001"]
+
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks test as integration tests (select with '-m integration')",
+]

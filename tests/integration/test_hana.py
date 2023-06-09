@@ -47,7 +47,7 @@ def test_connection_with_query(hana_source: HanaSource):
         assert result == [('HOTEL', 'HOTEL', 'ROOM', 'HOTEL')]
 
 
-def test_hana_ingest(pytestconfig):
+def test_integration_hana_ingest(pytestconfig):
     test_resources_dir = pytestconfig.rootpath / "tests/integration/data"
 
     # Run the metadata ingestion pipeline.
