@@ -4,7 +4,7 @@
 - Get SAP HANA express.
 1. Make sure that you have a dockerhub account. Otherwise, create one [here](https://hub.docker.com/).
 2. Pull the [hanaexpress](https://hub.docker.com/r/saplabs/hanaexpress) docker image from the dockerhub library. 
-3. Copy the docker-compose [file](https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml) from the datahub integration tests. Also copy the post_start and setup folders from datahub. 
+3. Copy the docker-compose [file](https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml) from the datahub integration tests. Also copy the test_helpers, post_start and setup folders from datahub. 
 4. Modify the docker-compose file to use the new image name: 
 ```image: "saplabs/hanaexpress:2.00.061.00.20220519.1"```
 

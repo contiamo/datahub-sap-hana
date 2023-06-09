@@ -1,5 +1,9 @@
 # Attention Hana pull requires that you are logged into Docker Hub prior to pulling the images (requirement by SAP as image provider)
-# Copied from datahub's tests for hana integration https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml
+# This is copied and slightly modified from the acryl-datahub project
+# The original source code can be found at  https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml
+# And the license is available at XXXX
+
+
 version: '3.4'
 services:
   testhana:
