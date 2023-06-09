@@ -1,14 +1,21 @@
 import pytest
-import yaml
-from datahub.ingestion.api.common import PipelineContext
 from sqlalchemy import create_engine
+from sqlalchemy.exc import OperationalError
 
-from datahub_sap_hana.ingestion import HanaSource
+from datahub_sap_hana.ingestion import HanaConfig, HanaSource
+from datahub.ingestion.api.common import PipelineContext
+
+from datahub.emitter import mce_builder
+from datahub.emitter.mcp_builder import mcps_from_mce
 from tests.test_helpers import mce_helpers
+from tests.test_helpers.type_helpers import PytestConfig
+
 from tests.test_helpers.click_helpers import run_datahub_cmd
+import yaml
 
 
 @pytest.fixture
+@pytest.mark.integration
 def hana_source():
     with open("tests/integration/data/hana_to_file.yml") as f:
         config_file = yaml.safe_load(f)
@@ -37,8 +44,7 @@ def test_connection_with_query(hana_source: HanaSource):
     engine = create_engine(engine)
     with engine.connect() as conn:
         result = conn.execute(query).fetchall()
-        assert result == [("HOTEL", "HOTEL", "ROOM", "HOTEL")]
-        assert len(result) > 0
+        assert result == [('HOTEL', 'HOTEL', 'ROOM', 'HOTEL')]
 
 
 def test_hana_ingest(pytestconfig):
@@ -47,7 +53,8 @@ def test_hana_ingest(pytestconfig):
     # Run the metadata ingestion pipeline.
     config_file = (test_resources_dir / "hana_to_file.yml").resolve()
     run_datahub_cmd(
-        ["ingest", "--strict-warnings", "-c", f"{config_file}"], test_resources_dir
+        ["ingest", "--strict-warnings", "-c",
+            f"{config_file}"], test_resources_dir
     )
 
     # Verify the output.
