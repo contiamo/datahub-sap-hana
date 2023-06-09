@@ -15,7 +15,6 @@ import yaml
 
 
 @pytest.fixture
-@pytest.mark.integration
 def hana_source():
     with open("tests/integration/data/hana_to_file.yml") as f:
         config_file = yaml.safe_load(f)
@@ -39,7 +38,8 @@ WHERE
   """
 
 
-def test_connection_with_query(hana_source: HanaSource):
+@pytest.mark.integration
+def test_integration_connection_with_query(hana_source: HanaSource):
     engine = hana_source.config.get_sql_alchemy_url()
     engine = create_engine(engine)
     with engine.connect() as conn:
@@ -47,6 +47,7 @@ def test_connection_with_query(hana_source: HanaSource):
         assert result == [('HOTEL', 'HOTEL', 'ROOM', 'HOTEL')]
 
 
+@pytest.mark.integration
 def test_integration_hana_ingest(pytestconfig):
     test_resources_dir = pytestconfig.rootpath / "tests/integration/data"
 
