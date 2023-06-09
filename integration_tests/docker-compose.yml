@@ -16,6 +16,7 @@ services:
       - ./post_start:/hana/hooks/post_start/
       - ./setup:/hana/mounts/setup/
     environment: 
+      # schema name is user name and pwd is schema_pwd
       - SCHEMA_NAME=HOTEL
       - DUMP_FILE=setup.sql
       - SCHEMA_PWD=Localdev1

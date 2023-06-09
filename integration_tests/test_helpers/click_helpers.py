@@ -5,7 +5,7 @@ from click.testing import CliRunner, Result
 from datahub.entrypoints import datahub
 from datahub.telemetry.telemetry import telemetry_instance
 
-from tests.test_helpers import fs_helpers
+from integration_tests.test_helpers import fs_helpers
 
 # disable telemetry for tests under this instance
 telemetry_instance.enabled = False

@@ -1,5 +1,4 @@
 run_id: hana-test
-
 source:
   type: hana
   config:

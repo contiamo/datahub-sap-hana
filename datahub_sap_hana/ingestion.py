@@ -40,7 +40,7 @@ WHERE
   DEPENDENT_OBJECT_TYPE = 'TABLE'
   OR DEPENDENT_OBJECT_TYPE = 'VIEW'
   AND BASE_SCHEMA_NAME NOT LIKE '%SYS%'
-  AND DEPENDENT_SCHEMA_NAME NOT LIKE '%SYS%'
+  AND DEPENDENT_SCHEMA_NAME NOT LIKE '%SYS%' LIMIT 1
   """
 
 
@@ -101,10 +101,9 @@ class HanaSource(SQLAlchemySource):
             yield from self._get_view_lineage_workunits()
 
     def _get_view_lineage_elements(self) -> Dict[Tuple[str, str], List[str]]:
-        """Connects to SAP HANA db to run the query statement.
-        Returns a dictionary of elements from the query results, which are mapped to the ViewLineageEntry fields
+        """Connects to SAP HANA db to run the query statement. The results are then mapped to the ViewLineageEntry attributes.
+        Returns a dictionary of downstream and upstream objects from the query results.
         """
-
         url = self.config.get_sql_alchemy_url()
 
         engine = create_engine(url, **self.config.options)
@@ -147,11 +146,10 @@ class HanaSource(SQLAlchemySource):
                     self.config.env,
                 )
             )
-
+    
         return lineage_elements
-
     def _get_view_lineage_workunits(self) -> Iterable[MetadataWorkUnit]:
-        """Creates MetadataWorkUnit objects for the upstream and downstream lineage of views in the SAP HANA database.
+        """Creates MetadataWorkUnit objects for table lineage based on the downstream and downstream objects from the query results.
         Returns an iterable MetadataWorkUnit that are emitted to Datahub.
         """
 
@@ -174,7 +172,41 @@ class HanaSource(SQLAlchemySource):
             )
 
             lineage_mce = mce_builder.make_lineage_mce(source_tables, urn)
+            print(lineage_mce)
             for item in mcps_from_mce(lineage_mce):
                 wu = item.as_workunit()
                 self.report.report_workunit(wu)
                 yield wu
+
+
+if __name__ == '__main__':
+    config = HanaConfig(
+        username="system",
+        password="HXEHana1",
+        host_port="localhost:39017",
+        scheme="hana",
+    )
+    source = HanaSource(config, PipelineContext(run_id="test-run"))
+    lineage_elements = source._get_view_lineage_elements()
+    for table_objects, lineage_urn in lineage_elements.items():
+        print(table_objects)
+
+        for key, source_tables in lineage_elements.items():
+            dependent_view, dependent_schema = key
+
+            urn = mce_builder.make_dataset_urn(
+                source.platform,
+                source.config.get_identifier(
+                    dependent_schema,
+                    dependent_view,
+                ),
+                source.config.env,
+
+            )
+
+            lineage_mce = mce_builder.make_lineage_mce(source_tables, urn)
+            for item in mcps_from_mce(lineage_mce):
+                print(item.aspect)
+                wu = item.as_workunit()
+                source.report.report_workunit(wu)
+           

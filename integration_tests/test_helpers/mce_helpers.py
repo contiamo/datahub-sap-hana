@@ -15,7 +15,7 @@ from datahub.ingestion.source.file import read_metadata_file
 from datahub.metadata.schema_classes import MetadataChangeEventClass
 from datahub.utilities.urns.urn import Urn
 
-from tests.test_helpers.type_helpers import PytestConfig
+from integration_tests.test_helpers.type_helpers import PytestConfig
 
 logger = logging.getLogger(__name__)
 
