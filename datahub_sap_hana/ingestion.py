@@ -73,6 +73,11 @@ class HanaConfig(BasicSQLAlchemyConfig):
     )
 
     def get_identifier(self: BasicSQLAlchemyConfig, schema: str, table: str) -> str:
+        regular = f"{schema}.{table}"
+        if self.database_alias:
+            return f"{self.database_alias}.{regular}"
+        if self.database:
+            return f"{self.database}.{regular}"
         regular: str = f"{schema}.{table}"
         return regular
 
@@ -146,8 +151,9 @@ class HanaSource(SQLAlchemySource):
                     self.config.env,
                 )
             )
-    
+
         return lineage_elements
+
     def _get_view_lineage_workunits(self) -> Iterable[MetadataWorkUnit]:
         """Creates MetadataWorkUnit objects for table lineage based on the downstream and downstream objects from the query results.
         Returns an iterable MetadataWorkUnit that are emitted to Datahub.
@@ -179,7 +185,7 @@ class HanaSource(SQLAlchemySource):
                 yield wu
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     config = HanaConfig(
         username="system",
         password="HXEHana1",
@@ -201,7 +207,6 @@ if __name__ == '__main__':
                     dependent_view,
                 ),
                 source.config.env,
-
             )
 
             lineage_mce = mce_builder.make_lineage_mce(source_tables, urn)
@@ -209,4 +214,3 @@ if __name__ == '__main__':
                 print(item.aspect)
                 wu = item.as_workunit()
                 source.report.report_workunit(wu)
-           
