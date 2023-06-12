@@ -1,0 +1,15 @@
+source:
+  type: datahub_sap_hana.ingestion.HanaSource
+  config:
+    username: HOTEL
+    password: Localdev1
+    database: HXE
+    host_port: localhost:39041
+    schema_pattern:
+      deny: 
+        - .*SYS*
+    include_view_lineage: false
+sink:
+  type: file
+  config: 
+    filename: ./integration_tests/hana_golden_file.json

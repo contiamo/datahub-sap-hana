@@ -1,8 +1,7 @@
 import logging
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple, Union
-
-import sqlalchemy_hana.types as custom_types
+import sqlalchemy_hana.types as custom_types  # type: ignore
 from datahub.configuration.common import AllowDenyPattern
 from datahub.emitter import mce_builder
 from datahub.emitter.mcp_builder import mcps_from_mce
@@ -68,7 +67,7 @@ class HanaConfig(BasicSQLAlchemyConfig):
     schema_pattern: AllowDenyPattern = Field(
         default=AllowDenyPattern(deny=["information_schema"])
     )
-    include_view_lineage: Any = Field(
+    include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
 
@@ -191,6 +190,7 @@ if __name__ == "__main__":
         password="HXEHana1",
         host_port="localhost:39017",
         scheme="hana",
+
     )
     source = HanaSource(config, PipelineContext(run_id="test-run"))
     lineage_elements = source._get_view_lineage_elements()
