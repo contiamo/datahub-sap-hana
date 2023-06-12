@@ -1,11 +1,11 @@
-
 # This is copied and slightly modified from the acryl-datahub project
+# Copyright 2015 LinkedIn Corp. All rights reserved.
 # The original source code can be found at https://github.com/acryldata/datahub/blob/master/metadata-ingestion/tests/integration/hana/hana_to_file.yml
-# And the license is available at XXXX
+# And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
 
 run_id: hana-test
 source:
-  type: hana
+  type: datahub_sap_hana.ingestion.HanaSource
   config:
     username: HOTEL
     password: Localdev1
