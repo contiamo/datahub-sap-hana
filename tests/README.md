@@ -36,8 +36,19 @@ The results should show that the database HOTEL is in the system:
 
 ### Testing 
 The test checks for the db connection by running a sample query based on the HOTEL db. 
-It also checks a golden file containing the metadata of workunits against the expected metadata output of an ingestion. 
 
-1. In the terminal of the project, run:
-```task test -- --update-golden-files```
+In the terminal of the project, initiate the first test:
+```
+task test -- -m integration
+```
+This will create an output file and the golden file that the former will be compared to.
+
+#### Using the golden file
+The golden file contains the metadata of workunits against the expected metadata output of an ingestion. 
+For subsequent tests that will continue to update the contents of the golden file: 
+
+```
+task test -- -m integration --update-golden-files
+```
+
 
