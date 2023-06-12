@@ -18,6 +18,7 @@ from tests.test_helpers.type_helpers import PytestConfig
 
 from tests.test_helpers.click_helpers import run_datahub_cmd
 import yaml
+from datahub_sap_hana.ingestion import LINEAGE_QUERY
 
 
 @pytest.fixture
@@ -30,26 +31,12 @@ def hana_source():
         return hana_source
 
 
-query = """SELECT 
-    BASE_OBJECT_NAME as source_table, 
-    BASE_SCHEMA_NAME as source_schema,
-    DEPENDENT_OBJECT_NAME as dependent_view, 
-    DEPENDENT_SCHEMA_NAME as dependent_schema
-  from SYS.OBJECT_DEPENDENCIES 
-WHERE 
-  DEPENDENT_OBJECT_TYPE = 'TABLE'
-  OR DEPENDENT_OBJECT_TYPE = 'VIEW'
-  AND BASE_SCHEMA_NAME NOT LIKE '%SYS%'
-  AND DEPENDENT_SCHEMA_NAME NOT LIKE '%SYS%' LIMIT 1
-  """
-
-
 @pytest.mark.integration
 def test_integration_connection_with_query(hana_source: HanaSource):
     engine = hana_source.config.get_sql_alchemy_url()
     engine = create_engine(engine)
     with engine.connect() as conn:
-        result = conn.execute(query).fetchall()
+        result = conn.execute(LINEAGE_QUERY).fetchall()
         assert result == [('HOTEL', 'HOTEL', 'ROOM', 'HOTEL')]
 
 
