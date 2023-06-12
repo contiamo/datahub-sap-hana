@@ -63,7 +63,7 @@ class HanaConfig(BasicSQLAlchemyConfig):
 
     scheme = "hana"
     schema_pattern: AllowDenyPattern = Field(
-        default=AllowDenyPattern(deny=["information_schema"])
+        default=AllowDenyPattern(deny=["*SYS*"])
     )
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
