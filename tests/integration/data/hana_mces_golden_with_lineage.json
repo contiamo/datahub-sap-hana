@@ -1,1742 +1,1742 @@
 [
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
-    "changeType": "UPSERT",
-    "aspectName": "containerProperties",
-    "aspect": {
-        "json": {
-            "customProperties": {
-                "platform": "hana",
-                "env": "PROD",
-                "database": "hxe"
-            },
-            "name": "hxe"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964581,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
-    "changeType": "UPSERT",
-    "aspectName": "status",
-    "aspect": {
-        "json": {
-            "removed": false
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964582,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
-    "changeType": "UPSERT",
-    "aspectName": "dataPlatformInstance",
-    "aspect": {
-        "json": {
-            "platform": "urn:li:dataPlatform:hana"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964582,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Database"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964583,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
-    "changeType": "UPSERT",
-    "aspectName": "containerProperties",
-    "aspect": {
-        "json": {
-            "customProperties": {
-                "platform": "hana",
-                "env": "PROD",
-                "database": "hxe",
-                "schema": "hotel"
-            },
-            "name": "hotel"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964586,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
-    "changeType": "UPSERT",
-    "aspectName": "status",
-    "aspect": {
-        "json": {
-            "removed": false
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964587,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
-    "changeType": "UPSERT",
-    "aspectName": "dataPlatformInstance",
-    "aspect": {
-        "json": {
-            "platform": "urn:li:dataPlatform:hana"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964587,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Schema"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964587,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "container",
-    "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:c8107a53ee221a15de176e4d34a06940"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964588,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964599,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
+        "changeType": "UPSERT",
+        "aspectName": "containerProperties",
+        "aspect": {
+            "json": {
+                "customProperties": {
+                    "platform": "hana",
+                    "env": "PROD",
+                    "database": "hxe"
                 },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {},
-                        "name": "customer",
-                        "tags": []
-                    }
+                "name": "hxe"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964581,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
+        "changeType": "UPSERT",
+        "aspectName": "status",
+        "aspect": {
+            "json": {
+                "removed": false
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964582,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
+        "changeType": "UPSERT",
+        "aspectName": "dataPlatformInstance",
+        "aspect": {
+            "json": {
+                "platform": "urn:li:dataPlatform:hana"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964582,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:c8107a53ee221a15de176e4d34a06940",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Database"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964583,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
+        "changeType": "UPSERT",
+        "aspectName": "containerProperties",
+        "aspect": {
+            "json": {
+                "customProperties": {
+                    "platform": "hana",
+                    "env": "PROD",
+                    "database": "hxe",
+                    "schema": "hotel"
                 },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.customer",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "cno",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "title",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=7)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "firstname",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=20)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "name",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=40)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "address",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=40)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "zip",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
+                "name": "hotel"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964586,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964600,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Table"
-            ]
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
+        "changeType": "UPSERT",
+        "aspectName": "status",
+        "aspect": {
+            "json": {
+                "removed": false
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964587,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964601,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
+        "changeType": "UPSERT",
+        "aspectName": "dataPlatformInstance",
+        "aspect": {
+            "json": {
+                "platform": "urn:li:dataPlatform:hana"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964587,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964610,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {},
-                        "name": "hotel",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.hotel",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "hno",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "name",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=50)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "address",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=40)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "city",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=30)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "state",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "zip",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Schema"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964587,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964611,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Table"
-            ]
+    {
+        "entityType": "container",
+        "entityUrn": "urn:li:container:f870c782e0a44727bd10da2ab742363b",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:c8107a53ee221a15de176e4d34a06940"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964588,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964612,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.maintenance,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964599,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964622,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.maintenance,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {},
-                        "name": "maintenance",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.maintenance",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "mno",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "hno",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "description",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=100)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "date_performed",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.DateType": {}
-                                    }
-                                },
-                                "nativeDataType": "DATE()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "performed_by",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=40)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964623,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.maintenance,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Table"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964625,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964633,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {},
-                        "name": "reservation",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.reservation",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "resno",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "rno",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "cno",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "hno",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "type",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "arrival",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.DateType": {}
-                                    }
-                                },
-                                "nativeDataType": "DATE()",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "departure",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.DateType": {}
-                                    }
-                                },
-                                "nativeDataType": "DATE()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ],
-                        "foreignKeys": [
-                            {
-                                "name": "_SYS_CONSTRAINT_154238_#0_#F0",
-                                "foreignFields": [
-                                    "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD),hno)"
-                                ],
-                                "sourceFields": [
-                                    "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD),hno)"
-                                ],
-                                "foreignDataset": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)"
-                            },
-                            {
-                                "name": "_SYS_CONSTRAINT_154238_#0_#F1",
-                                "foreignFields": [
-                                    "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD),cno)"
-                                ],
-                                "sourceFields": [
-                                    "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD),cno)"
-                                ],
-                                "foreignDataset": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)"
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964634,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Table"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964635,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964648,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {},
-                        "name": "room",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.room",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "hno",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "type",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": true
-                            },
-                            {
-                                "fieldPath": "free",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=3, scale=0)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "price",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=6, scale=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ],
-                        "foreignKeys": [
-                            {
-                                "name": "_SYS_CONSTRAINT_154212_#0_#F0",
-                                "foreignFields": [
-                                    "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD),hno)"
-                                ],
-                                "sourceFields": [
-                                    "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD),hno)"
-                                ],
-                                "foreignDataset": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)"
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964648,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "Table"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964650,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964663,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {
-                            "view_definition": "SELECT\n  H.NAME,\n  R.TYPE,\n  R.FREE,\n  COUNT(R.FREE) AS FREE_RM_COUNT\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  R.TYPE, \n  R.FREE",
-                            "is_view": "True"
-                        },
-                        "name": "available_rooms_by_hotel",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.available_rooms_by_hotel",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "name",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=50)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "type",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "free",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=3, scale=0)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "free_rm_count",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "BIGINT()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964664,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "View"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964665,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "viewProperties",
-    "aspect": {
-        "json": {
-            "materialized": false,
-            "viewLogic": "SELECT\n  H.NAME,\n  R.TYPE,\n  R.FREE,\n  COUNT(R.FREE) AS FREE_RM_COUNT\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  R.TYPE, \n  R.FREE",
-            "viewLanguage": "SQL"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964665,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964672,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {
-                            "view_definition": "SELECT \"H\".\"HNO\" , \"H\".\"NAME\" , \"H\".\"ADDRESS\" , \"H\".\"CITY\" , \"H\".\"STATE\" , \"H\".\"ZIP\" , \"R\".\"TYPE\" , \"R\".\"PRICE\" , \"R\".\"FREE\" FROM HOTEL.ROOM AS R\n  LEFT JOIN HOTEL.HOTEL AS H \n  ON H.HNO=R.HNO",
-                            "is_view": "True"
-                        },
-                        "name": "flat_hotel_rooms",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.flat_hotel_rooms",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "hno",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "INTEGER()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "name",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=50)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "address",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=40)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "city",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=30)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "state",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "zip",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "type",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "price",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=6, scale=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "free",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=3, scale=0)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964672,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "View"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964674,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "viewProperties",
-    "aspect": {
-        "json": {
-            "materialized": false,
-            "viewLogic": "SELECT \"H\".\"HNO\" , \"H\".\"NAME\" , \"H\".\"ADDRESS\" , \"H\".\"CITY\" , \"H\".\"STATE\" , \"H\".\"ZIP\" , \"R\".\"TYPE\" , \"R\".\"PRICE\" , \"R\".\"FREE\" FROM HOTEL.ROOM AS R\n  LEFT JOIN HOTEL.HOTEL AS H \n  ON H.HNO=R.HNO",
-            "viewLanguage": "SQL"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964674,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964684,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {
-                            "view_definition": "WITH \"MAX_PRICE_CTE\" AS (SELECT MAX(PRICE) AS MAX_PRICE\n  FROM HOTEL.ROOM) SELECT H.NAME, R.TYPE, R.PRICE\nFROM HOTEL.HOTEL AS H\nJOIN HOTEL.ROOM AS R ON R.HNO = H.HNO\nWHERE R.PRICE = (\n  SELECT MAX_PRICE\n  FROM MAX_PRICE_CTE\n)",
-                            "is_view": "True"
-                        },
-                        "name": "highest_price",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.highest_price",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "name",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=50)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "type",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "price",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=6, scale=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964685,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "View"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964686,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "viewProperties",
-    "aspect": {
-        "json": {
-            "materialized": false,
-            "viewLogic": "WITH \"MAX_PRICE_CTE\" AS (SELECT MAX(PRICE) AS MAX_PRICE\n  FROM HOTEL.ROOM) SELECT H.NAME, R.TYPE, R.PRICE\nFROM HOTEL.HOTEL AS H\nJOIN HOTEL.ROOM AS R ON R.HNO = H.HNO\nWHERE R.PRICE = (\n  SELECT MAX_PRICE\n  FROM MAX_PRICE_CTE\n)",
-            "viewLanguage": "SQL"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964686,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964695,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {
-                            "view_definition": "SELECT\n  H.NAME AS \"HOTEL NAME\",\n  R.TYPE AS \"ROOM TYPE\",\n  COUNT(R.TYPE) AS \"NUMBER OF RESERVATIONS\",\n  AVG(R.PRICE) AS \"AVERAGE ROOM PRICE\"\nFROM\n  HOTEL.RESERVATION AS RES\n  JOIN HOTEL.ROOM AS R ON R.HNO = RES.HNO AND R.TYPE = RES.TYPE\n  JOIN HOTEL.HOTEL AS H ON H.HNO = RES.HNO\n  JOIN HOTEL.CUSTOMER AS C ON C.CNO = RES.CNO\nGROUP BY\n  H.NAME,\n  R.TYPE\nHAVING\n  COUNT(R.TYPE) > 5",
-                            "is_view": "True"
-                        },
-                        "name": "reservation_count",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.reservation_count",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "HOTEL NAME",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=50)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "ROOM TYPE",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "NUMBER OF RESERVATIONS",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "BIGINT()",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "AVERAGE ROOM PRICE",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=6, scale=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964695,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "View"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964696,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "viewProperties",
-    "aspect": {
-        "json": {
-            "materialized": false,
-            "viewLogic": "SELECT\n  H.NAME AS \"HOTEL NAME\",\n  R.TYPE AS \"ROOM TYPE\",\n  COUNT(R.TYPE) AS \"NUMBER OF RESERVATIONS\",\n  AVG(R.PRICE) AS \"AVERAGE ROOM PRICE\"\nFROM\n  HOTEL.RESERVATION AS RES\n  JOIN HOTEL.ROOM AS R ON R.HNO = RES.HNO AND R.TYPE = RES.TYPE\n  JOIN HOTEL.HOTEL AS H ON H.HNO = RES.HNO\n  JOIN HOTEL.CUSTOMER AS C ON C.CNO = RES.CNO\nGROUP BY\n  H.NAME,\n  R.TYPE\nHAVING\n  COUNT(R.TYPE) > 5",
-            "viewLanguage": "SQL"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964697,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "container",
-    "aspect": {
-        "json": {
-            "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964705,
-        "runId": "hana-test"
-    }
-},
-{
-    "proposedSnapshot": {
-        "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
-            "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
-            "aspects": [
-                {
-                    "com.linkedin.pegasus2avro.common.Status": {
-                        "removed": false
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
-                        "customProperties": {
-                            "view_definition": "SELECT\n  H.NAME,\n  H.CITY,\n  R.TYPE,\n  COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  H.CITY,\n  R.TYPE, \n  R.PRICE",
-                            "is_view": "True"
-                        },
-                        "name": "total_rooms_price",
-                        "tags": []
-                    }
-                },
-                {
-                    "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
-                        "schemaName": "HXE.hotel.total_rooms_price",
-                        "platform": "urn:li:dataPlatform:hana",
-                        "version": 0,
-                        "created": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "lastModified": {
-                            "time": 0,
-                            "actor": "urn:li:corpuser:unknown"
-                        },
-                        "hash": "",
-                        "platformSchema": {
-                            "com.linkedin.pegasus2avro.schema.MySqlDDL": {
-                                "tableSchema": ""
-                            }
-                        },
-                        "fields": [
-                            {
-                                "fieldPath": "name",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=50)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "city",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=30)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "type",
-                                "nullable": false,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.StringType": {}
-                                    }
-                                },
-                                "nativeDataType": "VARCHAR(length=6)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            },
-                            {
-                                "fieldPath": "total_room_price",
-                                "nullable": true,
-                                "type": {
-                                    "type": {
-                                        "com.linkedin.pegasus2avro.schema.NumberType": {}
-                                    }
-                                },
-                                "nativeDataType": "DECIMAL(precision=25, scale=2)",
-                                "recursive": false,
-                                "isPartOfKey": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964705,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "subTypes",
-    "aspect": {
-        "json": {
-            "typeNames": [
-                "View"
-            ]
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964706,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "viewProperties",
-    "aspect": {
-        "json": {
-            "materialized": false,
-            "viewLogic": "SELECT\n  H.NAME,\n  H.CITY,\n  R.TYPE,\n  COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  H.CITY,\n  R.TYPE, \n  R.PRICE",
-            "viewLanguage": "SQL"
-        }
-    },
-    "systemMetadata": {
-        "lastObserved": 1687782964707,
-        "runId": "hana-test"
-    }
-},
-{
-    "entityType": "dataset",
-    "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,total_room_price,PROD)",
-    "changeType": "UPSERT",
-    "aspectName": "upstreamLineage",
-    "aspect": {
-        "json": {
-            "upstreams": [
-                {
-                    "auditStamp": {
-                        "time": 0,
-                        "actor": "urn:li:corpuser:unknown"
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
                     },
-                    "dataset": "urn:li:dataset:(urn:li:dataPlatform:hana,price,PROD)",
-                    "type": "TRANSFORMED"
-                },
-                {
-                    "auditStamp": {
-                        "time": 0,
-                        "actor": "urn:li:corpuser:unknown"
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {},
+                            "name": "customer",
+                            "tags": []
+                        }
                     },
-                    "dataset": "urn:li:dataset:(urn:li:dataPlatform:hana,type,PROD)",
-                    "type": "TRANSFORMED"
-                }
-            ]
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.customer",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "cno",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "title",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=7)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "firstname",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=20)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "name",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=40)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "address",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=40)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "zip",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964600,
+            "runId": "hana-test"
         }
     },
-    "systemMetadata": {
-        "lastObserved": 1687782964829,
-        "runId": "hana-test"
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Table"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964601,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964610,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {},
+                            "name": "hotel",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.hotel",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "hno",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "name",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=50)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "address",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=40)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "city",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=30)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "state",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "zip",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964611,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Table"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964612,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.maintenance,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964622,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.maintenance,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {},
+                            "name": "maintenance",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.maintenance",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "mno",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "hno",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "description",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=100)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "date_performed",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.DateType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DATE()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "performed_by",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=40)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964623,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.maintenance,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Table"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964625,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964633,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {},
+                            "name": "reservation",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.reservation",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "resno",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "rno",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "cno",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "hno",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "type",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "arrival",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.DateType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DATE()",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "departure",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.DateType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DATE()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ],
+                            "foreignKeys": [
+                                {
+                                    "name": "_SYS_CONSTRAINT_154238_#0_#F0",
+                                    "foreignFields": [
+                                        "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD),hno)"
+                                    ],
+                                    "sourceFields": [
+                                        "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD),hno)"
+                                    ],
+                                    "foreignDataset": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)"
+                                },
+                                {
+                                    "name": "_SYS_CONSTRAINT_154238_#0_#F1",
+                                    "foreignFields": [
+                                        "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD),cno)"
+                                    ],
+                                    "sourceFields": [
+                                        "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD),cno)"
+                                    ],
+                                    "foreignDataset": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.customer,PROD)"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964634,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Table"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964635,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964648,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {},
+                            "name": "room",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.room",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "hno",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "type",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": true
+                                },
+                                {
+                                    "fieldPath": "free",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=3, scale=0)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "price",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=6, scale=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ],
+                            "foreignKeys": [
+                                {
+                                    "name": "_SYS_CONSTRAINT_154212_#0_#F0",
+                                    "foreignFields": [
+                                        "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD),hno)"
+                                    ],
+                                    "sourceFields": [
+                                        "urn:li:schemaField:(urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD),hno)"
+                                    ],
+                                    "foreignDataset": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.hotel,PROD)"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964648,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.room,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "Table"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964650,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964663,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {
+                                "view_definition": "SELECT\n  H.NAME,\n  R.TYPE,\n  R.FREE,\n  COUNT(R.FREE) AS FREE_RM_COUNT\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  R.TYPE, \n  R.FREE",
+                                "is_view": "True"
+                            },
+                            "name": "available_rooms_by_hotel",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.available_rooms_by_hotel",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "name",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=50)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "type",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "free",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=3, scale=0)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "free_rm_count",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "BIGINT()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964664,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "View"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964665,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.available_rooms_by_hotel,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "viewProperties",
+        "aspect": {
+            "json": {
+                "materialized": false,
+                "viewLogic": "SELECT\n  H.NAME,\n  R.TYPE,\n  R.FREE,\n  COUNT(R.FREE) AS FREE_RM_COUNT\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  R.TYPE, \n  R.FREE",
+                "viewLanguage": "SQL"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964665,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964672,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {
+                                "view_definition": "SELECT \"H\".\"HNO\" , \"H\".\"NAME\" , \"H\".\"ADDRESS\" , \"H\".\"CITY\" , \"H\".\"STATE\" , \"H\".\"ZIP\" , \"R\".\"TYPE\" , \"R\".\"PRICE\" , \"R\".\"FREE\" FROM HOTEL.ROOM AS R\n  LEFT JOIN HOTEL.HOTEL AS H \n  ON H.HNO=R.HNO",
+                                "is_view": "True"
+                            },
+                            "name": "flat_hotel_rooms",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.flat_hotel_rooms",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "hno",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "INTEGER()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "name",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=50)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "address",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=40)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "city",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=30)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "state",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "zip",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "type",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "price",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=6, scale=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "free",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=3, scale=0)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964672,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "View"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964674,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.flat_hotel_rooms,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "viewProperties",
+        "aspect": {
+            "json": {
+                "materialized": false,
+                "viewLogic": "SELECT \"H\".\"HNO\" , \"H\".\"NAME\" , \"H\".\"ADDRESS\" , \"H\".\"CITY\" , \"H\".\"STATE\" , \"H\".\"ZIP\" , \"R\".\"TYPE\" , \"R\".\"PRICE\" , \"R\".\"FREE\" FROM HOTEL.ROOM AS R\n  LEFT JOIN HOTEL.HOTEL AS H \n  ON H.HNO=R.HNO",
+                "viewLanguage": "SQL"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964674,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964684,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {
+                                "view_definition": "WITH \"MAX_PRICE_CTE\" AS (SELECT MAX(PRICE) AS MAX_PRICE\n  FROM HOTEL.ROOM) SELECT H.NAME, R.TYPE, R.PRICE\nFROM HOTEL.HOTEL AS H\nJOIN HOTEL.ROOM AS R ON R.HNO = H.HNO\nWHERE R.PRICE = (\n  SELECT MAX_PRICE\n  FROM MAX_PRICE_CTE\n)",
+                                "is_view": "True"
+                            },
+                            "name": "highest_price",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.highest_price",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "name",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=50)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "type",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "price",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=6, scale=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964685,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "View"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964686,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.highest_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "viewProperties",
+        "aspect": {
+            "json": {
+                "materialized": false,
+                "viewLogic": "WITH \"MAX_PRICE_CTE\" AS (SELECT MAX(PRICE) AS MAX_PRICE\n  FROM HOTEL.ROOM) SELECT H.NAME, R.TYPE, R.PRICE\nFROM HOTEL.HOTEL AS H\nJOIN HOTEL.ROOM AS R ON R.HNO = H.HNO\nWHERE R.PRICE = (\n  SELECT MAX_PRICE\n  FROM MAX_PRICE_CTE\n)",
+                "viewLanguage": "SQL"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964686,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964695,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {
+                                "view_definition": "SELECT\n  H.NAME AS \"HOTEL NAME\",\n  R.TYPE AS \"ROOM TYPE\",\n  COUNT(R.TYPE) AS \"NUMBER OF RESERVATIONS\",\n  AVG(R.PRICE) AS \"AVERAGE ROOM PRICE\"\nFROM\n  HOTEL.RESERVATION AS RES\n  JOIN HOTEL.ROOM AS R ON R.HNO = RES.HNO AND R.TYPE = RES.TYPE\n  JOIN HOTEL.HOTEL AS H ON H.HNO = RES.HNO\n  JOIN HOTEL.CUSTOMER AS C ON C.CNO = RES.CNO\nGROUP BY\n  H.NAME,\n  R.TYPE\nHAVING\n  COUNT(R.TYPE) > 5",
+                                "is_view": "True"
+                            },
+                            "name": "reservation_count",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.reservation_count",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "HOTEL NAME",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=50)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "ROOM TYPE",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "NUMBER OF RESERVATIONS",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "BIGINT()",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "AVERAGE ROOM PRICE",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=6, scale=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964695,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "View"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964696,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.reservation_count,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "viewProperties",
+        "aspect": {
+            "json": {
+                "materialized": false,
+                "viewLogic": "SELECT\n  H.NAME AS \"HOTEL NAME\",\n  R.TYPE AS \"ROOM TYPE\",\n  COUNT(R.TYPE) AS \"NUMBER OF RESERVATIONS\",\n  AVG(R.PRICE) AS \"AVERAGE ROOM PRICE\"\nFROM\n  HOTEL.RESERVATION AS RES\n  JOIN HOTEL.ROOM AS R ON R.HNO = RES.HNO AND R.TYPE = RES.TYPE\n  JOIN HOTEL.HOTEL AS H ON H.HNO = RES.HNO\n  JOIN HOTEL.CUSTOMER AS C ON C.CNO = RES.CNO\nGROUP BY\n  H.NAME,\n  R.TYPE\nHAVING\n  COUNT(R.TYPE) > 5",
+                "viewLanguage": "SQL"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964697,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "container",
+        "aspect": {
+            "json": {
+                "container": "urn:li:container:f870c782e0a44727bd10da2ab742363b"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964705,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "proposedSnapshot": {
+            "com.linkedin.pegasus2avro.metadata.snapshot.DatasetSnapshot": {
+                "urn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
+                "aspects": [
+                    {
+                        "com.linkedin.pegasus2avro.common.Status": {
+                            "removed": false
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.dataset.DatasetProperties": {
+                            "customProperties": {
+                                "view_definition": "SELECT\n  H.NAME,\n  H.CITY,\n  R.TYPE,\n  COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  H.CITY,\n  R.TYPE, \n  R.PRICE",
+                                "is_view": "True"
+                            },
+                            "name": "total_rooms_price",
+                            "tags": []
+                        }
+                    },
+                    {
+                        "com.linkedin.pegasus2avro.schema.SchemaMetadata": {
+                            "schemaName": "HXE.hotel.total_rooms_price",
+                            "platform": "urn:li:dataPlatform:hana",
+                            "version": 0,
+                            "created": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "lastModified": {
+                                "time": 0,
+                                "actor": "urn:li:corpuser:unknown"
+                            },
+                            "hash": "",
+                            "platformSchema": {
+                                "com.linkedin.pegasus2avro.schema.MySqlDDL": {
+                                    "tableSchema": ""
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "fieldPath": "name",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=50)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "city",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=30)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "type",
+                                    "nullable": false,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.StringType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "VARCHAR(length=6)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                },
+                                {
+                                    "fieldPath": "total_room_price",
+                                    "nullable": true,
+                                    "type": {
+                                        "type": {
+                                            "com.linkedin.pegasus2avro.schema.NumberType": {}
+                                        }
+                                    },
+                                    "nativeDataType": "DECIMAL(precision=25, scale=2)",
+                                    "recursive": false,
+                                    "isPartOfKey": false
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964705,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "subTypes",
+        "aspect": {
+            "json": {
+                "typeNames": [
+                    "View"
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964706,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,HXE.hotel.total_rooms_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "viewProperties",
+        "aspect": {
+            "json": {
+                "materialized": false,
+                "viewLogic": "SELECT\n  H.NAME,\n  H.CITY,\n  R.TYPE,\n  COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  H.CITY,\n  R.TYPE, \n  R.PRICE",
+                "viewLanguage": "SQL"
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964707,
+            "runId": "hana-test"
+        }
+    },
+    {
+        "entityType": "dataset",
+        "entityUrn": "urn:li:dataset:(urn:li:dataPlatform:hana,total_room_price,PROD)",
+        "changeType": "UPSERT",
+        "aspectName": "upstreamLineage",
+        "aspect": {
+            "json": {
+                "upstreams": [
+                    {
+                        "auditStamp": {
+                            "time": 0,
+                            "actor": "urn:li:corpuser:unknown"
+                        },
+                        "dataset": "urn:li:dataset:(urn:li:dataPlatform:hana,price,PROD)",
+                        "type": "TRANSFORMED"
+                    },
+                    {
+                        "auditStamp": {
+                            "time": 0,
+                            "actor": "urn:li:corpuser:unknown"
+                        },
+                        "dataset": "urn:li:dataset:(urn:li:dataPlatform:hana,type,PROD)",
+                        "type": "TRANSFORMED"
+                    }
+                ]
+            }
+        },
+        "systemMetadata": {
+            "lastObserved": 1687782964829,
+            "runId": "hana-test"
+        }
     }
-}
 ]
