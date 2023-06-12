@@ -1,4 +1,5 @@
 # Attention Hana pull requires that you are logged into Docker Hub prior to pulling the images (requirement by SAP as image provider)
+#
 # This is copied and slightly modified from the acryl-datahub project
 # Copyright 2015 LinkedIn Corp. All rights reserved.
 # The original source code can be found at  https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml
