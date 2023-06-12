@@ -179,35 +179,3 @@ class HanaSource(SQLAlchemySource):
                 wu = item.as_workunit()
                 self.report.report_workunit(wu)
                 yield wu
-
-
-if __name__ == "__main__":
-    config = HanaConfig(
-        username="system",
-        password="HXEHana1",
-        host_port="localhost:39017",
-        scheme="hana",
-
-    )
-    source = HanaSource(config, PipelineContext(run_id="test-run"))
-    lineage_elements = source._get_view_lineage_elements()
-    for table_objects, lineage_urn in lineage_elements.items():
-        print(table_objects)
-
-        for key, source_tables in lineage_elements.items():
-            dependent_view, dependent_schema = key
-
-            urn = mce_builder.make_dataset_urn(
-                source.platform,
-                source.config.get_identifier(
-                    dependent_schema,
-                    dependent_view,
-                ),
-                source.config.env,
-            )
-
-            lineage_mce = mce_builder.make_lineage_mce(source_tables, urn)
-            for item in mcps_from_mce(lineage_mce):
-                print(item.aspect)
-                wu = item.as_workunit()
-                source.report.report_workunit(wu)
