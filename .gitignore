@@ -6,3 +6,6 @@ __pycache__
 dist
 /hana_mces.json
 examples/contiamo.yaml
+/notes.md
+/sink_results.json
+*_output.json

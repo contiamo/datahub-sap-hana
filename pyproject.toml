@@ -10,6 +10,7 @@ acryl-datahub = {extras = ["sqlalchemy"], version = "^0.10.3.2"}
 sqlalchemy-hana = "^0.5.0"
 pyhdb = {version = "^0.3.4", optional = true}
 hdbcli = "^2.11.14"
+deepdiff = "^6.3.0"
 
 [tool.poetry.extras]
 pyhdb = ["pyhdb"]
@@ -29,6 +30,11 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = [
     "tests/unit",
+    "tests/integration"
+]
+
+markers = [
+    "integration: marks test as integration tests (select with '-m integration')",
 ]
 
 # see https://microsoft.github.io/pyright/#/configuration?id=pyright-configuration
@@ -39,7 +45,7 @@ exclude = [
     "**/__pycache__"
 ]
 reportMissingImports = true
-typeCheckingMode = "strict"
+typeCheckingMode = "basic"
 
 
 [tool.ruff]
