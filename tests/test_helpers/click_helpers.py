@@ -1,3 +1,10 @@
+
+# This is copied and slightly modified from the acryl-datahub project
+# Copyright 2015 LinkedIn Corp. All rights reserved.
+# The original source code can be found at https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/test_helpers/click_helpers.py
+# And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
+
+
 from pathlib import Path
 from typing import List, Optional
 

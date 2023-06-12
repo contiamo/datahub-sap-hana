@@ -1,5 +1,5 @@
 source:
-  type: datahub_sap_hana.ingestion.HanaSource
+  type: datahub_sap_hana.ingestion.HanaSource   
   config:
     username: HOTEL
     password: Localdev1
