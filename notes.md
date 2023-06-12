@@ -15,7 +15,9 @@ The company also has instructions on how to run
 ### Connecting using Python
 
 1. In the folder where the repo datahub-sap-hana, use ipython to query the database. In the command line:
-``` poetry run ipython ```
+```
+poetry run ipython 
+```
 
 2. To create a connection to the db using python:
 
