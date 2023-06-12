@@ -33,7 +33,6 @@ build-backend = "poetry.core.masonry.api"
 testpaths = [
     "tests/unit",
     "tests/integration", 
-    markers = [
     "integration: marks test as integration tests (select with '-m integration')",
 ]
 
