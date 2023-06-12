@@ -10,8 +10,6 @@ acryl-datahub = {extras = ["sqlalchemy"], version = "^0.10.3.2"}
 sqlalchemy-hana = "^0.5.0"
 pyhdb = {version = "^0.3.4", optional = true}
 hdbcli = "^2.11.14"
-deepdiff = "^6.3.0"
-freezegun = "^1.2.2"
 
 [tool.poetry.extras]
 pyhdb = ["pyhdb"]
@@ -20,9 +18,8 @@ pyhdb = ["pyhdb"]
 black = "^23.3.0"
 pyright = "^1.1.313"
 pytest = "^7.3.1"
-ruff = "^0.0.270"
+ruff = "^0.0.272"
 sqlalchemy-stubs = "^0.4"
-ipython = "^8.14.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -32,10 +29,10 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = [
     "tests/unit",
-    "tests/integration", 
+    "tests/integration"
 ]
 
-marks = [
+markers = [
     "integration: marks test as integration tests (select with '-m integration')",
 ]
 
@@ -53,4 +50,3 @@ typeCheckingMode = "basic"
 [tool.ruff]
 # See https://beta.ruff.rs/docs/configuration/
 select = ["E", "F", "I001"]
-

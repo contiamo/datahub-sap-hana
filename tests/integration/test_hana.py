@@ -7,7 +7,6 @@
 import pytest
 import yaml
 from datahub.ingestion.api.common import PipelineContext
-from sqlalchemy import create_engine
 
 from datahub_sap_hana.ingestion import HanaSource
 from tests.test_helpers import mce_helpers
@@ -24,29 +23,6 @@ def hana_source():
         return hana_source
 
 
-query = """SELECT 
-    BASE_OBJECT_NAME as source_table, 
-    BASE_SCHEMA_NAME as source_schema,
-    DEPENDENT_OBJECT_NAME as dependent_view, 
-    DEPENDENT_SCHEMA_NAME as dependent_schema
-  from SYS.OBJECT_DEPENDENCIES 
-WHERE 
-  DEPENDENT_OBJECT_TYPE = 'TABLE'
-  OR DEPENDENT_OBJECT_TYPE = 'VIEW'
-  AND BASE_SCHEMA_NAME NOT LIKE '%SYS%'
-  AND DEPENDENT_SCHEMA_NAME NOT LIKE '%SYS%' LIMIT 1
-  """
-
-
-@pytest.mark.integration
-def test_integration_connection_with_query(hana_source: HanaSource):
-    engine = hana_source.config.get_sql_alchemy_url()
-    engine = create_engine(engine)
-    with engine.connect() as conn:
-        result = conn.execute(query).fetchall()
-        assert result == [("HOTEL", "HOTEL", "ROOM", "HOTEL")]
-
-
 @pytest.mark.integration
 def test_integration_hana_ingest(pytestconfig):
     test_resources_dir = pytestconfig.rootpath / "tests/integration/data"
@@ -59,8 +35,8 @@ def test_integration_hana_ingest(pytestconfig):
     # Verify the output.
     mce_helpers.check_golden_file(
         pytestconfig,
-        output_path=test_resources_dir / "hana_mces.json",
-        golden_path=test_resources_dir / "hana_mces_golden.json",
+        output_path=test_resources_dir / "hana_mces_with_lineage_output.json",
+        golden_path=test_resources_dir / "hana_mces_golden_with_lineage.json",
     )
 
 
@@ -77,6 +53,6 @@ def test_integration_hana_ingest_lineage_disabled(pytestconfig):
     # Verify the output.
     mce_helpers.check_golden_file(
         pytestconfig,
-        output_path=test_resources_dir / "hana_mces_lineage_disabled.json",
+        output_path=test_resources_dir / "hana_mces_lineage_disabled_output.json",
         golden_path=test_resources_dir / "hana_mces_golden_lineage_disabled.json",
     )

@@ -42,4 +42,4 @@ source:
 sink:
   type: file
   config:
-    filename: "./hana_mces.json"
+    filename: "./hana_mces_with_lineage_output.json"

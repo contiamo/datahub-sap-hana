@@ -46,4 +46,4 @@ source:
 sink:
   type: file
   config:
-    filename: "./hana_mces_lineage_disabled.json"
+    filename: "./hana_mces_lineage_disabled_output.json"
