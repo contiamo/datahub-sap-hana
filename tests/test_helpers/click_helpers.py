@@ -1,4 +1,3 @@
-
 # This is copied and slightly modified from the acryl-datahub project
 # Copyright 2015 LinkedIn Corp. All rights reserved.
 # The original source code can be found at https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/test_helpers/click_helpers.py

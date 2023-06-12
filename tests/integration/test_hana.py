@@ -5,19 +5,13 @@
 # And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
 
 import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.exc import OperationalError
-
-from datahub_sap_hana.ingestion import HanaConfig, HanaSource
-from datahub.ingestion.api.common import PipelineContext
-
-from datahub.emitter import mce_builder
-from datahub.emitter.mcp_builder import mcps_from_mce
-from tests.test_helpers import mce_helpers
-from tests.test_helpers.type_helpers import PytestConfig
-
-from tests.test_helpers.click_helpers import run_datahub_cmd
 import yaml
+from datahub.ingestion.api.common import PipelineContext
+from sqlalchemy import create_engine
+
+from datahub_sap_hana.ingestion import HanaSource
+from tests.test_helpers import mce_helpers
+from tests.test_helpers.click_helpers import run_datahub_cmd
 
 
 @pytest.fixture
@@ -50,7 +44,7 @@ def test_integration_connection_with_query(hana_source: HanaSource):
     engine = create_engine(engine)
     with engine.connect() as conn:
         result = conn.execute(query).fetchall()
-        assert result == [('HOTEL', 'HOTEL', 'ROOM', 'HOTEL')]
+        assert result == [("HOTEL", "HOTEL", "ROOM", "HOTEL")]
 
 
 @pytest.mark.integration
@@ -59,8 +53,7 @@ def test_integration_hana_ingest(pytestconfig):
     # Run the metadata ingestion pipeline.
     config_file = (test_resources_dir / "hana_to_file_default.yml").resolve()
     run_datahub_cmd(
-        ["ingest", "--strict-warnings", "-c",
-            f"{config_file}"], test_resources_dir
+        ["ingest", "--strict-warnings", "-c", f"{config_file}"], test_resources_dir
     )
 
     # Verify the output.
@@ -76,11 +69,9 @@ def test_integration_hana_ingest(pytestconfig):
 def test_integration_hana_ingest_lineage_disabled(pytestconfig):
     test_resources_dir = pytestconfig.rootpath / "tests/integration/data"
     # Run the metadata ingestion pipeline.
-    config_file = (test_resources_dir /
-                   "hana_to_file_lineage_disabled.yml").resolve()
+    config_file = (test_resources_dir / "hana_to_file_lineage_disabled.yml").resolve()
     run_datahub_cmd(
-        ["ingest", "--strict-warnings", "-c",
-            f"{config_file}"], test_resources_dir
+        ["ingest", "--strict-warnings", "-c", f"{config_file}"], test_resources_dir
     )
 
     # Verify the output.

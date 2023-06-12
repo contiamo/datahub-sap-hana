@@ -1,6 +1,7 @@
 import logging
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple, Union
+
 import sqlalchemy_hana.types as custom_types  # type: ignore
 from datahub.configuration.common import AllowDenyPattern
 from datahub.emitter import mce_builder
@@ -62,9 +63,7 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(
-        default=AllowDenyPattern(deny=["*SYS*"])
-    )
+    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )

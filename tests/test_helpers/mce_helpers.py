@@ -1,4 +1,3 @@
-
 # This is copied and slightly modified from the acryl-datahub project
 # Copyright 2015 LinkedIn Corp. All rights reserved.
 # The original source code can be found at https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/test_helpers/mce_helpers.py
@@ -102,8 +101,7 @@ def assert_mces_equal(
             ignore_order=True,
         )
         if not clean_diff:
-            logger.debug(
-                f"MCE-s differ, clean MCE-s are fine\n{pprint.pformat(diff)}")
+            logger.debug(f"MCE-s differ, clean MCE-s are fine\n{pprint.pformat(diff)}")
         diff = clean_diff
         if diff:
             # do some additional processing to emit helpful messages
@@ -266,8 +264,7 @@ def assert_mcp_entity_urn(
             for x in test_output
             if filter_operator(x)
         ]
-        failed_events = [
-            y for y in filtered_events if not y[1][0] or not y[1][1]]
+        failed_events = [y for y in filtered_events if not y[1][0] or not y[1][1]]
         if failed_events:
             raise Exception("Failed to match events", failed_events)
         return len(filtered_events)
@@ -305,8 +302,7 @@ def assert_mce_entity_urn(
             for x in test_output
             if filter_operator(x)
         ]
-        failed_events = [
-            y for y in filtered_events if not y[1][0] or not y[1][1]]
+        failed_events = [y for y in filtered_events if not y[1][0] or not y[1][1]]
         if failed_events:
             raise Exception(
                 "Failed to match events: {json.dumps(failed_events, indent=2)}"
@@ -457,8 +453,7 @@ def assert_entity_urn_not_like(entity_type: str, regex_pattern: str, file: str) 
     print(all_urns)
     matched_urns = [u for u in all_urns if re.match(regex_pattern, u)]
     if matched_urns:
-        raise AssertionError(
-            f"urns found that match the deny list {matched_urns}")
+        raise AssertionError(f"urns found that match the deny list {matched_urns}")
     return len(test_output)
 
 
