@@ -30,7 +30,5 @@ services:
       - --dont-check-mount-points
       - --master-password
       - HXEHana1 
-volumes:
-  data:
   
 
