@@ -53,8 +53,8 @@ def test_integration_hana_ingest(pytestconfig):
     # Verify the output.
     mce_helpers.check_golden_file(
         pytestconfig,
-        output_path=test_resources_dir / "hana_mces.json",
-        golden_path=test_resources_dir / "hana_mces_golden.json",
+        output_path=test_resources_dir / "hana_mces_with_lineage.json",
+        golden_path=test_resources_dir / "hana_mces_golden_with_lineage.json",
     )
 
 
