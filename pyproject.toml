@@ -32,7 +32,9 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = [
     "tests/unit",
-    "tests/integration"
+    "tests/integration", 
+    markers = [
+    "integration: marks test as integration tests (select with '-m integration')",
 ]
 
 # see https://microsoft.github.io/pyright/#/configuration?id=pyright-configuration
@@ -50,8 +52,3 @@ typeCheckingMode = "basic"
 # See https://beta.ruff.rs/docs/configuration/
 select = ["E", "F", "I001"]
 
-
-[tool.pytest.ini_options]
-markers = [
-    "integration: marks test as integration tests (select with '-m integration')",
-]
