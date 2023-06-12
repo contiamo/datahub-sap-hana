@@ -175,7 +175,6 @@ class HanaSource(SQLAlchemySource):
             )
 
             lineage_mce = mce_builder.make_lineage_mce(source_tables, urn)
-            print(lineage_mce)
             for item in mcps_from_mce(lineage_mce):
                 wu = item.as_workunit()
                 self.report.report_workunit(wu)
