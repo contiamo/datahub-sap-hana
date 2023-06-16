@@ -79,6 +79,11 @@ def get_lineage_for_view(view_name: str, view_sql: str):
         yield (view_name, lineage(col_name.lower(), view_sql.lower()))
 
 
+def parse_column_name(column_name: str):
+    parsed_name = column_name.split(".")
+    return parsed_name[1]
+
+
 def get_lineage():
 
     engine = create_engine("hana://HOTEL:Localdev1@localhost:39041/HXE")
@@ -94,8 +99,9 @@ def get_lineage():
                 # lineage_node.name is the name of the column that we want to see the lineage of
                 # lineage_node.downstream is the datahub upstream
                 # each element of lineage_node.downstream is a Node that represents a column in the source table
+                # column.source.name refers to the source table and column.name is the name of the column
                 for column in lineage_node.downstream:
-                    yield column.source.name, column.name
+                    yield column.source.name, parse_column_name(column.name)
 
 
 """
