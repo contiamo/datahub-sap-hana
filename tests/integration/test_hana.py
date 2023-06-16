@@ -56,3 +56,23 @@ def test_integration_hana_ingest_lineage_disabled(pytestconfig):
         output_path=test_resources_dir / "hana_mces_lineage_disabled_output.json",
         golden_path=test_resources_dir / "hana_mces_golden_lineage_disabled.json",
     )
+
+
+# test for when the field include_view_lineage: false
+@pytest.mark.integration
+def test_integration_hana_ingest_lineage_disabled(pytestconfig):
+    test_resources_dir = pytestconfig.rootpath / "tests/integration/data"
+    # Run the metadata ingestion pipeline.
+    config_file = (test_resources_dir /
+                   "hana_to_file_lineage_disabled.yml").resolve()
+    run_datahub_cmd(
+        ["ingest", "--strict-warnings", "-c",
+            f"{config_file}"], test_resources_dir
+    )
+
+    # Verify the output.
+    mce_helpers.check_golden_file(
+        pytestconfig,
+        output_path=test_resources_dir / "hana_mces_lineage_disabled.json",
+        golden_path=test_resources_dir / "hana_mces_golden_lineage_disabled.json",
+    )
