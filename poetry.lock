@@ -3241,6 +3241,21 @@ mypy = ">=0.790"
 typing-extensions = ">=3.7.4"
 
 [[package]]
+name = "sqlglot"
+version = "16.0.0"
+description = "An easily customizable SQL parser and transpiler"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "sqlglot-16.0.0-py3-none-any.whl", hash = "sha256:87aa5127c8b685b519c30c3f8e4e80484266a40de748f6d4dfbd0fb8723b577f"},
+    {file = "sqlglot-16.0.0.tar.gz", hash = "sha256:b27a9f1b5c56bb4dfc19be380cd60a63e94f08ed5d1401e36d95e3df96997c5e"},
+]
+
+[package.extras]
+dev = ["autoflake", "black", "duckdb (>=0.6)", "isort", "mypy (>=0.990)", "pandas", "pdoc", "pre-commit", "pyspark", "python-dateutil"]
+
+[[package]]
 name = "stack-data"
 version = "0.6.2"
 description = "Extract data from python stack frames and tracebacks for informative displays"
@@ -3742,4 +3757,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "7a356d0fbcfe8b9c767fb47bed9bf92a8aefa8fe7a1b395a824ac546904c26d8"
+content-hash = "330f1d46e11a99791ad86cd0e4943332bc48a28d061c2bf978219207bc091a84"

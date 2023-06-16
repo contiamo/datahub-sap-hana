@@ -11,6 +11,7 @@ sqlalchemy-hana = "^0.5.0"
 pyhdb = {version = "^0.3.4", optional = true}
 hdbcli = "^2.11.14"
 deepdiff = "^6.3.0"
+sqlglot = "^16.0.0"
 
 [tool.poetry.extras]
 pyhdb = ["pyhdb"]
@@ -30,7 +31,9 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = [
     "tests/unit",
-    "tests/integration"
+    "tests/integration",
+    "integration: marks test as integration tests (select with '-m integration')"
+
 ]
 
 markers = [
@@ -51,3 +54,4 @@ typeCheckingMode = "basic"
 [tool.ruff]
 # See https://beta.ruff.rs/docs/configuration/
 select = ["E", "F", "I001"]
+

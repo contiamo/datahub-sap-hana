@@ -1,10 +1,4 @@
 -- Sample data is taken from https://developers.sap.com/tutorials/hana-clients-hdbsql.html
-
--- This is copied and slightly modified from the acryl-datahub project
--- Copyright 2015 LinkedIn Corp. All rights reserved.
--- The original source code can be found athttps://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/setup/setup.sql
--- And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
-
 CREATE COLUMN TABLE HOTEL.HOTEL(
   hno INTEGER PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -51,6 +45,25 @@ CREATE COLUMN TABLE HOTEL.MAINTENANCE(
   performed_by VARCHAR(40)
 );
 
+
+CREATE OR REPLACE VIEW HOTEL.TOTAL_ROOMS_PRICE AS (
+SELECT
+  H.NAME,
+  H.CITY,
+  R.TYPE,
+  COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE
+FROM
+  HOTEL.ROOM AS R
+  LEFT JOIN
+  HOTEL.HOTEL AS H
+  ON H.HNO = R.HNO
+GROUP BY 
+  H.NAME,
+  H.CITY,
+  R.TYPE, 
+  R.PRICE
+);
+
 CREATE OR REPLACE PROCEDURE HOTEL.SHOW_RESERVATIONS(
   IN IN_HNO INTEGER, IN IN_ARRIVAL DATE)
   SQL SECURITY INVOKER
@@ -78,6 +91,55 @@ CREATE OR REPLACE PROCEDURE HOTEL.SHOW_RESERVATIONS(
       H.NAME ASC,
       R.ARRIVAL DESC;
   END;
+
+-- views for tests
+CREATE OR REPLACE VIEW HOTEL.AVAILABLE_ROOMS_BY_HOTEL AS (
+SELECT
+  H.NAME,
+  R.TYPE,
+  R.FREE,
+  COUNT(R.FREE) AS FREE_RM_COUNT
+FROM
+  HOTEL.ROOM AS R
+  LEFT JOIN
+  HOTEL.HOTEL AS H
+  ON H.HNO = R.HNO
+GROUP BY 
+  H.NAME,
+  R.TYPE, 
+  R.FREE);
+
+CREATE OR REPLACE VIEW HOTEL.RESERVATION_COUNT AS
+SELECT
+  H.NAME AS "HOTEL NAME",
+  R.TYPE AS "ROOM TYPE",
+  COUNT(R.TYPE) AS "NUMBER OF RESERVATIONS",
+  AVG(R.PRICE) AS "AVERAGE ROOM PRICE"
+FROM
+  HOTEL.RESERVATION AS RES
+  JOIN HOTEL.ROOM AS R ON R.HNO = RES.HNO AND R.TYPE = RES.TYPE
+  JOIN HOTEL.HOTEL AS H ON H.HNO = RES.HNO
+  JOIN HOTEL.CUSTOMER AS C ON C.CNO = RES.CNO
+GROUP BY
+  H.NAME,
+  R.TYPE
+HAVING
+  COUNT(R.TYPE) > 5;
+
+CREATE OR REPLACE VIEW HOTEL.HIGHEST_PRICE AS (
+  WITH MAX_PRICE_CTE AS(
+  SELECT MAX(PRICE) AS MAX_PRICE
+  FROM HOTEL.ROOM
+)
+SELECT H.NAME, R.TYPE, R.PRICE
+FROM HOTEL.HOTEL AS H
+JOIN HOTEL.ROOM AS R ON R.HNO = H.HNO
+WHERE R.PRICE = (
+  SELECT MAX_PRICE
+  FROM MAX_PRICE_CTE
+)); 
+
+
 
 INSERT INTO HOTEL.HOTEL VALUES(10, 'Congress', '155 Beechwood St.', 'Seattle', 'WA', '20005');
 INSERT INTO HOTEL.HOTEL VALUES(11, 'Regency', '477 17th Avenue', 'Seattle', 'WA', '20037');

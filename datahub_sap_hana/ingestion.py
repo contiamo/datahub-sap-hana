@@ -63,7 +63,8 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
+    schema_pattern: AllowDenyPattern = Field(
+        default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
@@ -94,6 +95,9 @@ class HanaSource(SQLAlchemySource):
     def create(cls, config_dict: Dict[str, Any], ctx: PipelineContext) -> "HanaSource":
         config = HanaConfig.parse_obj(config_dict)
         return cls(config, ctx)
+
+    """def make_dataset_urn(self, dataset_name): 
+        return builder.make_dataset_urn()"""
 
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         yield from super().get_workunits()
