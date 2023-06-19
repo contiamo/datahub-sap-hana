@@ -9,6 +9,9 @@ vars:
   VERSION:
     sh:  git describe --tags --always --dirty 2>/dev/null || echo "0.0.0"
 
+dotenv:
+  - .env
+
 tasks:
   check_poetry:
     desc: Check if poetry is installed
