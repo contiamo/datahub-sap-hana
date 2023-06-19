@@ -2,13 +2,13 @@
 
 [[package]]
 name = "acryl-datahub"
-version = "0.10.3.2"
+version = "0.10.4.1"
 description = "A CLI to work with DataHub metadata"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "acryl-datahub-0.10.3.2.tar.gz", hash = "sha256:b1bca1c6083b253bccfae3ccd7059e792e740dc2041579c7620600ce5db631f0"},
-    {file = "acryl_datahub-0.10.3.2-py3-none-any.whl", hash = "sha256:88b0c75dfba0101fa210143f230eefd49e308be6fbec5068409070e1fed2357e"},
+    {file = "acryl-datahub-0.10.4.1.tar.gz", hash = "sha256:c43dbf1278e6203f8fdfa8c390b7b8a02b0b84bcfca1b18ab2debe731c88ec1c"},
+    {file = "acryl_datahub-0.10.4.1-py3-none-any.whl", hash = "sha256:96408b99483051325b9c2379743360a0d321d887685f07b243d7c0e5b9011f70"},
 ]
 
 [package.dependencies]
@@ -3597,4 +3597,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "b64aa36543ba56f7c250697ba3a0805634a1be7530c4f0cad5c98539ad141957"
+content-hash = "5c5a22df91272895460b45995d12d13467c22fca57f542824f9ff5b028d9e8b9"
