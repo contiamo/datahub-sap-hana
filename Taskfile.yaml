@@ -97,8 +97,8 @@ tasks:
       - docker-compose down {{.CLI_ARGS}}
 
   ingest:
-  cmds:
-    - poetry run datahub ingest -c recipe.yaml
+    cmds:
+      - poetry run datahub ingest -c recipe.yaml
 
 
 
