@@ -183,7 +183,7 @@ class HanaSource(SQLAlchemySource):
                     dependent_view,
                 ),
                 self.config.env,
-            )
+            ).lower()
 
             lineage_mce = mce_builder.make_lineage_mce(source_tables, urn)
             for item in mcps_from_mce(lineage_mce):

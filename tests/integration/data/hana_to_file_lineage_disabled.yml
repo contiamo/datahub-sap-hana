@@ -3,7 +3,7 @@
 # The original source code can be found at https://github.com/acryldata/datahub/blob/master/metadata-ingestion/tests/integration/hana/hana_to_file.yml
 # And the license is available at XXXX
 
-run_id: hana-test
+#run_id: hana-test
 source:
   type: datahub_sap_hana.ingestion.HanaSource
   config:
