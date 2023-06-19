@@ -10,6 +10,5 @@ source:
         - .*SYS*
     include_view_lineage: false
 sink:
-  type: file
-  config: 
-    filename: ./integration_tests/hana_golden_file.json
+  type: console
+ 
