@@ -1,0 +1,43 @@
+# This is copied and slightly modified from the acryl-datahub project
+# Copyright 2015 LinkedIn Corp. All rights reserved.
+# The original source code can be found at https://github.com/acryldata/datahub/blob/master/metadata-ingestion/tests/integration/hana/hana_to_file.yml
+# And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
+
+
+source:
+  type: datahub_sap_hana.ingestion.HanaSource
+  config:
+    username: HOTEL
+    password: Localdev1
+    database: HXE
+    host_port: localhost:39041
+    include_view_lineage: true
+    schema_pattern:
+      allow:
+        - "HOTEL"
+      ignoreCase: true
+    profile_pattern:
+      allow:
+        - "HOTEL"
+    profiling:
+      enabled: True
+      include_field_null_count: true
+      include_field_min_value: true
+      include_field_max_value: true
+      include_field_mean_value: true
+      include_field_median_value: true
+      include_field_stddev_value: true
+      include_field_quantiles: true
+      include_field_distinct_value_frequencies: true
+      include_field_histogram: true
+      include_field_sample_values: true
+    domain:
+      "urn:li:domain:sales":
+        allow:
+          - "HOTEL"
+sink:
+  type: datahub-rest
+  config:
+    server: $DATAHUB_GMS_URL
+    token: $DATAHUB_GMS_TOKEN
+    #filename: "./hana_mces_with_lineage_output.json"
