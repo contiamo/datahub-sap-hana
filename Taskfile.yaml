@@ -75,3 +75,32 @@ tasks:
       - build
     cmds:
       - docker build --build-arg VERSION={{.VERSION}} --build-arg SHA=$(SHA) -t {{.REGISTRY}}/{{.COMPONENT}}:latest .
+
+  start:
+    desc: start the test SAP Hana database
+    dir: tests
+    cmds:
+      - docker-compose up -d
+  
+  stop:
+    desc: stop the test SAP Hana database
+    summary: |
+      This task stops the test SAP Hana database.
+
+      Examples:
+        task stop
+        task stop -- -v
+    dir: tests
+    cmds:
+      - docker-compose down {{.CLI_ARGS}}
+
+  ingest:
+  cmds:
+    - poetry run datahub ingest -c datahub_sap_hana/recipe.yaml
+
+  dotenv: 
+    - ".env"
+
+
+
+  
