@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.3.0](https://github.com/contiamo/datahub-sap-hana/compare/v0.2.3...v0.3.0) (2023-06-19)
+
+
+### Features
+
+* add integration tests ([#21](https://github.com/contiamo/datahub-sap-hana/issues/21)) ([796b052](https://github.com/contiamo/datahub-sap-hana/commit/796b052d6eabd86850451a025626a52d88bb56a8))
+* add MIT license ([9c5c137](https://github.com/contiamo/datahub-sap-hana/commit/9c5c1373af82c0e1c79f4567c9b5f24d403c4954))
+* add new recipe files ([#38](https://github.com/contiamo/datahub-sap-hana/issues/38)) ([037d6c8](https://github.com/contiamo/datahub-sap-hana/commit/037d6c861cad7c959e2b0fd826cdfd775211bde5))
+* update to latest datahub 0.10.2+ ([#13](https://github.com/contiamo/datahub-sap-hana/issues/13)) ([f2b9b9f](https://github.com/contiamo/datahub-sap-hana/commit/f2b9b9fef6e3b57d47a09d0e77ba592edf274370))
+
+
+### Bug Fixes
+
+* add sys filter in query ([#36](https://github.com/contiamo/datahub-sap-hana/issues/36)) ([8cb32ff](https://github.com/contiamo/datahub-sap-hana/commit/8cb32ff5ae0682c1a3aeb7f8ff6bdba350356220))
+* changed query to show output in lowercase ([#39](https://github.com/contiamo/datahub-sap-hana/issues/39)) ([99607ba](https://github.com/contiamo/datahub-sap-hana/commit/99607bab0dfe98b6e78559ff5971f9d00b4617f2))
+* changed schema view pattern comparison ([#35](https://github.com/contiamo/datahub-sap-hana/issues/35)) ([4360d4e](https://github.com/contiamo/datahub-sap-hana/commit/4360d4e3e8e73943de9287cdb51099b9bc9c222a))
+* deleted unusued folders in integration_tests ([#40](https://github.com/contiamo/datahub-sap-hana/issues/40)) ([248bf6f](https://github.com/contiamo/datahub-sap-hana/commit/248bf6f0f832691eaa6559f9a8f18df967c19c9c))
+
+
+### Miscellaneous
+
+* add default vscode python settings ([#25](https://github.com/contiamo/datahub-sap-hana/issues/25)) ([1e7ecc5](https://github.com/contiamo/datahub-sap-hana/commit/1e7ecc58b5c04d77ddffc5e0b1837edfabc9d2c1))
+* add email to License ([4ae6be1](https://github.com/contiamo/datahub-sap-hana/commit/4ae6be174a3cc6530761095ecc9ff157e7c8e156))
+* bump acryl-datahub from 0.10.3.1 to 0.10.3.2 ([#26](https://github.com/contiamo/datahub-sap-hana/issues/26)) ([e2185d6](https://github.com/contiamo/datahub-sap-hana/commit/e2185d6c2fd1b5750601c119c50614f9f952af76))
+* bump acryl-datahub from 0.10.3.2 to 0.10.4.1 ([#29](https://github.com/contiamo/datahub-sap-hana/issues/29)) ([99df58a](https://github.com/contiamo/datahub-sap-hana/commit/99df58a02caaf7b05f5092f001f5b328626b8ece))
+* bump hdbcli from 2.16.26 to 2.17.14 ([#30](https://github.com/contiamo/datahub-sap-hana/issues/30)) ([c09355c](https://github.com/contiamo/datahub-sap-hana/commit/c09355caee90a1b4a2ef906edb67aefb15085346))
+* bump pyright from 1.1.311 to 1.1.313 ([#23](https://github.com/contiamo/datahub-sap-hana/issues/23)) ([6353f77](https://github.com/contiamo/datahub-sap-hana/commit/6353f7723eb588660df2500a9167940a384641f9))
+* bump pyright from 1.1.313 to 1.1.314 ([#28](https://github.com/contiamo/datahub-sap-hana/issues/28)) ([2f4dbce](https://github.com/contiamo/datahub-sap-hana/commit/2f4dbce6f30e5e4789a7eae74b2c0c15060781aa))
+* bump ruff from 0.0.270 to 0.0.272 ([#24](https://github.com/contiamo/datahub-sap-hana/issues/24)) ([c336df4](https://github.com/contiamo/datahub-sap-hana/commit/c336df4197161d9c4254d1587fb494fec69dbf21))
+* edited taskfile ([#37](https://github.com/contiamo/datahub-sap-hana/issues/37)) ([5447602](https://github.com/contiamo/datahub-sap-hana/commit/544760214db40d605d832e4f1cefa33b4fd3871f))
+* remove any instructions for SAP Hana express ([9c5c137](https://github.com/contiamo/datahub-sap-hana/commit/9c5c1373af82c0e1c79f4567c9b5f24d403c4954))
+
 ### [0.2.3](https://www.github.com/contiamo/datahub-sap-hana/compare/v0.2.2...v0.2.3) (2022-01-20)
 
 
