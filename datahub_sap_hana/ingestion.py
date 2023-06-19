@@ -63,7 +63,8 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
+    schema_pattern: AllowDenyPattern = Field(
+        default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
@@ -130,7 +131,7 @@ class HanaSource(SQLAlchemySource):
                 )
                 continue
 
-            if not self.config.schema_pattern.allowed(lineage.dependent_view):
+            if not self.config.schema_pattern.allowed(lineage.dependent_schema):
                 self.report.report_dropped(
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
