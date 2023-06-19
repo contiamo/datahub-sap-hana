@@ -132,7 +132,7 @@ class HanaSource(SQLAlchemySource):
                 )
                 continue
 
-            if not self.config.schema_pattern.allowed(lineage.dependent_view):
+            if not self.config.schema_pattern.allowed(lineage.dependent_schema):
                 self.report.report_dropped(
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
