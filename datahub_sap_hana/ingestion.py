@@ -31,14 +31,15 @@ logger: logging.Logger = logging.getLogger(__name__)
 # Object dependencies in SAP HANA https://help.sap.com/docs/SAP_HANA_PLATFORM/de2486ee947e43e684d39702027f8a94/5ce9a6584eb84f10afbbf2b133534932.html
 LINEAGE_QUERY = """
 SELECT 
-    BASE_OBJECT_NAME as source_table, 
-    BASE_SCHEMA_NAME as source_schema,
-    DEPENDENT_OBJECT_NAME as dependent_view, 
-    DEPENDENT_SCHEMA_NAME as dependent_schema
+    LOWER(BASE_OBJECT_NAME) as source_table, 
+    LOWER(BASE_SCHEMA_NAME) as source_schema,
+    LOWER(DEPENDENT_OBJECT_NAME) as dependent_view, 
+    LOWER(DEPENDENT_SCHEMA_NAME) as dependent_schema
   from SYS.OBJECT_DEPENDENCIES 
 WHERE 
   DEPENDENT_OBJECT_TYPE = 'TABLE'
   OR DEPENDENT_OBJECT_TYPE = 'VIEW'
+  AND BASE_SCHEMA_NAME NOT LIKE '%SYS%'
   """
 
 
@@ -63,7 +64,8 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
+    schema_pattern: AllowDenyPattern = Field(
+        default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
@@ -128,12 +130,16 @@ class HanaSource(SQLAlchemySource):
                 self.report.report_dropped(
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
+                logger.debug(
+                    f"View pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
                 continue
 
-            if not self.config.schema_pattern.allowed(lineage.dependent_view):
+            if not self.config.schema_pattern.allowed(lineage.dependent_schema):
                 self.report.report_dropped(
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
+                logger.debug(
+                    f"Schema pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
                 continue
 
             key = (lineage.dependent_view, lineage.dependent_schema)
