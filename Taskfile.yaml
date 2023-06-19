@@ -96,7 +96,7 @@ tasks:
 
   ingest:
   cmds:
-    - poetry run datahub ingest -c datahub_sap_hana/recipe.yaml
+    - poetry run datahub ingest -c recipe.yaml
 
   dotenv: 
     - ".env"
