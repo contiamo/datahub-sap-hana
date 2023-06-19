@@ -9,3 +9,4 @@ examples/contiamo.yaml
 /notes.md
 /sink_results.json
 *_output.json
+.env
