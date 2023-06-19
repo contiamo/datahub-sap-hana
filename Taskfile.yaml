@@ -79,6 +79,23 @@ tasks:
   ingest:
     cmds:
     - poetry run datahub ingest -c tests/integration/data/hana_to_file_default.yml
-    
+
   dotenv:
     - ".env"
+
+  start: 
+    desc: start the test SAP Hana database
+    dir: tests
+    cmds: docker-compose up -d
+
+  stop:
+    desc: stop the test SAP Hana database
+    summary: |
+      This task stops the test SAP Hana database.
+
+      Examples:
+        task stop
+        task stop -- -v
+    dir: tests
+    cmds:
+      - docker-compose down {{.CLI_ARGS}}
