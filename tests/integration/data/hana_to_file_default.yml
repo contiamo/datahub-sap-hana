@@ -3,7 +3,7 @@
 # The original source code can be found at https://github.com/acryldata/datahub/blob/master/metadata-ingestion/tests/integration/hana/hana_to_file.yml
 # And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
 
-run_id: hana-test
+#run_id: hana-test
 source:
   type: datahub_sap_hana.ingestion.HanaSource
   config:
@@ -11,14 +11,10 @@ source:
     password: Localdev1
     database: HXE
     host_port: localhost:39041
+    include_view_lineage: true
     schema_pattern:
       allow:
         - "HOTEL"
-      ignoreCase: true
-    table_pattern:
-      deny:
-        - "HOTEL.RESERVATION"
-        - "HOTEL.ROOM"
       ignoreCase: true
     profile_pattern:
       allow:
@@ -40,6 +36,8 @@ source:
         allow:
           - "HOTEL"
 sink:
-  type: file
+  type: datahub-rest
   config:
-    filename: "./hana_mces_with_lineage_output.json"
+    server: $DATAHUB_GMS_URL
+    token: $DATAHUB_GMS_TOKEN
+    #filename: "./hana_mces_with_lineage_output.json"

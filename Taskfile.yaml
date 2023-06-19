@@ -77,8 +77,8 @@ tasks:
       - docker build --build-arg VERSION={{.VERSION}} --build-arg SHA=$(SHA) -t {{.REGISTRY}}/{{.COMPONENT}}:latest .
   
   ingest:
-  cmds:
-    - poetry run datahub ingest -c PATH_TO_RECIPE.yaml
-
-  dotenv
+    cmds:
+    - poetry run datahub ingest -c tests/integration/data/hana_to_file_default.yml
+    
+  dotenv:
     - ".env"

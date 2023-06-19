@@ -1,3 +1,4 @@
+import datahub.emitter.mce_builder as builder
 import logging
 from collections import defaultdict
 from typing import Any, Dict, Iterable, List, Tuple, Union
@@ -39,6 +40,7 @@ SELECT
 WHERE 
   DEPENDENT_OBJECT_TYPE = 'TABLE'
   OR DEPENDENT_OBJECT_TYPE = 'VIEW'
+  AND BASE_SCHEMA_NAME NOT LIKE '%SYS%'
   """
 
 
@@ -63,7 +65,8 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
+    schema_pattern: AllowDenyPattern = Field(
+        default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
@@ -95,6 +98,9 @@ class HanaSource(SQLAlchemySource):
         config = HanaConfig.parse_obj(config_dict)
         return cls(config, ctx)
 
+    def make_dataset_urn(self, dataset_name):
+        return builder.make_dataset_urn(name=dataset_name, platform="hana", env="PROD")
+
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         yield from super().get_workunits()
 
@@ -113,6 +119,7 @@ class HanaSource(SQLAlchemySource):
 
         with engine.connect() as conn:
             query_results = conn.execute(LINEAGE_QUERY)
+            logger.debug("Running the query")
 
             if not query_results.returns_rows:
                 logger.debug("No rows returned.")
@@ -128,12 +135,17 @@ class HanaSource(SQLAlchemySource):
                 self.report.report_dropped(
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
+                logger.debug(
+                    f"View pattern incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
                 continue
 
-            if not self.config.schema_pattern.allowed(lineage.dependent_view):
+            if not self.config.schema_pattern.allowed(lineage.dependent_schema):
                 self.report.report_dropped(
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
+                #
+                logger.debug(
+                    f"Schema pattern incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
                 continue
 
             key = (lineage.dependent_view, lineage.dependent_schema)

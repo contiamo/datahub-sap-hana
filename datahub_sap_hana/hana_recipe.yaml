@@ -8,7 +8,7 @@ source:
     schema_pattern:
       deny: 
         - .*SYS*
-    include_view_lineage: false
+    include_view_lineage: true
 sink:
   type: file
   config: 
