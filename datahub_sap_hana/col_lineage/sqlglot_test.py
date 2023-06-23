@@ -1,39 +1,16 @@
-from sqlalchemy import create_engine, inspect, MetaData
-from sqlalchemy.engine.reflection import Inspector
-
-from sqlglot import parse_one, exp, parse
-from sqlglot.lineage import lineage, Node
-from sqlglot.optimizer.scope import traverse_scope, ScopeType, walk_in_scope, Scope
-
-from datahub_sap_hana.ingestion import LINEAGE_QUERY
-import datahub.emitter.mce_builder as builder
-from typing import List, Optional, Union, Any
-
-from typing import Any, List, Optional, Set, Tuple, Iterable
+from typing import Any, List, Set
 
 import datahub.emitter.mce_builder as builder
 from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
-    DatasetLineageType,
     FineGrainedLineage,
     FineGrainedLineageDownstreamType,
     FineGrainedLineageUpstreamType,
-    Upstream,
-    UpstreamLineage,)
-
-from schema import Lineage, ColumnLineage, Field, Upstream, UpstreamField, Entity
-
-from datahub.ingestion.api.decorators import (
-    config_class,  # type: ignore
-    platform_name,  # type: ignore
 )
-from datahub.ingestion.api.workunit import MetadataWorkUnit
-from datahub.ingestion.source.sql.sql_common import (
-    SQLAlchemySource,
-    SqlWorkUnit,
-    register_custom_type,
-)
-from datahub.ingestion.source.sql.sql_config import BasicSQLAlchemyConfig
-from datahub.configuration.common import AllowDenyPattern
+from sqlalchemy import create_engine, inspect
+from sqlglot import parse_one
+from sqlglot.lineage import lineage
+
+from schema import Entity, UpstreamField
 
 hotel = """SELECT * FROM HOTEL.AVAILABLE_ROOMS_BY_HOTEL """
 views_check = """SELECT * FROM VIEWS WHERE SCHEMA_NAME = 'HOTEL'"""
@@ -50,7 +27,7 @@ def create_hana_urn():
         platform="hana",
         name="HXE",
         platform_instance="hana://HOTEL:Localdev1@localhost:39041/HXE",
-        env="PROD"
+        env="PROD",
     )
 
     print(dataset_urn)
@@ -66,13 +43,11 @@ def fldUrn(dataset_urn: str, column_name: str):
 
 
 def get_view_definitions(conn):
-
     # engine = create_engine("hana://HOTEL:Localdev1@localhost:39041/HXE")
 
     # with engine.connect() as conn:
     inspector = inspect(conn)
 
-    sql_definition_list = []
     schema = inspector.get_schema_names()  # returns a list
     views = inspector.get_view_names(schema[0])  # returns a list
     print(f"name of views in {schema[0]}: {views}")
@@ -82,7 +57,6 @@ def get_view_definitions(conn):
 
 
 def get_lineage_for_view(view_name: str, view_sql: str):
-
     cols = parse_one(view_sql).named_selects
     for col_name in cols:
         yield (view_name, lineage(col_name.lower(), view_sql.lower()))
@@ -94,7 +68,6 @@ def parse_column_name(column_name: str):
 
 
 def create_column_lineage():
-
     engine = create_engine("hana://HOTEL:Localdev1@localhost:39041/HXE")
 
     with engine.connect() as conn:
@@ -115,17 +88,16 @@ def create_column_lineage():
                 upstream_fields_list: List[UpstreamField] = []
 
                 for column in lineage_node.downstream:
-
-                    upstream_fields = UpstreamField(name=parse_column_name(column.name), entity=Entity(
-                        name=column.source.name, platform="hana"))
+                    upstream_fields = UpstreamField(
+                        name=parse_column_name(column.name),
+                        entity=Entity(name=column.source.name, platform="hana"),
+                    )
                     upstream_fields_list.append(upstream_fields)
 
                 if len(upstream_fields_list) > 1:
-                    yield (downstream_fields,
-                           upstream_fields_list)
+                    yield (downstream_fields, upstream_fields_list)
 
     def create_fine_grained_lineage():
-
         column_lineages: List[FineGrainedLineage] = []
         seen_upstream_datasets: Set[str] = set()
         upstream_columns: List[Any] = []
@@ -134,23 +106,33 @@ def create_column_lineage():
         downstream_type = FineGrainedLineageDownstreamType.FIELD
 
         for downstream_field, upstream_fields in create_column_lineage():
-
             downstream_dataset_urn = builder.make_dataset_urn(
-                platform="hana", name=downstream_field, env="PROD")
+                platform="hana", name=downstream_field, env="PROD"
+            )
 
             for upstream_field in upstream_fields:
                 upstream_dataset_urn = builder.make_dataset_urn(
-                    platform="hana", name=upstream_field.name, env="PROD")
+                    platform="hana", name=upstream_field.name, env="PROD"
+                )
                 seen_upstream_datasets.add(upstream_dataset_urn)
                 upstream_columns.append(
-                    builder.make_schema_field_urn(upstream_dataset_urn, upstream_field.name))
+                    builder.make_schema_field_urn(
+                        upstream_dataset_urn, upstream_field.name
+                    )
+                )
 
-            column_lineages.append(FineGrainedLineage(downstreamType=downstream_type,
-                                                      downstreams=[
-                                                          builder.make_schema_field_urn(downstream_dataset_urn, downstream_field)],
-                                                      upstreamType=upstream_type,
-                                                      upstreams=upstream_columns
-                                                      ))
+            column_lineages.append(
+                FineGrainedLineage(
+                    downstreamType=downstream_type,
+                    downstreams=[
+                        builder.make_schema_field_urn(
+                            downstream_dataset_urn, downstream_field
+                        )
+                    ],
+                    upstreamType=upstream_type,
+                    upstreams=upstream_columns,
+                )
+            )
 
         yield column_lineages, seen_upstream_datasets
 
@@ -160,6 +142,7 @@ def create_column_lineage():
         for column_lineage, seen_upstream_datasets in create_fine_grained_lineage():
             for upstream_urn in seen_upstream_datasets:
                 lineage_data.append(
-                    {"dataset": upstream_urn, "lineage": column_lineage})
+                    {"dataset": upstream_urn, "lineage": column_lineage}
+                )
 
         print(lineage_data)

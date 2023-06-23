@@ -210,28 +210,38 @@ class HanaSource(SQLAlchemySource):
             inspector = inspect(conn)
             schema = inspector.get_schema_names()  # returns a list
             views = inspector.get_view_names(
-                schema[0])  # returns a list
+                schema=schema)  # returns a list
 
-            for view in views:
-                definition = inspector.get_view_definition(view, schema[0])
-                yield (view, definition)
-                # print(view, definition)
+            for view_name in views:
+                definition = inspector.get_view_definition(
+                    view_name, schema)
+                yield (view_name, definition)
 
-    def get_lineage_for_column(self, view_name: str, view_sql: str) -> Iterable[Tuple[str, Any]]:
+    def _get_column_lineage_for_view(self, view_name: str, view_sql: str) -> Tuple[str, List[Node]]:
+        """Extracts the columns and the sql definitions of a downstream view. 
+         These are then passed to the lineage function create a lineage graph of the column of an sql query."""
 
         cols = parse_one(view_sql).named_selects
-        for col_name in cols:
-            yield (view_name, lineage(col_name.lower(), view_sql.lower()))
+
+        view_sql = view_sql.lower()
+        lineages = [lineage(col_name.lower(), view_sql)
+                    for col_name in cols]
+        return view_name, lineages
 
     def parse_column_name(self, column_name: str):
+        """Removes the table/name and alias from the column name returned by sqlglot, eg: instead of 'hotel.room', it will return 'room'."""
+
         parsed_name = column_name.split(".")
         return parsed_name[1]
 
     def get_column_view_lineage_elements(self) -> Iterable[Tuple[Field, List[UpstreamField]]]:
+        """This function returns an iterable of tuples containing information about the lineage of columns in a view.
+        Each tuple contains a downstream field (a column in a view) and a list of upstream fields
+        (columns in other views or tables that are used to calculate/transform the downstream column)."""
 
         for view_name, view_sql in self.get_column_lineage_view_definitions():
 
-            for _, lineage_node in self.get_lineage_for_column(view_name, view_sql):
+            for _, lineage_node in self._get_column_lineage_for_view(view_name, view_sql):
 
                 downstream_fields = Field(name=lineage_node.name)
 
@@ -248,6 +258,8 @@ class HanaSource(SQLAlchemySource):
                            upstream_fields_list)
 
     def create_column_lineage(self) -> Iterable[Tuple[List[FineGrainedLineage], Set[str]]]:
+        """Returns an iterable of tuples, where each tuple contains a list of FineGrainedLineage objects, which represents
+        column-level lineage information and a set of strings representing the upstream dataset URNs created during lineage generation."""
 
         column_lineages: List[FineGrainedLineage] = []
         seen_upstream_datasets: Set[str] = set()
@@ -256,22 +268,21 @@ class HanaSource(SQLAlchemySource):
         upstream_type = FineGrainedLineageUpstreamType.FIELD_SET
         downstream_type = FineGrainedLineageDownstreamType.FIELD
 
-        for downstream_field, upstream_fields in self.create_column_lineage():
-            print(downstream_field, upstream_fields)
+        for downstream_field, upstream_fields in self.get_column_view_lineage_elements():
 
             downstream_dataset_urn = builder.make_dataset_urn(
-                platform="hana", name=downstream_field, env="PROD")
+                platform="hana", name=downstream_field.name, env="PROD")
 
             for upstream_field in upstream_fields:
                 upstream_dataset_urn = builder.make_dataset_urn(
-                    platform="hana", name=upstream_fields.name, env="PROD")
+                    platform="hana", name=upstream_field.name, env="PROD")
                 seen_upstream_datasets.add(upstream_dataset_urn)
                 upstream_columns.append(
                     builder.make_schema_field_urn(upstream_dataset_urn, upstream_field.name))
 
             column_lineages.append(FineGrainedLineage(downstreamType=downstream_type,
                                                       downstreams=[
-                                                          builder.make_schema_field_urn(downstream_dataset_urn, downstream_field)],
+                                                          builder.make_schema_field_urn(downstream_dataset_urn, downstream_field.name)],
                                                       upstreamType=upstream_type,
                                                       upstreams=upstream_columns
                                                       ))
@@ -302,9 +313,7 @@ if __name__ == "__main__":
 
     column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions()
     for view_name, view_sql in column_lineage_view_definitions:
-        lineage_for_column = hana_source.get_lineage_for_column(
-            view_name, view_sql)
-        print(view_name, view_sql)
+        lineage_for_column = hana_source.get_column_view_lineage_elements()
 
     column_view_lineage = hana_source.get_column_view_lineage_elements()
     for col_lineage in column_view_lineage:
