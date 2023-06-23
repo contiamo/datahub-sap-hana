@@ -42,18 +42,21 @@ def fldUrn(dataset_urn: str, column_name: str):
     return builder.make_schema_field_urn(dataset_urn, column_name)
 
 
-def get_view_definitions(conn):
-    # engine = create_engine("hana://HOTEL:Localdev1@localhost:39041/HXE")
+def get_view_definitions():
+    engine = create_engine("hana://HOTEL:Localdev1@localhost:39041/HXE")
 
-    # with engine.connect() as conn:
-    inspector = inspect(conn)
+    with engine.connect() as conn:
+        inspector = inspect(conn)
 
-    schema = inspector.get_schema_names()  # returns a list
-    views = inspector.get_view_names(schema[0])  # returns a list
-    print(f"name of views in {schema[0]}: {views}")
-    for view in views:
-        definition = inspector.get_view_definition(view, schema[0])
-        yield (view, definition)
+        schema: List[Any] = inspector.get_schema_names()  # returns a list
+
+        for schema_name in schema:
+            views = inspector.get_view_names(schema=schema_name)  # returns a list
+
+            for view_name in views:
+                definition = inspector.get_view_definition(view_name, schema_name)
+
+                yield (view_name, definition)
 
 
 def get_lineage_for_view(view_name: str, view_sql: str):
