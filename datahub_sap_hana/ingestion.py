@@ -1,6 +1,8 @@
+from sqlglot.lineage import lineage, Node
+from sqlglot import parse_one, exp, parse
 import logging
 from collections import defaultdict
-from typing import Any, Dict, Iterable, List, Tuple, Union
+from typing import Any, Dict, Iterable, List, Tuple, Union, Set
 
 import sqlalchemy_hana.types as custom_types  # type: ignore
 from datahub.configuration.common import AllowDenyPattern
@@ -20,7 +22,22 @@ from datahub.ingestion.source.sql.sql_common import (
 from datahub.ingestion.source.sql.sql_config import BasicSQLAlchemyConfig
 from datahub.metadata.com.linkedin.pegasus2avro import schema
 from pydantic import BaseModel, Field
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
+import datahub.emitter.mce_builder as builder
+
+
+from schema import Lineage, ColumnLineage, Field, Upstream, UpstreamField, Entity
+from pydantic.fields import Field as PydanticField
+from pydantic import BaseModel
+
+from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
+    DatasetLineageType,
+    FineGrainedLineage,
+    FineGrainedLineageDownstreamType,
+    FineGrainedLineageUpstreamType,
+    Upstream,
+    UpstreamLineage,)
+
 
 register_custom_type(custom_types.TINYINT, schema.NumberType)
 
@@ -63,11 +80,12 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(
+    schema_pattern: AllowDenyPattern = PydanticField(
         default=AllowDenyPattern(deny=["*SYS*"]))
-    include_view_lineage: bool = Field(
-        default=False, description="Include table lineage for views"
-    )
+    include_view_lineage: bool = PydanticField(
+        default=False, description="Include table lineage for views")
+    include_column_lineage: bool = PydanticField(
+        default=False, description="Include column lineage for views")
 
     def get_identifier(self: BasicSQLAlchemyConfig, schema: str, table: str) -> str:
         regular = f"{schema}.{table}"
@@ -96,21 +114,22 @@ class HanaSource(SQLAlchemySource):
         config = HanaConfig.parse_obj(config_dict)
         return cls(config, ctx)
 
-    """def make_dataset_urn(self, dataset_name): 
-        return builder.make_dataset_urn()"""
-
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         yield from super().get_workunits()
 
         if self.config.include_view_lineage:
             yield from self._get_view_lineage_workunits()
 
+        """if self.config.include_column_lineage: 
+            yield from self._get_view_lineage_workunits()
+        """
+        # TODO include: if self.config.include_column_view_lineage?
+
     def _get_view_lineage_elements(self) -> Dict[Tuple[str, str], List[str]]:
         """Connects to SAP HANA db to run the query statement. The results are then mapped to the ViewLineageEntry attributes.
         Returns a dictionary of downstream and upstream objects from the query results.
         """
         url = self.config.get_sql_alchemy_url()
-
         engine = create_engine(url, **self.config.options)
 
         data: List[ViewLineageEntry] = []
@@ -151,7 +170,6 @@ class HanaSource(SQLAlchemySource):
                     self.config.env,
                 )
             )
-
         return lineage_elements
 
     def _get_view_lineage_workunits(self) -> Iterable[MetadataWorkUnit]:
@@ -182,3 +200,115 @@ class HanaSource(SQLAlchemySource):
                 wu = item.as_workunit()
                 self.report.report_workunit(wu)
                 yield wu
+
+    def get_column_lineage_view_definitions(self) -> Iterable[Tuple[str, str]]:
+
+        url = self.config.get_sql_alchemy_url()
+        engine = create_engine(url, **self.config.options)
+
+        with engine.connect() as conn:
+            inspector = inspect(conn)
+            schema = inspector.get_schema_names()  # returns a list
+            views = inspector.get_view_names(
+                schema[0])  # returns a list
+
+            for view in views:
+                definition = inspector.get_view_definition(view, schema[0])
+                yield (view, definition)
+                # print(view, definition)
+
+    def get_lineage_for_column(self, view_name: str, view_sql: str) -> Iterable[Tuple[str, Any]]:
+
+        cols = parse_one(view_sql).named_selects
+        for col_name in cols:
+            yield (view_name, lineage(col_name.lower(), view_sql.lower()))
+
+    def parse_column_name(self, column_name: str):
+        parsed_name = column_name.split(".")
+        return parsed_name[1]
+
+    def get_column_view_lineage_elements(self) -> Iterable[Tuple[Field, List[UpstreamField]]]:
+
+        for view_name, view_sql in self.get_column_lineage_view_definitions():
+
+            for _, lineage_node in self.get_lineage_for_column(view_name, view_sql):
+
+                downstream_fields = Field(name=lineage_node.name)
+
+                upstream_fields_list: List[UpstreamField] = []
+
+                for column in lineage_node.downstream:
+
+                    upstream_fields = UpstreamField(name=self.parse_column_name(column.name), entity=Entity(
+                        name=column.source.name, platform="hana"))
+                    upstream_fields_list.append(upstream_fields)
+
+                if len(upstream_fields_list) > 1:
+                    yield (downstream_fields,
+                           upstream_fields_list)
+
+    def create_column_lineage(self) -> Iterable[Tuple[List[FineGrainedLineage], Set[str]]]:
+
+        column_lineages: List[FineGrainedLineage] = []
+        seen_upstream_datasets: Set[str] = set()
+        upstream_columns: List[Any] = []
+
+        upstream_type = FineGrainedLineageUpstreamType.FIELD_SET
+        downstream_type = FineGrainedLineageDownstreamType.FIELD
+
+        for downstream_field, upstream_fields in self.create_column_lineage():
+            print(downstream_field, upstream_fields)
+
+            downstream_dataset_urn = builder.make_dataset_urn(
+                platform="hana", name=downstream_field, env="PROD")
+
+            for upstream_field in upstream_fields:
+                upstream_dataset_urn = builder.make_dataset_urn(
+                    platform="hana", name=upstream_fields.name, env="PROD")
+                seen_upstream_datasets.add(upstream_dataset_urn)
+                upstream_columns.append(
+                    builder.make_schema_field_urn(upstream_dataset_urn, upstream_field.name))
+
+            column_lineages.append(FineGrainedLineage(downstreamType=downstream_type,
+                                                      downstreams=[
+                                                          builder.make_schema_field_urn(downstream_dataset_urn, downstream_field)],
+                                                      upstreamType=upstream_type,
+                                                      upstreams=upstream_columns
+                                                      ))
+
+            yield column_lineages, seen_upstream_datasets
+
+
+""" def create_workunits(self):
+
+        for column_lineages, upstream_datasets in self.create_column_lineage():
+            print(column_lineages, upstream_datasets)
+        """
+
+
+if __name__ == "__main__":
+
+    hana_config = HanaConfig(username="HOTEL",
+                             password="Localdev1",
+                             host_port="localhost:39041",
+                             database="HXE",
+                             schema_pattern=AllowDenyPattern(allow=["*"]),
+                             include_view_lineage=True,
+                             )  # type: ignore
+    hana_source = HanaSource(hana_config, PipelineContext(run_id="test"))
+
+    lineage_urns = hana_source.create_column_lineage()
+    print(lineage_urns)
+
+    column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions()
+    for view_name, view_sql in column_lineage_view_definitions:
+        lineage_for_column = hana_source.get_lineage_for_column(
+            view_name, view_sql)
+        print(view_name, view_sql)
+
+    column_view_lineage = hana_source.get_column_view_lineage_elements()
+    for col_lineage in column_view_lineage:
+        print(col_lineage)
+
+    for lineage_urn, upstreams in hana_source.create_column_lineage():
+        print(lineage_urn, upstreams)

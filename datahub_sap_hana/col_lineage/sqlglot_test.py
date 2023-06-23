@@ -9,7 +9,7 @@ from datahub_sap_hana.ingestion import LINEAGE_QUERY
 import datahub.emitter.mce_builder as builder
 from typing import List, Optional, Union, Any
 
-from typing import Any, List, Optional, Set, Tuple
+from typing import Any, List, Optional, Set, Tuple, Iterable
 
 import datahub.emitter.mce_builder as builder
 from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
@@ -22,6 +22,18 @@ from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
 
 from schema import Lineage, ColumnLineage, Field, Upstream, UpstreamField, Entity
 
+from datahub.ingestion.api.decorators import (
+    config_class,  # type: ignore
+    platform_name,  # type: ignore
+)
+from datahub.ingestion.api.workunit import MetadataWorkUnit
+from datahub.ingestion.source.sql.sql_common import (
+    SQLAlchemySource,
+    SqlWorkUnit,
+    register_custom_type,
+)
+from datahub.ingestion.source.sql.sql_config import BasicSQLAlchemyConfig
+from datahub.configuration.common import AllowDenyPattern
 
 hotel = """SELECT * FROM HOTEL.AVAILABLE_ROOMS_BY_HOTEL """
 views_check = """SELECT * FROM VIEWS WHERE SCHEMA_NAME = 'HOTEL'"""
@@ -63,12 +75,9 @@ def get_view_definitions(conn):
     sql_definition_list = []
     schema = inspector.get_schema_names()  # returns a list
     views = inspector.get_view_names(schema[0])  # returns a list
-    # how to get only the relevant schema? exclude anything with %sys%?
     print(f"name of views in {schema[0]}: {views}")
     for view in views:
         definition = inspector.get_view_definition(view, schema[0])
-        # because sqlglot wants lowercase and saphana setup is in uppercase
-        # sql_definition_list.append(definition.lower())
         yield (view, definition)
 
 
@@ -84,7 +93,7 @@ def parse_column_name(column_name: str):
     return parsed_name[1]
 
 
-def get_lineage():
+def create_column_lineage():
 
     engine = create_engine("hana://HOTEL:Localdev1@localhost:39041/HXE")
 
@@ -93,48 +102,64 @@ def get_lineage():
         for view_name, view_sql in view_definitions:
             # _ notation to ignore view name for now
             for _, lineage_node in get_lineage_for_view(view_name, view_sql):
-                print(
-                    f"processing lineage for column:{view_name}.{lineage_node.name}")
+                # print(
+                #    f"processing lineage for column:{view_name}.{lineage_node.name}")
                 # we are in the node, which represents the lineage of 1 column
                 # lineage_node.name is the name of the column that we want to see the lineage of
                 # lineage_node.downstream is the datahub upstream
                 # each element of lineage_node.downstream is a Node that represents a column in the source table
                 # column.source.name refers to the source table and column.name is the name of the column
+
+                downstream_fields = lineage_node.name
+
+                upstream_fields_list: List[UpstreamField] = []
+
                 for column in lineage_node.downstream:
-                    yield column.source.name, parse_column_name(column.name)
 
+                    upstream_fields = UpstreamField(name=parse_column_name(column.name), entity=Entity(
+                        name=column.source.name, platform="hana"))
+                    upstream_fields_list.append(upstream_fields)
 
-"""
+                if len(upstream_fields_list) > 1:
+                    yield (downstream_fields,
+                           upstream_fields_list)
 
+    def create_fine_grained_lineage():
 
-    for node in lineage_list:
-        # downstream field is basically the col whose lineage we want to trace. In Sqlglot, this refers to the node name
-        downstream_fields = [Field(name=node.name)]
-
-        print(node)
-
-        upstream_columns = []
-
-        upstream_fields = node.downstream
+        column_lineages: List[FineGrainedLineage] = []
+        seen_upstream_datasets: Set[str] = set()
+        upstream_columns: List[Any] = []
 
         upstream_type = FineGrainedLineageUpstreamType.FIELD_SET
+        downstream_type = FineGrainedLineageDownstreamType.FIELD
 
-        for fields in upstream_fields:
-            fields = UpstreamField(name=fields.name, entity=Entity(
-                name=node.name, platform="hana, env"))
+        for downstream_field, upstream_fields in create_column_lineage():
 
-            upstream_dataset_urn = builder.make_dataset_urn_with_platform_instance(
-                platform="hana",
-                name="HXE",
-                platform_instance="hana://HOTEL:Localdev1@localhost:39041/HXE",
-                env="PROD")
+            downstream_dataset_urn = builder.make_dataset_urn(
+                platform="hana", name=downstream_field, env="PROD")
 
-            # print(fields)
+            for upstream_field in upstream_fields:
+                upstream_dataset_urn = builder.make_dataset_urn(
+                    platform="hana", name=upstream_field.name, env="PROD")
+                seen_upstream_datasets.add(upstream_dataset_urn)
+                upstream_columns.append(
+                    builder.make_schema_field_urn(upstream_dataset_urn, upstream_field.name))
 
-            seen_upstream_datasets.add(upstream_dataset_urn)
-            upstream_columns.append(fldUrn(
-                upstream_dataset_urn, fields.name))
+            column_lineages.append(FineGrainedLineage(downstreamType=downstream_type,
+                                                      downstreams=[
+                                                          builder.make_schema_field_urn(downstream_dataset_urn, downstream_field)],
+                                                      upstreamType=upstream_type,
+                                                      upstreams=upstream_columns
+                                                      ))
 
-            # print(seen_upstream_datasets)
-            # print(upstream_columns)
-"""
+        yield column_lineages, seen_upstream_datasets
+
+    def create_workunits(self):
+        lineage_data = []
+
+        for column_lineage, seen_upstream_datasets in create_fine_grained_lineage():
+            for upstream_urn in seen_upstream_datasets:
+                lineage_data.append(
+                    {"dataset": upstream_urn, "lineage": column_lineage})
+
+        print(lineage_data)
