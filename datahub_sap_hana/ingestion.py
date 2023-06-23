@@ -1,3 +1,5 @@
+from sqlglot.lineage import lineage, Node
+from sqlglot import parse_one, exp, parse
 import logging
 from collections import defaultdict
 from functools import cache
@@ -87,7 +89,7 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(
+    schema_pattern: AllowDenyPattern = PydanticField(
         default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
