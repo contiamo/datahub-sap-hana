@@ -1,5 +1,6 @@
 from sqlglot.lineage import lineage, Node
-from sqlglot import parse_one, exp, parse
+from sqlglot import parse_one, exp, parse 
+from sqlglot.expressions import DerivedTable
 import logging
 from collections import defaultdict
 from functools import cache
