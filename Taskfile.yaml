@@ -39,12 +39,14 @@ tasks:
       - poetry run pyright
       - poetry run ruff check .
       - poetry run black --check .
+      - poetry run unimport --check .
 
   fix:
     desc: Fix linters
     deps:
       - setup
     cmds:
+      - poetry run unimport -r
       - poetry run black .
       - poetry run ruff --fix-only .
 

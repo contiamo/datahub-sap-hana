@@ -22,6 +22,7 @@ pyright = "^1.1.313"
 pytest = "^7.3.1"
 ruff = "^0.0.272"
 sqlalchemy-stubs = "^0.4"
+unimport = "^0.16.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -55,3 +56,6 @@ typeCheckingMode = "basic"
 # See https://beta.ruff.rs/docs/configuration/
 select = ["E", "F", "I001"]
 
+[tool.unimport]
+sources = ["datahub_sap_hana", "tests"]
+exclude = '__init__.py|.venv/'
