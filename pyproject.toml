@@ -32,8 +32,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = [
     "tests/unit",
-    "tests/integration",
-    "integration: marks test as integration tests (select with '-m integration')"
+    "tests/integration"
 
 ]
 
