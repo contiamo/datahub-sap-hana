@@ -12,16 +12,14 @@ source:
     database: HXE
     host_port: localhost:39041
     include_view_lineage: true
-    include_column_lineage: true 
+    include_column_lineage: true
     schema_pattern:
       allow:
         - "HOTEL"
       ignoreCase: true
-    table_pattern:
-      deny:
-        - "HOTEL.RESERVATION"
-        - "HOTEL.ROOM"
-      ignoreCase: true
+    profile_pattern:
+      allow:
+        - "HOTEL"
     profile_pattern:
       allow:
         - "HOTEL"

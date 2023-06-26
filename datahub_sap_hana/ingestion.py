@@ -36,7 +36,7 @@ from sqlglot import parse_one
 from sqlglot.expressions import DerivedTable
 from sqlglot.lineage import Node, lineage
 
-from column_lineage_schema import Column, Field, UpstreamField
+from datahub_sap_hana.column_lineage_schema import Column, Field, UpstreamField
 
 register_custom_type(custom_types.TINYINT, schema.NumberType)
 
@@ -140,15 +140,14 @@ class HanaSource(SQLAlchemySource):
 
         data: List[ViewLineageEntry] = []
 
-        with conn:
-            query_results = conn.execute(LINEAGE_QUERY)
+        query_results = conn.execute(LINEAGE_QUERY)
 
-            if not query_results.returns_rows:
-                logger.debug("No rows returned.")
-                return {}
+        if not query_results.returns_rows:
+            logger.debug("No rows returned.")
+            return {}
 
-            for row in query_results:
-                data.append(ViewLineageEntry.parse_obj(row))
+        for row in query_results:
+            data.append(ViewLineageEntry.parse_obj(row))
 
         lineage_elements: Dict[Tuple[str, str], List[str]] = defaultdict(list)
 
@@ -343,7 +342,7 @@ class HanaSource(SQLAlchemySource):
             )
 
             lineage_mce = mce_builder.make_lineage_mce(
-                upstream_datasets, downstream_dataset_urn
+                upstream_datasets, downstream_dataset_urn, lineage_type=DatasetLineageType.TRANSFORMED
             )
             for item in mcps_from_mce(lineage_mce):
                 wu = item.as_workunit()
@@ -351,8 +350,7 @@ class HanaSource(SQLAlchemySource):
                 yield wu
 
 
-"""
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     hana_config = HanaConfig(
         username="HOTEL",
         password="Localdev1",
@@ -371,9 +369,9 @@ if __name__ == "__main__":
         conn
     )
     for view_name, view_sql in column_lineage_view_definitions:
-        lineage_for_column = hana_source.get_column_view_lineage_elements()
+        lineage_for_column = hana_source.get_column_view_lineage_elements(conn)
 
-    column_view_lineage = hana_source.get_column_view_lineage_elements()
+    column_view_lineage = hana_source.get_column_view_lineage_elements(conn)
     for col_lineage in column_view_lineage:
         print(col_lineage)
 
@@ -382,5 +380,4 @@ if __name__ == "__main__":
 
     lineage_emitted = hana_source._get_column_lineage_workunits(conn)
     for le in lineage_emitted:
-        print(le)
-"""
+        print(le)"""

@@ -6,6 +6,7 @@ source:
     database: HXE
     host_port: localhost:39041
     include_view_lineage: true
+    include_column_lineage: true 
     schema_pattern:
       allow:
         - "HOTEL"
