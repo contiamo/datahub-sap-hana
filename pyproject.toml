@@ -38,6 +38,7 @@ testpaths = [
 
 markers = [
     "integration: marks test as integration tests (select with '-m integration')",
+    "db: marks a test as requireing a database (select with '-m db')",
 ]
 
 # see https://microsoft.github.io/pyright/#/configuration?id=pyright-configuration

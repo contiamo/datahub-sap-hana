@@ -1,61 +1,55 @@
-from typing import List, Optional
+from dataclasses import dataclass
 
-from pydantic import BaseModel
+from sqlglot.lineage import Node
 
 
-class Column(BaseModel):
+def parse_column_name(column_name: str):
     """
-    Represents a column and its metadata.
+    Removes the table/name and alias from the column name returned by sqlglot,
+    eg: instead of 'hotel.room', it will return 'room'.
+    """
 
-    Attributes:
-    -----------
-    name : str
-        Name of the column.
-    platform : str
-        Platform of the column.
-    env : Optional[str], default="PROD"
-        Environment of the column.
+    parsed_name = column_name.split(".")
+    return parsed_name[-1]
+
+
+@dataclass
+class Table:
+    schema: str
+    name: str
+
+@dataclass
+class View(Table):
+    sql: str
+
+
+@dataclass
+class ColumnField:
+    """
+    ColumnField contains the metadata to describe a column in a table.
+
+    Use `ColumnField.from_node(lineage_node)` to create a ColumnField from a sqlglot node.
     """
 
     name: str
-    platform: str
-    env: Optional[str] = "PROD"
+    dataset: Table
+
+    @classmethod
+    def from_node(cls, node: Node, schema: str):
+        """Creates a ColumnField from a sqlglot node."""
+        return cls(
+            name=parse_column_name(node.name),
+            dataset=Table(schema=schema, name=node.source.name)
+        )
 
 
-class Field(BaseModel):
-    # Name of the field
-    name: str
+class UpstreamLineageField(ColumnField):
+    """UpstreamField contains the metadata to describe the upstream column (source) lineage of a DownstreamField."""
+
+    pass
 
 
-class UpstreamField(BaseModel):
-    """
-    Represents an upstream field that feeds into a column.
+class DownstreamLineageField(ColumnField):
+    """DownstreamField contains the metadata to describe the downstream column (target) lineage of a column in a table."""
 
-    Attributes:
-    -----------
-    name : str
-        Name of the upstream field.
-    column : Column
-        Column metadata of the upstream field
-    """
-
-    name: str
-    column: Column
-
-
-class Upstream(BaseModel):
-    """
-    Represents an upstream column or dataset that feeds into a field.
-
-    Attributes:
-    -----------
-    transform : Optional[str], default=None
-        Optional transformation applied to the upstream data.
-    fields : List[Field]
-        List of upstream fields.
-    column : Column
-        Upstream column name and metadata
-    """
-
-    transform: Optional[str] = None
-    fields: List[UpstreamField]
+    pass
