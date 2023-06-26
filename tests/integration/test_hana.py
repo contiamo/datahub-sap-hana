@@ -29,8 +29,7 @@ def test_integration_hana_ingest(pytestconfig):
     # Run the metadata ingestion pipeline.
     config_file = (test_resources_dir / "hana_to_file_default.yml").resolve()
     run_datahub_cmd(
-        ["ingest", "--strict-warnings", "-c",
-            f"{config_file}"], test_resources_dir
+        ["ingest", "--strict-warnings", "-c", f"{config_file}"], test_resources_dir
     )
 
     # Verify the output.
@@ -46,11 +45,9 @@ def test_integration_hana_ingest(pytestconfig):
 def test_integration_hana_ingest_lineage_disabled(pytestconfig):
     test_resources_dir = pytestconfig.rootpath / "tests/integration/data"
     # Run the metadata ingestion pipeline.
-    config_file = (test_resources_dir /
-                   "hana_to_file_lineage_disabled.yml").resolve()
+    config_file = (test_resources_dir / "hana_to_file_lineage_disabled.yml").resolve()
     run_datahub_cmd(
-        ["ingest", "--strict-warnings", "-c",
-            f"{config_file}"], test_resources_dir
+        ["ingest", "--strict-warnings", "-c", f"{config_file}"], test_resources_dir
     )
 
     # Verify the output.
