@@ -20,7 +20,7 @@ def hana_source():
         config_dict = config_file["source"]["config"]
         ctx = PipelineContext(run_id="hana-test")
         hana_source = HanaSource.create(config_dict, ctx)
-        return hana_source, conn
+        return hana_source
 
 
 @pytest.mark.integration
