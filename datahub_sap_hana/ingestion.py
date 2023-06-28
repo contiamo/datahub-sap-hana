@@ -45,6 +45,8 @@ from datahub_sap_hana.column_lineage_schema import (
 
 from functools import cache
 
+from datahub_sap_hana.inspector import CachedInspector, Inspector
+
 register_custom_type(custom_types.TINYINT, schema.NumberType)
 
 
@@ -106,57 +108,6 @@ class HanaConfig(BasicSQLAlchemyConfig):
         return regular
 
 
-class Inspector(Protocol):
-    def get_columns(self, table_name: str, schema: Optional[str] = None) -> List[Tuple[str, str, str, str, Optional[int], Optional[int], Optional[int], bool, Optional[str]]]:
-        ...
-        ...
-
-    def get_table_names(self, schema: Optional[str] = None) -> List[str]:
-        ...
-
-    def get_schema_names(self) -> List[str]:
-        ...
-
-    def get_view_names(self, schema: Optional[str] = None) -> List[str]:
-        ...
-
-    def get_view_definition(self, view_name: str, schema: Optional[str] = None) -> str:
-        ...
-
-
-ColumnDescription = Tuple[str, str, str, str, Optional[int],
-                          Optional[int], Optional[int], bool, Optional[str]]
-
-
-class CachedInspector:
-    def __init__(self, inspector: Inspector) -> Inspector:
-        self.inspector = inspector
-
-    @cache
-    def get_columns(self, table_name: str, schema: Optional[str] = None) -> List[ColumnDescription]:
-        return self.inspector.get_columns(table_name, schema)
-
-    @cache
-    def get_table_schema(self, table_name: str, schema: Optional[str] = None) -> Dict[str, ColumnDescription]:
-        return {column[0].lower(): column for column in self.get_columns(table_name, schema)}
-
-    @cache
-    def get_table_names(self, schema: Optional[str] = None) -> List[str]:
-        return self.inspector.get_table_names(schema)
-
-    @cache
-    def get_schema_names(self) -> List[str]:
-        return self.inspector.get_schema_names()
-
-    @cache
-    def get_view_names(self, schema: Optional[str] = None) -> List[str]:
-        return self.inspector.get_view_names(schema)
-
-    @cache
-    def get_view_definition(self, view_name: str, schema: Optional[str] = None) -> str:
-        return self.inspector.get_view_definition(view_name, schema)
-
-
 @platform_name(platform_name="SAP Hana", id="hana")
 @config_class(HanaConfig)  # type: ignore
 class HanaSource(SQLAlchemySource):
@@ -171,14 +122,14 @@ class HanaSource(SQLAlchemySource):
 
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         conn = self.get_db_connection()
-        inspector = inspect(conn)
-        cached_inspector = CachedInspector(inspector)
         try:
             yield from super().get_workunits()
             if self.config.include_view_lineage:
                 yield from self._get_view_lineage_workunits(conn)
             if self.config.include_column_lineage:
-                yield from self._get_column_lineage_workunits(inspector)
+                inspector = inspect(conn)
+                cached_inspector = CachedInspector(inspector)
+                yield from self._get_column_lineage_workunits(cached_inspector)
         finally:
             conn.close()
 
@@ -264,8 +215,9 @@ class HanaSource(SQLAlchemySource):
                 self.report.report_workunit(wu)
                 yield wu
 
-    def get_column_lineage_view_definitions(self, inspector: Inspector) -> Iterable[View]:
-
+    def get_column_lineage_view_definitions(
+        self, inspector: Inspector
+    ) -> Iterable[View]:
         schema: List[str] = inspector.get_schema_names()  # returns a list
         # TODO, filter schemas
         for schema_name in schema:
@@ -274,8 +226,7 @@ class HanaSource(SQLAlchemySource):
             )  # returns a list
 
             for view_name in views:
-                view_sql: str = inspector.get_view_definition(
-                    view_name, schema_name)
+                view_sql: str = inspector.get_view_definition(view_name, schema_name)
 
                 if view_sql:
                     yield View(
@@ -313,9 +264,6 @@ class HanaSource(SQLAlchemySource):
             ] = []
 
             column_lineages = self._get_column_lineage_for_view(view.sql)
-            cached_inspector = CachedInspector(inspector)
-            cached_table_metadata = cached_inspector.get_table_schema(
-                view.name, view.schema)
 
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream
@@ -332,23 +280,22 @@ class HanaSource(SQLAlchemySource):
                     for column_node in lineage_node.downstream
                 ]
 
+                # for each column we need to look up the name of the column
+                # with the correct casing as it is in the database.
+                # the inspector implementation should have caching to avoid
+                # hitting the database for each column. We need the actual casing
+                # from the inspector so that the Datahub URN we generate matches
+                # the URN from the base SQLAlchemy source implementation.
+                for column in upstream_fields_list:
+                    source_table_metadata = get_table_schema(
+                        inspector, column.dataset.name, column.dataset.schema
+                    )
+                    column_metadata = source_table_metadata[column.name.lower()]
+                    column.name = column_metadata["name"]
+
                 # we only have lineage information if there are "upstream" fields
                 if len(lineage_node.downstream) > 0:
-                    # Check and match the column names with the cached table metadata
-                    matching_columns = [
-                        column
-                        for column in cached_table_metadata
-                        if column[0] == lineage_node.name
-                    ]
-
-                    if matching_columns:
-                        # If there is a match, use the cached view name and schema
-                        view_name, view_schema = cached_table_metadata
-                        view.name = view_name
-                        view.schema = view_schema
-
-                        column_lineage.append(
-                            (downstream, upstream_fields_list))
+                    column_lineage.append((downstream, upstream_fields_list))
 
             yield view, column_lineage
 
@@ -428,8 +375,7 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn,
-                             type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )
@@ -439,6 +385,15 @@ class HanaSource(SQLAlchemySource):
             wu = proposal.as_workunit()
             self.report.report_workunit(wu)
             yield wu
+
+
+@cache
+def get_table_schema(inspector: Inspector, table_name: str, schema_name: str) -> Dict:
+    """Returns a dictionary that contains the schema information of a table."""
+    return {
+        column["name"].lower(): column
+        for column in inspector.get_columns(table_name, schema_name)
+    }
 
 
 if __name__ == "__main__":
@@ -460,8 +415,7 @@ if __name__ == "__main__":
     for view_name in column_lineage_view_definitions:
         print(view_name)
 
-    lineage_for_column = hana_source.get_column_view_lineage_elements(
-        inspector)
+    lineage_for_column = hana_source.get_column_view_lineage_elements(inspector)
     for lineage_ in lineage_for_column:
         print(lineage_)
 
