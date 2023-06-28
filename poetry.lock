@@ -534,6 +534,18 @@ files = [
 ]
 
 [[package]]
+name = "casefy"
+version = "0.1.7"
+description = "Utilities for string case conversion."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "casefy-0.1.7-py3-none-any.whl", hash = "sha256:ab05ff1c67f2a8e62d9f8986fa9a849416d61ac5413ec57d1f827b4f36589cf6"},
+    {file = "casefy-0.1.7.tar.gz", hash = "sha256:6accce985a64b9edb2a610a29ac489d78fac80e52ff8f2d137e294f2f92b8027"},
+]
+
+[[package]]
 name = "certifi"
 version = "2023.5.7"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -1381,7 +1393,7 @@ testing = ["flake8 (<5)", "flufl.flake8", "importlib-resources (>=1.3)", "packag
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2397,7 +2409,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.3.1)", "pytest-
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -2518,7 +2530,7 @@ version = "2.21"
 description = "C parser in Python"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 files = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
@@ -2687,15 +2699,40 @@ files = [
 ]
 
 [[package]]
+name = "pyserde"
+version = "0.11.1"
+description = "Yet another serialization library on top of dataclasses"
+category = "main"
+optional = false
+python-versions = ">=3.7.0,<4.0.0"
+files = [
+    {file = "pyserde-0.11.1-py3-none-any.whl", hash = "sha256:2173f7b9d136884fa4af7dbabe42861727be06db113c64857bac464acc3c9ff8"},
+    {file = "pyserde-0.11.1.tar.gz", hash = "sha256:00a02844dc9ff34cb6423b67f19cc0c0d67ac0f9c281a3f2bd1635f404f4935a"},
+]
+
+[package.dependencies]
+casefy = "*"
+jinja2 = "*"
+typing_inspect = ">=0.4.0"
+
+[package.extras]
+all = ["msgpack", "numpy (>1.21.0)", "numpy (>1.21.0)", "numpy (>1.21.0)", "numpy (>1.22.0)", "orjson", "pyyaml", "tomli", "tomli-w"]
+msgpack = ["msgpack"]
+numpy = ["numpy (>1.21.0)", "numpy (>1.21.0)", "numpy (>1.21.0)", "numpy (>1.22.0)"]
+orjson = ["orjson"]
+toml = ["tomli", "tomli-w"]
+yaml = ["pyyaml"]
+
+[[package]]
 name = "pytest"
-version = "7.3.2"
+version = "7.4.0"
 description = "pytest: simple powerful testing with Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-7.3.2-py3-none-any.whl", hash = "sha256:cdcbd012c9312258922f8cd3f1b62a6580fdced17db6014896053d47cddf9295"},
-    {file = "pytest-7.3.2.tar.gz", hash = "sha256:ee990a3cc55ba808b80795a79944756f315c67c12b56abd3ac993a7b8c17030b"},
+    {file = "pytest-7.4.0-py3-none-any.whl", hash = "sha256:78bf16451a2eb8c7a2ea98e32dc119fd2aa758f1d5d66dbf0a59d69a3969df32"},
+    {file = "pytest-7.4.0.tar.gz", hash = "sha256:b4bf8c45bd59934ed84001ad51e11b4ee40d40a1229d2c79f9c592b0a3f6bd8a"},
 ]
 
 [package.dependencies]
@@ -3405,7 +3442,7 @@ files = [
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -3826,4 +3863,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "1b1ebc4b260a9463ed2f4bdb851a49ce696e2722c710bf938742b251282f5fe5"
+content-hash = "fb9720e44d53ab40d61795f630b42baaf54f31da9386f164aea92e6750956507"

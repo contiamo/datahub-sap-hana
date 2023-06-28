@@ -104,7 +104,7 @@ class HanaConfig(BasicSQLAlchemyConfig):
         return regular
 
 
-@platform_name("SAPHana")
+@platform_name(platform_name="SAP Hana", id="hana")
 @config_class(HanaConfig)  # type: ignore
 class HanaSource(SQLAlchemySource):
     """Creates a datasource for the lineage of tables from a SAP HANA database.
@@ -219,7 +219,9 @@ class HanaSource(SQLAlchemySource):
         schema: List[str] = inspector.get_schema_names()  # returns a list
         # TODO, filter schemas
         for schema_name in schema:
-            views: List[str] = inspector.get_view_names(schema=schema_name)  # returns a list
+            views: List[str] = inspector.get_view_names(
+                schema=schema_name
+            )  # returns a list
 
             for view_name in views:
                 view_sql: str = inspector.get_view_definition(view_name, schema_name)
@@ -231,9 +233,7 @@ class HanaSource(SQLAlchemySource):
                         sql=view_sql,
                     )
 
-    def _get_column_lineage_for_view(
-        self, view_sql: str
-    ) -> List[Node]:
+    def _get_column_lineage_for_view(self, view_sql: str) -> List[Node]:
         """Extracts the columns and the sql definitions of a downstream view to build a lineage graph."""
 
         expression: DerivedTable = parse_one(view_sql)
@@ -247,14 +247,19 @@ class HanaSource(SQLAlchemySource):
 
     def get_column_view_lineage_elements(
         self, conn: Connection
-    ) -> Iterable[Tuple[View, List[Tuple[DownstreamLineageField, List[UpstreamLineageField]]]]]:
+    ) -> Iterable[
+        Tuple[View, List[Tuple[DownstreamLineageField, List[UpstreamLineageField]]]]
+    ]:
         """This function returns an iterable of tuples containing information about the lineage of columns in a view.
         Each tuple contains a downstream field (a column in a view) and a list of upstream fields
         (columns in other views or tables that are used to calculate/transform the downstream column).
         """
-        column_lineage: List[Tuple[DownstreamLineageField, List[UpstreamLineageField]]] = []
 
         for view in self.get_column_lineage_view_definitions(conn):
+            column_lineage: List[
+                Tuple[DownstreamLineageField, List[UpstreamLineageField]]
+            ] = []
+
             column_lineages = self._get_column_lineage_for_view(view.sql)
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream
@@ -275,63 +280,66 @@ class HanaSource(SQLAlchemySource):
                 if len(lineage_node.downstream) > 0:
                     column_lineage.append((downstream, upstream_fields_list))
 
-            yield view, column_lineage 
+            yield view, column_lineage
 
-    def create_column_lineage(
+    def build_fine_grained_lineage(
         self, conn: Connection
     ) -> Iterable[Tuple[List[FineGrainedLineage], Set[str], str]]:
         """Returns an iterable of tuples, where each tuple contains a list of FineGrainedLineage objects, which represents
         column-level lineage information and a set of strings representing the upstream dataset URNs created during lineage generation.
         """
 
-        column_lineages: List[FineGrainedLineage] = []
-        seen_upstream_datasets: Set[str] = set()
-        upstream_columns: List[Any] = []
-
         upstream_type = FineGrainedLineageUpstreamType.FIELD_SET
         downstream_type = FineGrainedLineageDownstreamType.FIELD
 
         for (
-            downstream_field,
-            upstream_fields,
+            view,
+            lineage,
         ) in self.get_column_view_lineage_elements(conn):
+            column_lineages: List[FineGrainedLineage] = []
+            seen_upstream_datasets: Set[str] = set()
+
             downstream_dataset_urn = builder.make_dataset_urn(
                 platform=self.platform,
                 name=self.config.get_identifier(
-                    downstream_field.dataset.schema,
-                    downstream_field.dataset.name,
+                    view.schema,
+                    view.name,
                 ),
                 env=self.config.env,
             )
 
-            for upstream_field in upstream_fields:
-                upstream_dataset_urn = builder.make_dataset_urn(
-                    platform=self.platform,
-                    name=self.config.get_identifier(
-                        upstream_field.dataset.schema,
-                        upstream_field.dataset.name,
-                    ),
-                    env=self.config.env,
-                )
-                seen_upstream_datasets.add(upstream_dataset_urn)
-                upstream_columns.append(
-                    builder.make_schema_field_urn(
-                        upstream_dataset_urn, upstream_field.name
-                    )
-                )
+            for downstream_field, upstream_fields in lineage:
+                # upstream_column/s should be dependent on the existence of downstream_field attached to it
+                upstream_columns: List[Any] = []
 
-                column_lineages.append(
-                    FineGrainedLineage(
-                        downstreamType=downstream_type,
-                        downstreams=[
-                            builder.make_schema_field_urn(
-                                downstream_dataset_urn, downstream_field.name
-                            )
-                        ],
-                        upstreamType=upstream_type,
-                        upstreams=upstream_columns,
+                for upstream_field in upstream_fields:
+                    upstream_dataset_urn = builder.make_dataset_urn(
+                        platform=self.platform,
+                        name=self.config.get_identifier(
+                            upstream_field.dataset.schema, upstream_field.dataset.name
+                        ),
+                        env=self.config.env,
                     )
-                )
+
+                    seen_upstream_datasets.add(upstream_dataset_urn)
+                    upstream_columns.append(
+                        builder.make_schema_field_urn(
+                            upstream_dataset_urn, upstream_field.name
+                        )
+                    )
+
+                    column_lineages.append(
+                        FineGrainedLineage(
+                            downstreamType=downstream_type,
+                            downstreams=[
+                                builder.make_schema_field_urn(
+                                    downstream_dataset_urn, downstream_field.name
+                                )
+                            ],
+                            upstreamType=upstream_type,
+                            upstreams=upstream_columns,
+                        )
+                    )
 
             yield column_lineages, seen_upstream_datasets, downstream_dataset_urn
 
@@ -346,24 +354,25 @@ class HanaSource(SQLAlchemySource):
             column_lineages,
             upstream_datasets,
             downstream_dataset_urn,
-        ) in self.create_column_lineage(conn):
+        ) in self.build_fine_grained_lineage(conn):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
                     Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
-                ]
+                ],
             )
             proposal = MetadataChangeProposalWrapper(
-                entityUrn=downstream_dataset_urn, 
-                aspect=fieldLineages
+                entityUrn=downstream_dataset_urn, aspect=fieldLineages
             )
             wu = proposal.as_workunit()
             self.report.report_workunit(wu)
             yield wu
 
 
-"""if __name__ == "__main__":
+"""
+
+if __name__ == "__main__":
     hana_config = HanaConfig(
         username="HOTEL",
         password="Localdev1",
@@ -375,22 +384,39 @@ class HanaSource(SQLAlchemySource):
     hana_source = HanaSource(hana_config, PipelineContext(run_id="test"))
     conn = hana_source.get_db_connection()
 
-    lineage_urns = hana_source.create_column_lineage(conn)
-    print(lineage_urns)
-
     column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions(
         conn
     )
-    for view_name, view_sql in column_lineage_view_definitions:
-        lineage_for_column = hana_source.get_column_view_lineage_elements(conn)
+    for view_name in column_lineage_view_definitions:
+        print(view_name)
+    
 
-    column_view_lineage = hana_source.get_column_view_lineage_elements(conn)
-    for col_lineage in column_view_lineage:
-        print(col_lineage)
+    lineage_for_column = hana_source.get_column_view_lineage_elements(conn)
+    for lineage_ in lineage_for_column:
+        print(lineage_)
+   
 
-    for lineage_urn, upstreams, downstream_urn in hana_source.create_column_lineage(conn):
-        print(lineage_urn, upstreams, downstream_urn)
+    lineage_elements = hana_source.get_column_view_lineage_elements(conn)
 
-    lineage_emitted = hana_source._get_column_lineage_workunits(conn)
-    for le in lineage_emitted:
-        print(le)"""
+    for ix, elements in enumerate(lineage_elements):
+        if ix == 4:
+            print(elements)
+
+    finegrainedlineage = hana_source.build_fine_grained_lineage(conn)
+    for fg in finegrainedlineage:
+        print(len(fg[0]))
+
+    finegrainedlineage = hana_source.build_fine_grained_lineage(conn)
+
+    for column_lineages, _, _ in finegrainedlineage:
+        for lineages in column_lineages:
+            print(lineages.downstreams, lineages.upstreams)
+
+    for ix, f in enumerate(finegrainedlineage):
+        if ix == 0:
+            print(f[1])
+
+    # workunits = hana_source._get_column_lineage_workunits(conn)
+
+    # print(len(list(workunits)))
+"""

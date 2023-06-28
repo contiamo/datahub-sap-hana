@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from serde import serde
 from sqlglot.lineage import Node
 
 
@@ -8,26 +9,28 @@ def parse_column_name(column_name: str):
     Removes the table/name and alias from the column name returned by sqlglot,
     eg: instead of 'hotel.room', it will return 'room'.
     """
-
     parsed_name = column_name.split(".")
     return parsed_name[-1]
 
 
+@serde
 @dataclass
 class Table:
     schema: str
     name: str
 
+
+@serde
 @dataclass
 class View(Table):
     sql: str
 
 
+@serde
 @dataclass
 class ColumnField:
     """
     ColumnField contains the metadata to describe a column in a table.
-
     Use `ColumnField.from_node(lineage_node)` to create a ColumnField from a sqlglot node.
     """
 
@@ -39,7 +42,7 @@ class ColumnField:
         """Creates a ColumnField from a sqlglot node."""
         return cls(
             name=parse_column_name(node.name),
-            dataset=Table(schema=schema, name=node.source.name)
+            dataset=Table(schema=schema, name=node.source.name),
         )
 
 

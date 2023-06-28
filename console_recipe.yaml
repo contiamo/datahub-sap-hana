@@ -31,4 +31,6 @@ source:
         allow:
           - "HOTEL"
 sink:
-  type: console
+  type: file
+  config: 
+    filename: ./sap_hana_results.json
