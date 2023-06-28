@@ -106,57 +106,6 @@ class HanaConfig(BasicSQLAlchemyConfig):
         return regular
 
 
-class Inspector(Protocol):
-    def get_columns(self, table_name: str, schema: Optional[str] = None) -> List[Tuple[str, str, str, str, Optional[int], Optional[int], Optional[int], bool, Optional[str]]]:
-        ...
-        ...
-
-    def get_table_names(self, schema: Optional[str] = None) -> List[str]:
-        ...
-
-    def get_schema_names(self) -> List[str]:
-        ...
-
-    def get_view_names(self, schema: Optional[str] = None) -> List[str]:
-        ...
-
-    def get_view_definition(self, view_name: str, schema: Optional[str] = None) -> str:
-        ...
-
-
-ColumnDescription = Tuple[str, str, str, str, Optional[int],
-                          Optional[int], Optional[int], bool, Optional[str]]
-
-
-class CachedInspector:
-    def __init__(self, inspector: Inspector) -> Inspector:
-        self.inspector = inspector
-
-    @cache
-    def get_columns(self, table_name: str, schema: Optional[str] = None) -> List[ColumnDescription]:
-        return self.inspector.get_columns(table_name, schema)
-
-    @cache
-    def get_table_schema(self, table_name: str, schema: Optional[str] = None) -> Dict[str, ColumnDescription]:
-        return {column[0].lower(): column for column in self.get_columns(table_name, schema)}
-
-    @cache
-    def get_table_names(self, schema: Optional[str] = None) -> List[str]:
-        return self.inspector.get_table_names(schema)
-
-    @cache
-    def get_schema_names(self) -> List[str]:
-        return self.inspector.get_schema_names()
-
-    @cache
-    def get_view_names(self, schema: Optional[str] = None) -> List[str]:
-        return self.inspector.get_view_names(schema)
-
-    @cache
-    def get_view_definition(self, view_name: str, schema: Optional[str] = None) -> str:
-        return self.inspector.get_view_definition(view_name, schema)
-
-
 @platform_name(platform_name="SAP Hana", id="hana")
 @config_class(HanaConfig)  # type: ignore
 class HanaSource(SQLAlchemySource):
@@ -171,8 +120,6 @@ class HanaSource(SQLAlchemySource):
 
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         conn = self.get_db_connection()
-        inspector = inspect(conn)
-        cached_inspector = CachedInspector(inspector)
         try:
             yield from super().get_workunits()
             if self.config.include_view_lineage:
@@ -281,8 +228,7 @@ class HanaSource(SQLAlchemySource):
             )  # returns a list
 
             for view_name in views:
-                view_sql: str = inspector.get_view_definition(
-                    view_name, schema_name)
+                view_sql: str = inspector.get_view_definition(view_name, schema_name)
 
                 if view_sql:
                     yield View(
@@ -352,21 +298,7 @@ class HanaSource(SQLAlchemySource):
 
                 # we only have lineage information if there are "upstream" fields
                 if len(lineage_node.downstream) > 0:
-                    # Check and match the column names with the cached table metadata
-                    matching_columns = [
-                        column
-                        for column in cached_table_metadata
-                        if column[0] == lineage_node.name
-                    ]
-
-                    if matching_columns:
-                        # If there is a match, use the cached view name and schema
-                        view_name, view_schema = cached_table_metadata
-                        view.name = view_name
-                        view.schema = view_schema
-
-                        column_lineage.append(
-                            (downstream, upstream_fields_list))
+                    column_lineage.append((downstream, upstream_fields_list))
 
             yield view, column_lineage
 
@@ -446,8 +378,7 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn,
-                             type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )
@@ -487,8 +418,7 @@ if __name__ == "__main__":
     for view_name in column_lineage_view_definitions:
         print(view_name)
 
-    lineage_for_column = hana_source.get_column_view_lineage_elements(
-        inspector)
+    lineage_for_column = hana_source.get_column_view_lineage_elements(inspector)
     for lineage_ in lineage_for_column:
         print(lineage_)
 
