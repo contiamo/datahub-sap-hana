@@ -260,7 +260,6 @@ class HanaSource(SQLAlchemySource):
         Each tuple contains a downstream field (a column in a view) and a list of upstream fields
         (columns in other views or tables that are used to calculate/transform the downstream column).
         """
-        column_lineage: List[Tuple[DownstreamLineageField, List[UpstreamLineageField]]] = []
 
         for view in self.get_column_lineage_view_definitions(inspector):
             column_lineage: List[

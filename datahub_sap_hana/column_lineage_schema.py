@@ -19,6 +19,8 @@ class Table:
     schema: str
     name: str
 
+
+@serde
 @dataclass
 class View(Table):
     sql: str
