@@ -1,25 +1,26 @@
-
-
 from functools import cache
 from typing import Dict, List, Optional, Protocol, TypedDict
 
-
 ColumnDescription = TypedDict(
-    "ColumnDescription", 
+    "ColumnDescription",
     {
-        "name": str, 
-        "type": str, 
+        "name": str,
+        "type": str,
         "nullable": bool,
         "default": Optional[str],
         "comment": Optional[str],
-    })
+    },
+)
 
 
 class Inspector(Protocol):
     """
     A protocol describing the required methods from the sqlalchemy.engine.reflection.Inspector class.
     """
-    def get_columns(self, table_name: str, schema: Optional[str] = None) -> List[ColumnDescription]:
+
+    def get_columns(
+        self, table_name: str, schema: Optional[str] = None
+    ) -> List[ColumnDescription]:
         ...
 
     def get_table_names(self, schema: Optional[str] = None) -> List[str]:
@@ -35,19 +36,22 @@ class Inspector(Protocol):
         ...
 
 
-
 class CachedInspector:
     def __init__(self, inspector: Inspector):
         self.inspector = inspector
 
     @cache
-    def get_columns(self, table_name: str, schema: Optional[str] = None) -> List[ColumnDescription]:
+    def get_columns(
+        self, table_name: str, schema: Optional[str] = None
+    ) -> List[ColumnDescription]:
         return self.inspector.get_columns(table_name, schema)
 
     @cache
-    def get_table_schema(self, table_name: str, schema: Optional[str] = None) -> Dict[str, ColumnDescription]:
+    def get_table_schema(
+        self, table_name: str, schema: Optional[str] = None
+    ) -> Dict[str, ColumnDescription]:
         return {
-            column['name'].lower(): column
+            column["name"].lower(): column
             for column in self.get_columns(table_name, schema)
         }
 
