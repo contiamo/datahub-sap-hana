@@ -120,6 +120,7 @@ class HanaSource(SQLAlchemySource):
 
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         conn = self.get_db_connection()
+        logger.info("connecting to db")
         try:
             yield from super().get_workunits()
             if self.config.include_view_lineage:
@@ -147,6 +148,8 @@ class HanaSource(SQLAlchemySource):
         data: List[ViewLineageEntry] = []
 
         query_results = conn.execute(LINEAGE_QUERY)
+
+        logger.info("executing query")
 
         if not query_results.returns_rows:
             logger.debug("No rows returned.")
@@ -217,14 +220,21 @@ class HanaSource(SQLAlchemySource):
         self, inspector: Inspector
     ) -> Iterable[View]:
         schema: List[str] = inspector.get_schema_names()  # returns a list
+
         # TODO, filter schemas
+
         for schema_name in schema:
+
+            if not self.config.schema_pattern.allowed(schema_name):
+                continue
+
             views: List[str] = inspector.get_view_names(
                 schema=schema_name
             )  # returns a list
 
             for view_name in views:
-                view_sql: str = inspector.get_view_definition(view_name, schema_name)
+                view_sql: str = inspector.get_view_definition(
+                    view_name, schema_name)
 
                 if view_sql:
                     yield View(
@@ -288,7 +298,8 @@ class HanaSource(SQLAlchemySource):
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
                     )
-                    column_metadata = source_table_metadata[column.name.lower()]
+                    column_metadata = source_table_metadata[column.name.lower(
+                    )]
                     column.name = column_metadata["name"]
 
                 # we only have lineage information if there are "upstream" fields
@@ -324,6 +335,7 @@ class HanaSource(SQLAlchemySource):
             )
 
             for downstream_field, upstream_fields in lineage:
+
                 # upstream_column/s should be dependent on the existence of downstream_field attached to it
                 upstream_columns: List[Any] = []
 
@@ -373,7 +385,8 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn,
+                             type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )
@@ -392,3 +405,51 @@ def get_table_schema(inspector: Inspector, table_name: str, schema_name: str) ->
         column["name"].lower(): column
         for column in inspector.get_columns(table_name, schema_name)
     }
+
+
+if __name__ == "__main__":
+    hana_config = HanaConfig(
+        username="HOTEL",
+        password="Localdev1",
+        host_port="localhost:39041",
+        database="HXE",
+        schema_pattern=AllowDenyPattern(allow=["HOTEL"]),
+        include_view_lineage=True,
+        include_column_lineage=True
+    )  # type: ignore
+    hana_source = HanaSource(hana_config, PipelineContext(run_id="test"))
+    conn = hana_source.get_db_connection()
+    inspector = inspect(conn)
+
+    column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions(
+        inspector
+    )
+
+    lineage_for_column = hana_source.get_column_view_lineage_elements(
+        inspector)
+    for lineage_ in lineage_for_column:
+        print(lineage_)
+
+    lineage_elements = hana_source.get_column_view_lineage_elements(inspector)
+
+    for ix, elements in enumerate(lineage_elements):
+        if ix == 4:
+            print(elements)
+
+    finegrainedlineage = hana_source.build_fine_grained_lineage(inspector)
+    for fg in finegrainedlineage:
+        print(len(fg[0]))
+
+    finegrainedlineage = hana_source.build_fine_grained_lineage(inspector)
+
+    for column_lineages, _, _ in finegrainedlineage:
+        for lineages in column_lineages:
+            print(lineages.downstreams, lineages.upstreams)
+
+    for ix, f in enumerate(finegrainedlineage):
+        if ix == 0:
+            print(f[1])
+
+    # workunits = hana_source._get_column_lineage_workunits(conn)
+
+    # print(len(list(workunits)))
