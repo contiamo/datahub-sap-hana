@@ -1,15 +1,15 @@
 [tool.poetry]
 name = "datahub-sap-hana"
-version = "0.2.3"
+version = "0.3.0"
 description = "Linkedin DataHub ingestion source for SAP Hana"
 authors = ["Contiamo <developers@contiamo.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
-acryl-datahub = {extras = ["sqlalchemy"], version = "^0.10.3.2"}
+acryl-datahub = {extras = ["sqlalchemy"], version = "^0.10.4.1"}
 sqlalchemy-hana = "^0.5.0"
 pyhdb = {version = "^0.3.4", optional = true}
-hdbcli = "^2.11.14"
+hdbcli = "^2.17.14"
 deepdiff = "^6.3.0"
 sqlglot = "^16.0.0"
 pytest = "^7.4.0"
@@ -20,7 +20,7 @@ pyhdb = ["pyhdb"]
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
-pyright = "^1.1.313"
+pyright = "^1.1.315"
 pytest = "^7.3.1"
 ruff = "^0.0.272"
 sqlalchemy-stubs = "^0.4"
