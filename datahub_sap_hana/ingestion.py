@@ -120,15 +120,16 @@ class HanaSource(SQLAlchemySource):
 
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         conn = self.get_db_connection()
-        logger.info("connecting to db")
+        logger.debug("Connecting to database.")
+
         try:
             yield from super().get_workunits()
-            if self.config.include_view_lineage:
+            if self.config.include_lineage:
                 yield from self._get_view_lineage_workunits(conn)
-            if self.config.include_column_lineage:
                 inspector = inspect(conn)
                 cached_inspector = CachedInspector(inspector)
                 yield from self._get_column_lineage_workunits(cached_inspector)
+
         finally:
             conn.close()
 
@@ -148,8 +149,6 @@ class HanaSource(SQLAlchemySource):
         data: List[ViewLineageEntry] = []
 
         query_results = conn.execute(LINEAGE_QUERY)
-
-        logger.info("executing query")
 
         if not query_results.returns_rows:
             logger.debug("No rows returned.")
@@ -340,6 +339,8 @@ class HanaSource(SQLAlchemySource):
 
             for downstream_field, upstream_fields in lineage:
 
+                downstream_field_name = downstream_field.name.lower()
+
                 # upstream_column/s should be dependent on the existence of downstream_field attached to it
                 upstream_columns: List[Any] = []
 
@@ -364,7 +365,7 @@ class HanaSource(SQLAlchemySource):
                             downstreamType=downstream_type,
                             downstreams=[
                                 builder.make_schema_field_urn(
-                                    downstream_dataset_urn, downstream_field.name
+                                    downstream_dataset_urn, downstream_field_name
                                 )
                             ],
                             upstreamType=upstream_type,
@@ -410,6 +411,8 @@ def get_table_schema(inspector: Inspector, table_name: str, schema_name: str) ->
         for column in inspector.get_columns(table_name, schema_name)
     }
 
+
+"""
 
 if __name__ == "__main__":
     hana_config = HanaConfig(
@@ -457,3 +460,4 @@ if __name__ == "__main__":
     # workunits = hana_source._get_column_lineage_workunits(conn)
 
     # print(len(list(workunits)))
+"""
