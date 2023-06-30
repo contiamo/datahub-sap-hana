@@ -31,7 +31,7 @@ from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
     UpstreamLineage,
 )
 from pydantic import BaseModel
-from pydantic.fields import Field
+from pydantic.fields import Field as PydanticField
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.engine.base import Connection
 from sqlglot import parse_one
@@ -88,9 +88,10 @@ class HanaConfig(BasicSQLAlchemyConfig):
 
     scheme = "hana"
     schema_pattern: AllowDenyPattern = PydanticField(
-        default=AllowDenyPattern(deny=["*SYS*"]))
-    include_view_lineage: bool = Field(
-        default=False, description="Include table lineage for views"
+        default=AllowDenyPattern(deny=["*SYS*"])
+
+    include_lineage: bool = PydanticField(
+        default=False, description="Include both  lineage for views and columns"
     )
     include_column_lineage: bool = Field(
         default=False, description="Include column lineage for views"

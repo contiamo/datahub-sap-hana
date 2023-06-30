@@ -1,41 +1,6 @@
 
 # This is copied and slightly modified from the acryl-datahub project
 # The original source code can be found at  https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml
-# And the license is available at XXXX
-
-
-version: '3.4'
-services:
-  testhana:
-    image: "saplabs/hanaexpress:2.00.061.00.20220519.1"
-    container_name: "testhana"
-    restart: "unless-stopped"
-    ports:
-      - 39013:39013
-      - 39017:39017
-      - 39041-39045:39041-39045
-      - 1128-1129:1128-1129
-      - 59013-59014:59013-59014 
-    volumes:
-      - ./post_start:/hana/hooks/post_start/
-      - ./setup:/hana/mounts/setup/
-    environment: 
-      # schema name is user name and pwd is schema_pwd
-      - SCHEMA_NAME=HOTEL
-      - DUMP_FILE=setup.sql
-      - SCHEMA_PWD=Localdev1
-    command:
-      - --agree-to-sap-license
-      - --dont-check-system
-      - --dont-check-mount-points
-      - --master-password
-      - HXEHana1 
-  
-
-
-# This is copied and slightly modified from the acryl-datahub project
-# Copyright 2015 LinkedIn Corp. All rights reserved.
-# The original source code can be found at  https://github.com/datahub-project/datahub/blob/master/metadata-ingestion/tests/integration/hana/docker-compose.yml
 # And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
 
 

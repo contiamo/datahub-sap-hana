@@ -11,3 +11,4 @@ examples/contiamo.yaml
 *_output.json
 .env
 ./sap_hana_results.json
+.env

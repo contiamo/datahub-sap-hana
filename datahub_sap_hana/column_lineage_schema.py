@@ -28,12 +28,6 @@ class View(Table):
 
 @serde
 @dataclass
-class View(Table):
-    sql: str
-
-
-@serde
-@dataclass
 class ColumnField:
     """
     ColumnField contains the metadata to describe a column in a table.

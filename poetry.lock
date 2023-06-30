@@ -538,6 +538,7 @@ files = [
 name = "casefy"
 version = "0.1.7"
 description = "Utilities for string case conversion."
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1732,6 +1733,7 @@ files = [
 name = "libcst"
 version = "0.4.10"
 description = "A concrete syntax tree with AST-like properties for Python 3.5, 3.6, 3.7, 3.8, 3.9, and 3.10 programs."
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2738,6 +2740,7 @@ files = [
 name = "pyserde"
 version = "0.11.1"
 description = "Yet another serialization library on top of dataclasses"
+category = "main"
 optional = false
 python-versions = ">=3.7.0,<4.0.0"
 files = [
@@ -3402,13 +3405,14 @@ typing-extensions = ">=3.7.4"
 
 [[package]]
 name = "sqlglot"
-version = "16.7.7"
+version = "16.0.0"
 description = "An easily customizable SQL parser and transpiler"
+category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sqlglot-16.7.7-py3-none-any.whl", hash = "sha256:190e40b0cd92c57bf2551a1ffaa5cf6d44ff76fec812d5db9193833a80947b9d"},
-    {file = "sqlglot-16.7.7.tar.gz", hash = "sha256:992c3fa0b91bf59ff935615a2addd0b15578853dd463e8f20d8223cce044f887"},
+    {file = "sqlglot-16.0.0-py3-none-any.whl", hash = "sha256:87aa5127c8b685b519c30c3f8e4e80484266a40de748f6d4dfbd0fb8723b577f"},
+    {file = "sqlglot-16.0.0.tar.gz", hash = "sha256:b27a9f1b5c56bb4dfc19be380cd60a63e94f08ed5d1401e36d95e3df96997c5e"},
 ]
 
 [package.extras]
@@ -3655,6 +3659,7 @@ devenv = ["black", "check-manifest", "flake8", "pyroma", "pytest (>=4.3)", "pyte
 name = "unimport"
 version = "0.16.0"
 description = "The ultimate linter and formatter for removing unused import statements in your code."
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -3936,4 +3941,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "0791a827ba07e9435e0c64c3837cfc578c21a2508145c6e7334863b218d1707a"
+content-hash = "fb9720e44d53ab40d61795f630b42baaf54f31da9386f164aea92e6750956507"
