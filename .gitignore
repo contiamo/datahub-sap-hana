@@ -10,3 +10,4 @@ examples/contiamo.yaml
 /sink_results.json
 *_output.json
 .env
+./sap_hana_results.json

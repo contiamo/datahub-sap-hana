@@ -1,6 +1,7 @@
 import logging
 from collections import defaultdict
-from typing import Any, Dict, Iterable, List, Set, Tuple, Union, Protocol, Optional
+from functools import cache
+from typing import Any, Dict, Iterable, List, Set, Tuple, Union
 
 import datahub.emitter.mce_builder as builder
 import sqlalchemy_hana.types as custom_types  # type: ignore
@@ -30,7 +31,7 @@ from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
     UpstreamLineage,
 )
 from pydantic import BaseModel
-from pydantic.fields import Field as PydanticField
+from pydantic.fields import Field
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.engine.base import Connection
 from sqlglot import parse_one
@@ -42,9 +43,6 @@ from datahub_sap_hana.column_lineage_schema import (
     UpstreamLineageField,
     View,
 )
-
-from functools import cache
-
 from datahub_sap_hana.inspector import CachedInspector, Inspector
 
 register_custom_type(custom_types.TINYINT, schema.NumberType)
@@ -88,13 +86,12 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = PydanticField(
-        default=AllowDenyPattern(deny=["*SYS*"])
-    )
-    include_view_lineage: bool = PydanticField(
+    schema_pattern: AllowDenyPattern = Field(
+        default=AllowDenyPattern(deny=["*SYS*"]))
+    include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
-    include_column_lineage: bool = PydanticField(
+    include_column_lineage: bool = Field(
         default=False, description="Include column lineage for views"
     )
 
@@ -226,7 +223,8 @@ class HanaSource(SQLAlchemySource):
             )  # returns a list
 
             for view_name in views:
-                view_sql: str = inspector.get_view_definition(view_name, schema_name)
+                view_sql: str = inspector.get_view_definition(
+                    view_name, schema_name)
 
                 if view_sql:
                     yield View(
@@ -290,7 +288,8 @@ class HanaSource(SQLAlchemySource):
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
                     )
-                    column_metadata = source_table_metadata[column.name.lower()]
+                    column_metadata = source_table_metadata[column.name.lower(
+                    )]
                     column.name = column_metadata["name"]
 
                 # we only have lineage information if there are "upstream" fields
@@ -375,7 +374,8 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn,
+                             type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )
@@ -415,7 +415,8 @@ if __name__ == "__main__":
     for view_name in column_lineage_view_definitions:
         print(view_name)
 
-    lineage_for_column = hana_source.get_column_view_lineage_elements(inspector)
+    lineage_for_column = hana_source.get_column_view_lineage_elements(
+        inspector)
     for lineage_ in lineage_for_column:
         print(lineage_)
 
