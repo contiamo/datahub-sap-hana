@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import List
 
 import pytest
 
@@ -11,7 +12,7 @@ os.putenv("DATAHUB_DEBUG", "1")
 os.putenv("DATAHUB_TELEMETRY_ENABLED", "false")
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: pytest.Parser):
     parser.addoption(
         "--update-golden-files",
         action="store_true",
@@ -20,17 +21,17 @@ def pytest_addoption(parser):
     parser.addoption("--copy-output-files", action="store_true", default=False)
 
 
-def pytest_configure(config):
+def pytest_configure(config: pytest.Config):
     # Automatically skip integration tests if no mark is specified
-    markexpr = config.getoption("markexpr", None)
+    markexpr = config.getoption("markexpr", None)  # type: ignore
     if not markexpr:
         print("No markexpr specified, skipping integration tests")
-        markexpr = "not integration"
+        markexpr = "not integration and not db"
 
     config.option.markexpr = markexpr
 
 
-def pytest_collection_modifyitems(items, config):
+def pytest_collection_modifyitems(items: List[pytest.Item], config: pytest.Config):
     # Automatically mark tests as integration test if it starts with `test_integration`
     for item in items:
         if "test_integration" in item.nodeid:

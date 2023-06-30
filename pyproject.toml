@@ -11,6 +11,9 @@ sqlalchemy-hana = "^0.5.0"
 pyhdb = {version = "^0.3.4", optional = true}
 hdbcli = "^2.17.14"
 deepdiff = "^6.3.0"
+sqlglot = "^16.0.0"
+pytest = "^7.4.0"
+pyserde = "^0.11.1"
 
 [tool.poetry.extras]
 pyhdb = ["pyhdb"]
@@ -21,6 +24,7 @@ pyright = "^1.1.315"
 pytest = "^7.3.1"
 ruff = "^0.0.272"
 sqlalchemy-stubs = "^0.4"
+unimport = "^0.16.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -31,10 +35,12 @@ build-backend = "poetry.core.masonry.api"
 testpaths = [
     "tests/unit",
     "tests/integration"
+
 ]
 
 markers = [
     "integration: marks test as integration tests (select with '-m integration')",
+    "db: marks a test as requireing a database (select with '-m db')",
 ]
 
 # see https://microsoft.github.io/pyright/#/configuration?id=pyright-configuration
@@ -51,3 +57,7 @@ typeCheckingMode = "basic"
 [tool.ruff]
 # See https://beta.ruff.rs/docs/configuration/
 select = ["E", "F", "I001"]
+
+[tool.unimport]
+sources = ["datahub_sap_hana", "tests"]
+exclude = '__init__.py|.venv/'

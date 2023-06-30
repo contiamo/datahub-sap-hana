@@ -1,7 +1,7 @@
 
 # This is copied and slightly modified from the acryl-datahub project
 # The original source code can be found at https://github.com/acryldata/datahub/blob/master/metadata-ingestion/tests/integration/hana/hana_to_file.yml
-# And the license is available at XXXX
+#  And the original Apache 2 license is available at https://github.com/acryldata/datahub/blob/master/LICENSE
 
 run_id: hana-test
 source:
@@ -11,19 +11,15 @@ source:
     password: Localdev1
     database: HXE
     host_port: localhost:39041
-    schema_pattern:
-      deny: 
-        - .*SYS*
     include_view_lineage: false
+    include_column_lineage: false
     schema_pattern:
       allow:
         - "HOTEL"
       ignoreCase: true
-    table_pattern:
-      deny:
-        - "HOTEL.RESERVATION"
-        - "HOTEL.ROOM"
-      ignoreCase: true
+    profile_pattern:
+      allow:
+        - "HOTEL"
     profile_pattern:
       allow:
         - "HOTEL"
