@@ -278,6 +278,13 @@ class HanaSource(SQLAlchemySource):
                     dataset=view,
                 )
 
+                # checks the casing for the downstream column based on what is in the db
+                downstream_table_metadata = get_table_schema(
+                    inspector, downstream.dataset.name, view.schema)
+                downstream_column_metadata = downstream_table_metadata[lineage_node.name.lower(
+                )]
+                downstream.name = downstream_column_metadata["name"]
+
                 upstream_fields_list = [
                     UpstreamLineageField.from_node(column_node, view.schema)
                     for column_node in lineage_node.downstream
@@ -290,6 +297,8 @@ class HanaSource(SQLAlchemySource):
                 # from the inspector so that the Datahub URN we generate matches
                 # the URN from the base SQLAlchemy source implementation.
                 for column in upstream_fields_list:
+
+                    # checks the casing for the upstream column based on what is in the db
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
                     )
