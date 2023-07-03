@@ -15,7 +15,8 @@ ColumnDescription = TypedDict(
 
 class Inspector(Protocol):
     """
-    A protocol describing the required methods from the sqlalchemy.engine.reflection.Inspector class.
+    A protocol describing the required methods from the
+    sqlalchemy.engine.reflection.Inspector class.
     """
 
     def get_columns(
