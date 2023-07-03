@@ -266,8 +266,11 @@ class HanaSource(SQLAlchemySource):
                 Tuple[DownstreamLineageField, List[UpstreamLineageField]]
             ] = []
 
-            column_lineages = self._get_column_lineage_for_view(view.sql)
+            column_lineages = self._get_column_lineage_for_view(view.sql)   
 
+            downstream_table_metadata = get_table_schema(
+                    inspector, view.name, view.schema)
+            
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream
             # each element of lineage_node.downstream is a node that represents a column in the source table
@@ -279,8 +282,6 @@ class HanaSource(SQLAlchemySource):
                 )
 
                 # checks the casing for the downstream column based on what is in the db
-                downstream_table_metadata = get_table_schema(
-                    inspector, downstream.dataset.name, view.schema)
                 downstream_column_metadata = downstream_table_metadata[lineage_node.name.lower(
                 )]
                 downstream.name = downstream_column_metadata["name"]
@@ -408,52 +409,3 @@ def get_table_schema(inspector: Inspector, table_name: str, schema_name: str) ->
         column["name"].lower(): column
         for column in inspector.get_columns(table_name, schema_name)
     }
-
-
-if __name__ == "__main__":
-    hana_config = HanaConfig(
-        username="HOTEL",
-        password="Localdev1",
-        host_port="localhost:39041",
-        database="HXE",
-        schema_pattern=AllowDenyPattern(allow=["*"]),
-        include_view_lineage=True,
-    )  # type: ignore
-    hana_source = HanaSource(hana_config, PipelineContext(run_id="test"))
-    conn = hana_source.get_db_connection()
-    inspector = inspect(conn)
-
-    column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions(
-        inspector
-    )
-    for view_name in column_lineage_view_definitions:
-        print(view_name)
-
-    lineage_for_column = hana_source.get_column_view_lineage_elements(
-        inspector)
-    for lineage_ in lineage_for_column:
-        print(lineage_)
-
-    lineage_elements = hana_source.get_column_view_lineage_elements(inspector)
-
-    for ix, elements in enumerate(lineage_elements):
-        if ix == 4:
-            print(elements)
-
-    finegrainedlineage = hana_source.build_fine_grained_lineage(inspector)
-    for fg in finegrainedlineage:
-        print(len(fg[0]))
-
-    finegrainedlineage = hana_source.build_fine_grained_lineage(inspector)
-
-    for column_lineages, _, _ in finegrainedlineage:
-        for lineages in column_lineages:
-            print(lineages.downstreams, lineages.upstreams)
-
-    for ix, f in enumerate(finegrainedlineage):
-        if ix == 0:
-            print(f[1])
-
-    # workunits = hana_source._get_column_lineage_workunits(conn)
-
-    # print(len(list(workunits)))
