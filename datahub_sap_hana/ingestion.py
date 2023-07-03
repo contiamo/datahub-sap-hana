@@ -118,6 +118,11 @@ class HanaSource(SQLAlchemySource):
     def __init__(self, config: HanaConfig, ctx: PipelineContext):
         super().__init__(config, ctx, "hana")
 
+    @classmethod
+    def create(cls, config_dict: Dict[str, Any], ctx: PipelineContext) -> "HanaSource":
+        config = HanaConfig.parse_obj(config_dict)
+        return cls(config, ctx)
+
     def get_workunits(self) -> Iterable[Union[MetadataWorkUnit, SqlWorkUnit]]:
         conn = self.get_db_connection()
         try:
@@ -163,7 +168,8 @@ class HanaSource(SQLAlchemySource):
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
                 logger.debug(
-                    f"View pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
+                    f"View pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}"
+                )
                 continue
 
             if not self.config.schema_pattern.allowed(lineage.dependent_schema):
@@ -171,7 +177,8 @@ class HanaSource(SQLAlchemySource):
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
                 logger.debug(
-                    f"Schema pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
+                    f"Schema pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}"
+                )
                 continue
 
             key = (lineage.dependent_view, lineage.dependent_schema)
@@ -241,7 +248,7 @@ class HanaSource(SQLAlchemySource):
     def _get_column_lineage_for_view(self, view_sql: str) -> List[Node]:
         """Extracts the columns and the sql definitions of a downstream view to build a lineage graph."""
 
-        expression: DerivedTable = parse_one(view_sql)
+        expression: DerivedTable = parse_one(view_sql)  # type: ignore
         selected_columns: List[str] = expression.named_selects
 
         view_sql = view_sql.lower()
@@ -266,11 +273,12 @@ class HanaSource(SQLAlchemySource):
                 Tuple[DownstreamLineageField, List[UpstreamLineageField]]
             ] = []
 
-            column_lineages = self._get_column_lineage_for_view(view.sql)   
+            column_lineages = self._get_column_lineage_for_view(view.sql)
 
             downstream_table_metadata = get_table_schema(
-                    inspector, view.name, view.schema)
-            
+                inspector, view.name, view.schema
+            )
+
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream
             # each element of lineage_node.downstream is a node that represents a column in the source table
@@ -282,8 +290,9 @@ class HanaSource(SQLAlchemySource):
                 )
 
                 # checks the casing for the downstream column based on what is in the db
-                downstream_column_metadata = downstream_table_metadata[lineage_node.name.lower(
-                )]
+                downstream_column_metadata = downstream_table_metadata[
+                    lineage_node.name.lower()
+                ]
                 downstream.name = downstream_column_metadata["name"]
 
                 upstream_fields_list = [
@@ -298,7 +307,6 @@ class HanaSource(SQLAlchemySource):
                 # from the inspector so that the Datahub URN we generate matches
                 # the URN from the base SQLAlchemy source implementation.
                 for column in upstream_fields_list:
-
                     # checks the casing for the upstream column based on what is in the db
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
