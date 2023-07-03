@@ -221,22 +221,24 @@ class HanaSource(SQLAlchemySource):
         self, inspector: Inspector
     ) -> Iterable[View]:
         schema: List[str] = inspector.get_schema_names()  # returns a list
-        # TODO, filter schemas
+
         for schema_name in schema:
-            views: List[str] = inspector.get_view_names(
-                schema=schema_name
-            )  # returns a list
+            if self.config.schema_pattern.allowed(schema_name):
 
-            for view_name in views:
-                view_sql: str = inspector.get_view_definition(
-                    view_name, schema_name)
+                views: List[str] = inspector.get_view_names(
+                    schema=schema_name
+                )  # returns a list
 
-                if view_sql:
-                    yield View(
-                        schema=schema_name,
-                        name=view_name,
-                        sql=view_sql,
-                    )
+                for view_name in views:
+                    view_sql: str = inspector.get_view_definition(
+                        view_name, schema_name)
+
+                    if view_sql:
+                        yield View(
+                            schema=schema_name,
+                            name=view_name,
+                            sql=view_sql,
+                        )
 
     def _get_column_lineage_for_view(self, view_sql: str) -> List[Node]:
         """Extracts the columns and the sql definitions of a downstream view to build a lineage graph."""
@@ -266,11 +268,11 @@ class HanaSource(SQLAlchemySource):
                 Tuple[DownstreamLineageField, List[UpstreamLineageField]]
             ] = []
 
-            column_lineages = self._get_column_lineage_for_view(view.sql)   
+            column_lineages = self._get_column_lineage_for_view(view.sql)
 
             downstream_table_metadata = get_table_schema(
-                    inspector, view.name, view.schema)
-            
+                inspector, view.name, view.schema)
+
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream
             # each element of lineage_node.downstream is a node that represents a column in the source table
