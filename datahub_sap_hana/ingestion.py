@@ -31,7 +31,7 @@ from datahub.metadata.com.linkedin.pegasus2avro.dataset import (
     UpstreamLineage,
 )
 from pydantic import BaseModel
-from pydantic.fields import Field as PydanticField
+from pydantic.fields import Field
 from sqlalchemy import create_engine, inspect
 from sqlalchemy.engine.base import Connection
 from sqlglot import parse_one
@@ -87,10 +87,9 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = PydanticField(
-        default=AllowDenyPattern(deny=["*SYS*"])
+    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
 
-    include_lineage: bool = PydanticField(
+    include_lineage: bool = Field(
         default=False, description="Include both  lineage for views and columns"
     )
     include_column_lineage: bool = Field(
@@ -166,7 +165,8 @@ class HanaSource(SQLAlchemySource):
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
                 logger.debug(
-                    f"View pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
+                    f"View pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}"
+                )
                 continue
 
             if not self.config.schema_pattern.allowed(lineage.dependent_schema):
@@ -174,7 +174,8 @@ class HanaSource(SQLAlchemySource):
                     f"{lineage.dependent_schema}.{lineage.dependent_view}"
                 )
                 logger.debug(
-                    f"Schema pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}")
+                    f"Schema pattern is incompatible, dropping: {lineage.dependent_schema}.{lineage.dependent_view}"
+                )
                 continue
 
             key = (lineage.dependent_view, lineage.dependent_schema)
@@ -228,7 +229,6 @@ class HanaSource(SQLAlchemySource):
         # TODO, filter schemas
 
         for schema_name in schema:
-
             if not self.config.schema_pattern.allowed(schema_name):
                 continue
 
@@ -237,8 +237,7 @@ class HanaSource(SQLAlchemySource):
             )  # returns a list
 
             for view_name in views:
-                view_sql: str = inspector.get_view_definition(
-                    view_name, schema_name)
+                view_sql: str = inspector.get_view_definition(view_name, schema_name)
 
                 if view_sql:
                     yield View(
@@ -302,8 +301,7 @@ class HanaSource(SQLAlchemySource):
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
                     )
-                    column_metadata = source_table_metadata[column.name.lower(
-                    )]
+                    column_metadata = source_table_metadata[column.name.lower()]
                     column.name = column_metadata["name"]
 
                 # we only have lineage information if there are "upstream" fields
@@ -339,7 +337,6 @@ class HanaSource(SQLAlchemySource):
             )
 
             for downstream_field, upstream_fields in lineage:
-
                 downstream_field_name = downstream_field.name.lower()
 
                 # upstream_column/s should be dependent on the existence of downstream_field attached to it
@@ -391,8 +388,7 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn,
-                             type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )
