@@ -30,7 +30,10 @@ source:
       "urn:li:domain:sales":
         allow:
           - "HOTEL"
-sink:
-  type: file
-  config: 
-    filename: ./sap_hana_results.json
+sink: 
+  type: console
+#sink: 
+#  type: file
+#  config: 
+#    filename: ./sap_hana_results.json
+
