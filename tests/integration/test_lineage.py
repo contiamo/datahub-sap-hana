@@ -1,6 +1,7 @@
 import pytest
 from datahub.ingestion.api.common import PipelineContext
 from serde.json import to_json
+from sqlalchemy import inspect
 
 from datahub_sap_hana.ingestion import HanaSource
 
@@ -28,8 +29,9 @@ def config():
 def test_get_view_definitions(config, ctx):
     source = HanaSource.create(config, ctx)
     conn = source.get_db_connection()
+    inspector = inspect(conn)
 
-    view_definitions = list(source.get_column_lineage_view_definitions(conn))
+    view_definitions = list(source.get_column_lineage_view_definitions(inspector))
 
     assert len(view_definitions) == 5
     assert [view.name for view in view_definitions] == [
@@ -48,8 +50,9 @@ def test_get_view_definitions(config, ctx):
 def test_get_column_lineage(config, ctx):
     source = HanaSource.create(config, ctx)
     conn = source.get_db_connection()
+    inspector = inspect(conn)
 
-    lineages = list(source.get_column_view_lineage_elements(conn))
+    lineages = list(source.get_column_view_lineage_elements(inspector))
 
     assert len(lineages) == 5
     assert [x[0].name for x in lineages] == [
