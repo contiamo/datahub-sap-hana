@@ -106,6 +106,9 @@ def test_get_column_lineage(config, ctx):
     upstreams = [x[1][0].name for x in column_lineage]
     assert upstreams == upstream_field_names, f"{upstreams}"
 
+    # Now test the more complicated view "total_rooms_price"
+    #
+    # It is defined as follows:
     # SELECT
     #   H.NAME,
     #   H.CITY,
@@ -124,13 +127,24 @@ def test_get_column_lineage(config, ctx):
 
     total_rooms_price = lineages[4]
     column_lineage = total_rooms_price[1]
-    assert column_lineage[0][0].name == "name"
-    assert column_lineage[1][0].name == "city"
-    assert column_lineage[2][0].name == "type"
-    assert column_lineage[3][0].name == "total_room_price"
+
+    # check that the downstream (target) columns are correct
+    expected_downstreams = ["name", "city", "type", "total_room_price"]
+    downstreams = [x[0].name for x in column_lineage]
+    assert downstreams == expected_downstreams, f"{downstreams}"
+
+    # check that the view schema and name are correct
     assert column_lineage[0][0].dataset.schema == "hotel"
     assert column_lineage[0][0].dataset.name == "total_rooms_price"
 
-    upstream_field_names = ["name", "city", "type", "price"]
-    upstreams = [x[1][0].name for x in column_lineage]
+    # now check that each of these columns has the correct upstream (source) columns
+    upstream_field_names = [
+        ["name"],  # upstream for name
+        ["city"],  # upstream for city
+        ["type"],  # upstream for type
+        ["price", "type"],  # upstream for total_room_price
+    ]
+    # note that we sort the upstreams because the order is not guaranteed by sqlglot
+    upstreams = [sorted([source.name for source in x[1]]) for x in column_lineage]
+
     assert upstreams == upstream_field_names, f"{upstreams}"

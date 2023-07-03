@@ -1,10 +1,12 @@
 {
     "cSpell.words": [
         "datahub",
+        "downstreams",
         "Hana",
         "sqlachemy",
         "sqlalchemy",
-        "sqlglot"
+        "sqlglot",
+        "upstreams"
     ],
     "[python]": {
         "editor.tabSize": 4,
