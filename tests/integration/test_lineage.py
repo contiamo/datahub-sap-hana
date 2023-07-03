@@ -1,6 +1,7 @@
 import pytest
 from datahub.ingestion.api.common import PipelineContext
 from serde.json import to_json
+from sqlalchemy import inspect
 
 from datahub_sap_hana.ingestion import HanaSource
 
@@ -28,8 +29,9 @@ def config():
 def test_get_view_definitions(config, ctx):
     source = HanaSource.create(config, ctx)
     conn = source.get_db_connection()
+    inspector = inspect(conn)
 
-    view_definitions = list(source.get_column_lineage_view_definitions(conn))
+    view_definitions = list(source.get_column_lineage_view_definitions(inspector))
 
     assert len(view_definitions) == 5
     assert [view.name for view in view_definitions] == [
@@ -48,8 +50,9 @@ def test_get_view_definitions(config, ctx):
 def test_get_column_lineage(config, ctx):
     source = HanaSource.create(config, ctx)
     conn = source.get_db_connection()
+    inspector = inspect(conn)
 
-    lineages = list(source.get_column_view_lineage_elements(conn))
+    lineages = list(source.get_column_view_lineage_elements(inspector))
 
     assert len(lineages) == 5
     assert [x[0].name for x in lineages] == [
@@ -60,9 +63,19 @@ def test_get_column_lineage(config, ctx):
         "total_rooms_price",
     ]
 
-    # SELECT "H"."HNO" , "H"."NAME" , "H"."ADDRESS" , "H"."CITY" , "H"."STATE" , "H"."ZIP" , "R"."TYPE" , "R"."PRICE" , "R"."FREE"
-    #  FROM HOTEL.ROOM AS R\n
-    # LEFT JOIN HOTEL.HOTEL AS H \n  ON H.HNO=R.HNO'
+    # SELECT
+    # "H"."HNO" ,
+    # "H"."NAME" ,
+    # "H"."ADDRESS" ,
+    # "H"."CITY" ,
+    # "H"."STATE" ,
+    # "H"."ZIP" ,
+    # "R"."TYPE" ,
+    # "R"."PRICE" ,
+    # "R"."FREE"
+    #  FROM HOTEL.ROOM AS R
+    # LEFT JOIN HOTEL.HOTEL AS H
+    #   ON H.HNO=R.HNO'
 
     flat_hotel_rooms = lineages[1]
     column_lineage = flat_hotel_rooms[1]
@@ -93,11 +106,21 @@ def test_get_column_lineage(config, ctx):
     upstreams = [x[1][0].name for x in column_lineage]
     assert upstreams == upstream_field_names, f"{upstreams}"
 
-    # SELECT\n  H.NAME,\n  H.CITY,\n  R.TYPE,\n  COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE\n
-    # FROM\n  HOTEL.ROOM AS R\n
-    # LEFT JOIN\n  HOTEL.HOTEL AS H\n
-    # ON H.HNO = R.HNO\n
-    # GROUP BY \n  H.NAME,\n  H.CITY,\n  R.TYPE, \n  R.PRICE'
+    # SELECT
+    #   H.NAME,
+    #   H.CITY,
+    #   R.TYPE,
+    #   COUNT(R.TYPE) * (R.PRICE) AS TOTAL_ROOM_PRICE
+    # FROM
+    #   HOTEL.ROOM AS R
+    # LEFT JOIN
+    #   HOTEL.HOTEL AS H
+    # ON H.HNO = R.HNO
+    # GROUP BY
+    #   H.NAME,
+    #   H.CITY,
+    #   R.TYPE,
+    #   R.PRICE'
 
     total_rooms_price = lineages[4]
     column_lineage = total_rooms_price[1]
