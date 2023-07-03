@@ -31,7 +31,9 @@ class View(Table):
 class ColumnField:
     """
     ColumnField contains the metadata to describe a column in a table.
-    Use `ColumnField.from_node(lineage_node)` to create a ColumnField from a sqlglot node.
+
+    Use `ColumnField.from_node(lineage_node)` to create a ColumnField
+    from a sqlglot node.
     """
 
     name: str
@@ -47,12 +49,16 @@ class ColumnField:
 
 
 class UpstreamLineageField(ColumnField):
-    """UpstreamField contains the metadata to describe the upstream column (source) lineage of a DownstreamField."""
+    """UpstreamField contains the metadata to describe the
+    upstream column (source) lineage of a DownstreamField.
+    """
 
     pass
 
 
 class DownstreamLineageField(ColumnField):
-    """DownstreamField contains the metadata to describe the downstream column (target) lineage of a column in a table."""
+    """DownstreamField contains the metadata to describe the
+    downstream column (target) lineage of a column in a table.
+    """
 
     pass
