@@ -89,7 +89,8 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
+    schema_pattern: AllowDenyPattern = Field(
+        default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
@@ -193,7 +194,8 @@ class HanaSource(SQLAlchemySource):
             lineage_elements[key].append(
                 mce_builder.make_dataset_urn(
                     self.platform,
-                    self.config.get_identifier(item.source_schema, item.source_table),
+                    self.config.get_identifier(
+                        item.source_schema, item.source_table),
                     self.config.env,
                 )
             )
@@ -238,14 +240,14 @@ class HanaSource(SQLAlchemySource):
 
         for schema_name in schema:
             if self.config.schema_pattern.allowed(schema_name):
-
                 views: List[str] = inspector.get_view_names(
                     schema=schema_name
                 )  # returns a list
 
                 for view_name in views:
                     view_sql: str = inspector.get_view_definition(
-                        view_name, schema_name)
+                        view_name, schema_name
+                    )
 
                     if view_sql:
                         yield View(
@@ -281,18 +283,20 @@ class HanaSource(SQLAlchemySource):
         Each tuple contains a downstream field (a column in a view) and a list of
         upstream fields (columns in other views or tables that are used to
         calculate/transform the downstream column).
-        """
 
+        """
         for view in self.get_column_lineage_view_definitions(inspector):
+
             column_lineage: List[
-                Tuple[DownstreamLineageField, List[UpstreamLineageField]]
+                Tuple[DownstreamLineageField,
+                      List[UpstreamLineageField]]
             ] = []
 
-            column_lineages = self._get_column_lineage_for_view(view.sql)
+            column_lineages = self._get_column_lineage_for_view(
+                view.sql)
 
             downstream_table_metadata = get_table_schema(
                 inspector, view.name, view.schema)
-
 
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream each element
@@ -312,7 +316,8 @@ class HanaSource(SQLAlchemySource):
                 downstream.name = downstream_column_metadata["name"]
 
                 upstream_fields_list = [
-                    UpstreamLineageField.from_node(column_node, view.schema)
+                    UpstreamLineageField.from_node(
+                        column_node, view.schema)
                     for column_node in lineage_node.downstream
                 ]
 
@@ -327,12 +332,14 @@ class HanaSource(SQLAlchemySource):
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
                     )
-                    column_metadata = source_table_metadata[column.name.lower()]
+                    column_metadata = source_table_metadata[column.name.lower(
+                    )]
                     column.name = column_metadata["name"]
 
                 # we only have lineage information if there are "upstream" fields
                 if len(lineage_node.downstream) > 0:
-                    column_lineage.append((downstream, upstream_fields_list))
+                    column_lineage.append(
+                        (downstream, upstream_fields_list))
 
             yield view, column_lineage
 
@@ -417,7 +424,8 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn,
+                             type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )
@@ -436,3 +444,37 @@ def get_table_schema(inspector: Inspector, table_name: str, schema_name: str) ->
         column["name"].lower(): column
         for column in inspector.get_columns(table_name, schema_name)
     }
+
+
+if __name__ == "__main__":
+    hana_config = HanaConfig(
+        username="system",
+        password="HXEHana1",
+        host_port="localhost:39041",
+        database="HXE",
+        schema_pattern=AllowDenyPattern(allow=["RESERVATIONS", "HOTEL"]),
+        include_view_lineage=True,
+    )  # type: ignore
+    hana_source = HanaSource(hana_config, PipelineContext(run_id="test"))
+    conn = hana_source.get_db_connection()
+    inspector = inspect(conn)
+
+    column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions(
+        inspector
+    )
+    for view in column_lineage_view_definitions:
+        # print(view.name, view.sql)
+
+        if view.name == "test_cross_schema":
+            cross_schema_sql = view.sql
+
+            print(cross_schema_sql)
+
+            cross_schema_lineage = hana_source._get_column_lineage_for_view(
+                cross_schema_sql)
+            print(cross_schema_lineage)
+            lineage_elements = hana_source.get_column_view_lineage_elements(
+                inspector)
+
+            for ix, elements in enumerate(lineage_elements):
+                print(ix, elements[0].name, elements[0].schema, )

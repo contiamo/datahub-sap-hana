@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 from typing import List
 
 import pytest
@@ -36,3 +37,8 @@ def pytest_collection_modifyitems(items: List[pytest.Item], config: pytest.Confi
     for item in items:
         if "test_integration" in item.nodeid:
             item.add_marker(pytest.mark.integration)
+
+
+@pytest.fixture
+def testdata(request: pytest.FixtureRequest):
+    return Path(request.module.__file__).parent / "testdata"  # type: ignore
