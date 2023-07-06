@@ -3548,13 +3548,13 @@ devenv = ["black", "check-manifest", "flake8", "pyroma", "pytest (>=4.3)", "pyte
 
 [[package]]
 name = "unimport"
-version = "0.16.0"
+version = "0.16.1"
 description = "The ultimate linter and formatter for removing unused import statements in your code."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "unimport-0.16.0-py3-none-any.whl", hash = "sha256:91881750b76ef673de3899623b215b47b66671f73d5b94e8b06f5a3942ab5f52"},
-    {file = "unimport-0.16.0.tar.gz", hash = "sha256:cc0c407c33ee680adb4bbea250a41b7b693e3d74916fef1c119040b277249190"},
+    {file = "unimport-0.16.1-py3-none-any.whl", hash = "sha256:fd267224103cf2a303085af8a7e3f26f95863b75094347d9ef06724a14930e8a"},
+    {file = "unimport-0.16.1.tar.gz", hash = "sha256:1d953951815eb5230652a0e7cd22b631e49ead4d4149ddb0dc060fa04fbf67cf"},
 ]
 
 [package.dependencies]
@@ -3823,4 +3823,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "815199d84baa47ca3b8d9d61aab1465afe8f7d8b1a1a0390d7ba4baa3273aecc"
+content-hash = "ba7039c3975b312dcebe7363852e3b1ef421f7ec874f91e091b3e2e26e34c13a"
