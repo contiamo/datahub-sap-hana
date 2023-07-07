@@ -49,9 +49,6 @@ class ColumnField:
         if isinstance(node.source, expressions.Table):
             node.source
 
-        # print(type(node.source).__name__)
-        # print(f"name={node.source.name}, db={node.source.db}")  # type:ignore
-        # print(f"name={node.source.name}, catalog={node.source.catalog}")
 
         return cls(
             name=parse_column_name(node.name),
