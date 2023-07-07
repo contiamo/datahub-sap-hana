@@ -51,8 +51,7 @@ class ColumnField:
 
         return cls(
             name=parse_column_name(node.name),
-            dataset=Table(
-                schema=node.source.catalog or node.source.db or default_schema, name=node.source.name,)  # type:ignore
+            dataset=Table(schema=schema, name=node.source.name)
         )
 
 
