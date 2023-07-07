@@ -44,10 +44,9 @@ class ColumnField:
     def from_node(cls, node: Node, schema: str):
         """Creates a ColumnField from a sqlglot node."""
 
-        default_schema = schema
-
+        schema = default_schema
         if isinstance(node.source, expressions.Table):
-            node.source
+            schema = node.source.catalog or node.source.db or default_schema
 
 
         return cls(
