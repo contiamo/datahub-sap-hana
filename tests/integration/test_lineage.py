@@ -1,5 +1,4 @@
 from pathlib import Path
-
 import pytest
 from datahub.configuration.common import AllowDenyPattern
 from datahub.ingestion.api.common import PipelineContext
@@ -18,14 +17,14 @@ def ctx():
 @pytest.fixture
 def config():
     return {
-        "username": "HOTEL",
+        "username": "HOTEL_SCHEMA",
         "password": "Localdev1",
         "database": "HXE",
         "host_port": "localhost:39041",
         "include_view_lineage": True,
         "include_column_lineage": True,
-        "schema_pattern": {"allow": ["HOTEL"], "ignoreCase": True},
-        "profile_pattern": {"allow": ["HOTEL"]},
+        "schema_pattern": {"allow": ["HOTEL*"], "ignoreCase": True},
+        "profile_pattern": {"allow": ["HOTEL*"]},
     }
 
 
@@ -52,7 +51,7 @@ def test_get_view_definitions(config, ctx):
     ]
 
     assert all([view.sql for view in view_definitions])
-    assert all([view.schema == "hotel" for view in view_definitions])
+    assert all([view.schema == "hotel_schema" for view in view_definitions])
 
 
 @pytest.mark.db
@@ -95,7 +94,7 @@ def test_get_column_lineage(config, ctx):
     column_lineage = flat_hotel_rooms[1]
     assert len(column_lineage) == 9, f"found: {to_json(column_lineage)}"
     assert column_lineage[0][0].name == "hno"
-    assert column_lineage[0][0].dataset.schema == "hotel"
+    assert column_lineage[0][0].dataset.schema == "hotel_schema"
     assert column_lineage[0][0].dataset.name == "flat_hotel_rooms"
     assert column_lineage[1][0].name == "name", f"{column_lineage[1][0].name }"
     assert column_lineage[2][0].name == "address", f"{column_lineage[2][0].name }"
@@ -160,7 +159,7 @@ def test_get_column_lineage(config, ctx):
     assert downstreams == expected_downstreams, f"check: {downstreams}"
 
     # check that the view schema and name are correct
-    assert column_lineage[0][0].dataset.schema == "hotel"
+    assert column_lineage[0][0].dataset.schema == "hotel_schema"
     assert column_lineage[0][0].dataset.name == "latest_maintenance"
 
     # now check that each of these columns has the correct upstream (source) columns
@@ -179,7 +178,7 @@ def test_get_column_lineage(config, ctx):
 
     assert upstreams == upstream_field_names, f"found: {upstreams}"
 
-    # test for view with subselect, joined with a view, and windown func
+    # test for view with subselect, joined with a view, and window func
 
     #     SELECT
     #     H.NAME,
@@ -215,7 +214,7 @@ def test_get_column_lineage(config, ctx):
     assert downstreams == expected_downstreams, f"check: {downstreams}"
 
     # check that the view schema and name are correct
-    assert column_lineage[0][0].dataset.schema == "hotel"
+    assert column_lineage[0][0].dataset.schema == "hotel_schema"
     assert column_lineage[0][0].dataset.name == "guests"
 
     # now check that each of these columns has the correct upstream (source) columns
@@ -235,6 +234,7 @@ def test_get_column_lineage(config, ctx):
     assert upstreams == upstream_field_names, f"found: {upstreams}"
 
 
+# test for cross-schema where the downstream is on reservations_schema and the upstreams are on hotel_schema
 @pytest.mark.db
 def test_cross_schema(testdata: Path, ctx):
     scheme = "hana"  # make this into dictionary
@@ -251,7 +251,7 @@ def test_cross_schema(testdata: Path, ctx):
         "database": "HXE",
         "include_view_lineage": "true",
         "include_column_lineage": "true",
-        "schema_pattern": AllowDenyPattern(allow=["RESERVATIONS"]),
+        "schema_pattern": AllowDenyPattern(allow=["RESERVATIONS*"]),
     }
 
     test_schema_file = testdata / "test_cross_schema.sql"
@@ -262,18 +262,18 @@ def test_cross_schema(testdata: Path, ctx):
     conn = engine.connect()
 
     schema_results = conn.execute(
-        "SELECT * FROM SCHEMAS WHERE SCHEMA_NAME = 'RESERVATIONS'"
+        "SELECT * FROM SCHEMAS WHERE SCHEMA_NAME = 'RESERVATIONS_SCHEMA'"
     )
     print(schema_results)
 
     if schema_results.returns_rows:
-        conn.execute("DROP SCHEMA RESERVATIONS CASCADE")
+        conn.execute("DROP SCHEMA RESERVATIONS_SCHEMA CASCADE")
 
-    conn.execute("CREATE SCHEMA RESERVATIONS")
+    conn.execute("CREATE SCHEMA RESERVATIONS_SCHEMA")
     conn.execute(test_schema)
 
     assert any(
-        "RESERVATIONS" in item[0] for item in schema_results
+        "RESERVATIONS_SCHEMA" in item[0] for item in schema_results
     ), f"{schema_results}"
 
     # source class
@@ -281,19 +281,69 @@ def test_cross_schema(testdata: Path, ctx):
     source.get_db_connection()
     inspector = inspect(conn)
 
-    sql = 'SELECT\n  H.NAME,\n  R.TYPE,\n  R.FREE,\n  COUNT(R.FREE) AS FREE_RM_COUNT\nFROM\n  HOTEL.ROOM AS R\n  LEFT JOIN\n  HOTEL.HOTEL AS H\n  ON H.HNO = R.HNO\nGROUP BY \n  H.NAME,\n  R.TYPE, \n  R.FREE'
     view_definitions = source.get_column_lineage_view_definitions(inspector)
 
+    # sql = """SELECT
+    # H.NAME,
+    # R.TYPE,
+    # R.FREE,
+    # COUNT(R.FREE) AS FREE_RM_COUNT
+    # FROM
+    # HOTEL_SCHEMA.ROOM AS R
+    # LEFT JOIN
+    # HOTEL_SCHEMA.HOTEL AS H
+    # ON H.HNO = R.HNO
+    # GROUP BY
+    # H.NAME,
+    # R.TYPE,
+    # R.FREE;"""
+
     for views in view_definitions:
-        assert views.name == "test_cross_schema", f"{views.name}"  # pass
-        assert views.schema == "reservations"  # pass
-        assert views.sql == sql, f"{views.sql}"  # pass
+        # pass
+        assert views.name == "test_cross_schema"
+        assert views.schema == "reservations_schema"
 
-    # notes: view from reservation schema is detected before creation of column lineage. When get_column_view_lineage elements is
-    # executed, there is a Key error
+    lineages = list(source.get_column_view_lineage_elements(inspector))
+    assert len(lineages) == 1
+    cross_schema = lineages[0]
+    column_lineage = cross_schema[1]
 
-    # create the dictionary for config
-    # create the source class
-    # test for the get_column_view_lineage
-    # test for the downstream nd upstream columns
-    # check for behavior of diff schemas (hotel, reservations)
+    # test for downstream cols
+    expected_downstreams = [
+        "name",
+        "type",
+        "free",
+        "free_rm_count",
+    ]
+    downstreams = [x[0].name for x in column_lineage]
+    assert (
+        downstreams == expected_downstreams
+    ), f"cross_schema_downstreams: {downstreams}"
+
+    # test for upstream cols
+    upstream_field_names = [
+        ["name"],  # name of hotel
+        ["type"],  # type of room
+        ["free"],  # status  of room
+        ["free"],  # status  of room
+    ]
+    # note that we sort the upstreams because the order is not guaranteed by sqlglot
+    upstreams = [sorted([source.name for source in x[1]])
+                 for x in column_lineage]
+
+    assert upstreams == upstream_field_names, f"cross_schema_upstreams: {upstreams}"
+
+    # test to see the downstream shema name
+    assert (
+        column_lineage[0][0].dataset.schema == "reservations_schema"
+    ), f"cross_schema_upstreams: {column_lineage[0][0].dataset.schema}"
+
+    # test to see the source schema name
+    expected_upstream_schema = [
+        ["hotel_schema"],
+    ]
+
+    upstreams_schema = [
+        sorted([source.dataset.schema for source in x[1]]) for x in column_lineage
+    ]
+    assert upstreams_schema[0] == expected_upstream_schema[0], f"{upstreams_schema[0]}"

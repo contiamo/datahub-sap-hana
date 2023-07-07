@@ -286,17 +286,15 @@ class HanaSource(SQLAlchemySource):
 
         """
         for view in self.get_column_lineage_view_definitions(inspector):
-
             column_lineage: List[
-                Tuple[DownstreamLineageField,
-                      List[UpstreamLineageField]]
+                Tuple[DownstreamLineageField, List[UpstreamLineageField]]
             ] = []
 
-            column_lineages = self._get_column_lineage_for_view(
-                view.sql)
+            column_lineages = self._get_column_lineage_for_view(view.sql)
 
             downstream_table_metadata = get_table_schema(
-                inspector, view.name, view.schema)
+                inspector, view.name, view.schema
+            )
 
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream each element
@@ -316,8 +314,7 @@ class HanaSource(SQLAlchemySource):
                 downstream.name = downstream_column_metadata["name"]
 
                 upstream_fields_list = [
-                    UpstreamLineageField.from_node(
-                        column_node, view.schema)
+                    UpstreamLineageField.from_node(column_node, view.schema)
                     for column_node in lineage_node.downstream
                 ]
 
@@ -338,8 +335,7 @@ class HanaSource(SQLAlchemySource):
 
                 # we only have lineage information if there are "upstream" fields
                 if len(lineage_node.downstream) > 0:
-                    column_lineage.append(
-                        (downstream, upstream_fields_list))
+                    column_lineage.append((downstream, upstream_fields_list))
 
             yield view, column_lineage
 
@@ -444,37 +440,3 @@ def get_table_schema(inspector: Inspector, table_name: str, schema_name: str) ->
         column["name"].lower(): column
         for column in inspector.get_columns(table_name, schema_name)
     }
-
-
-if __name__ == "__main__":
-    hana_config = HanaConfig(
-        username="system",
-        password="HXEHana1",
-        host_port="localhost:39041",
-        database="HXE",
-        schema_pattern=AllowDenyPattern(allow=["RESERVATIONS", "HOTEL"]),
-        include_view_lineage=True,
-    )  # type: ignore
-    hana_source = HanaSource(hana_config, PipelineContext(run_id="test"))
-    conn = hana_source.get_db_connection()
-    inspector = inspect(conn)
-
-    column_lineage_view_definitions = hana_source.get_column_lineage_view_definitions(
-        inspector
-    )
-    for view in column_lineage_view_definitions:
-        # print(view.name, view.sql)
-
-        if view.name == "test_cross_schema":
-            cross_schema_sql = view.sql
-
-            print(cross_schema_sql)
-
-            cross_schema_lineage = hana_source._get_column_lineage_for_view(
-                cross_schema_sql)
-            print(cross_schema_lineage)
-            lineage_elements = hana_source.get_column_view_lineage_elements(
-                inspector)
-
-            for ix, elements in enumerate(lineage_elements):
-                print(ix, elements[0].name, elements[0].schema, )

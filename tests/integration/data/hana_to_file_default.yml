@@ -15,14 +15,14 @@ source:
     include_column_lineage: true
     schema_pattern:
       allow:
-        - "HOTEL"
+        - "HOTEL*"
       ignoreCase: true
     profile_pattern:
       allow:
-        - "HOTEL"
+        - "HOTEL*"
     profile_pattern:
       allow:
-        - "HOTEL"
+        - "HOTEL*"
     profiling:
       enabled: True
       include_field_null_count: true
