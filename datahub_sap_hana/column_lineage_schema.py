@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from serde import serde
 from sqlglot.lineage import Node
+from sqlglot import expressions
 
 
 def parse_column_name(column_name: str):
@@ -42,9 +43,20 @@ class ColumnField:
     @classmethod
     def from_node(cls, node: Node, schema: str):
         """Creates a ColumnField from a sqlglot node."""
+
+        default_schema = schema
+
+        if isinstance(node.source, expressions.Table):
+            node.source
+
+        # print(type(node.source).__name__)
+        # print(f"name={node.source.name}, db={node.source.db}")  # type:ignore
+        # print(f"name={node.source.name}, catalog={node.source.catalog}")
+
         return cls(
             name=parse_column_name(node.name),
-            dataset=Table(schema=schema, name=node.source.name),
+            dataset=Table(
+                schema=node.source.catalog or node.source.db or default_schema, name=node.source.name,)  # type:ignore
         )
 
 
