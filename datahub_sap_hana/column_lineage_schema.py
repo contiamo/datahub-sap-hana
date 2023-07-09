@@ -47,11 +47,12 @@ class ColumnField:
         schema = default_schema
 
         if isinstance(node.source, expressions.Table):
-            schema = node.source.catalog or node.source.db  # type:ignore
+            schema = node.source.catalog or node.source.db or default_schema
 
         return cls(
             name=parse_column_name(node.name),
-            dataset=Table(schema=schema, name=node.source.name or default_schema),
+            dataset=Table(
+                schema=schema, name=node.source.name),
         )
 
 

@@ -89,8 +89,7 @@ class HanaConfig(BasicSQLAlchemyConfig):
     """Represents the attributes needed to configure the SAP HANA DB connection"""
 
     scheme = "hana"
-    schema_pattern: AllowDenyPattern = Field(
-        default=AllowDenyPattern(deny=["*SYS*"]))
+    schema_pattern: AllowDenyPattern = Field(default=AllowDenyPattern(deny=["*SYS*"]))
     include_view_lineage: bool = Field(
         default=False, description="Include table lineage for views"
     )
@@ -194,8 +193,7 @@ class HanaSource(SQLAlchemySource):
             lineage_elements[key].append(
                 mce_builder.make_dataset_urn(
                     self.platform,
-                    self.config.get_identifier(
-                        item.source_schema, item.source_table),
+                    self.config.get_identifier(item.source_schema, item.source_table),
                     self.config.env,
                 )
             )
@@ -329,8 +327,7 @@ class HanaSource(SQLAlchemySource):
                     source_table_metadata = get_table_schema(
                         inspector, column.dataset.name, column.dataset.schema
                     )
-                    column_metadata = source_table_metadata[column.name.lower(
-                    )]
+                    column_metadata = source_table_metadata[column.name.lower()]
                     column.name = column_metadata["name"]
 
                 # we only have lineage information if there are "upstream" fields
@@ -420,8 +417,7 @@ class HanaSource(SQLAlchemySource):
             fieldLineages = UpstreamLineage(
                 fineGrainedLineages=column_lineages,
                 upstreams=[
-                    Upstream(dataset=dataset_urn,
-                             type=DatasetLineageType.TRANSFORMED)
+                    Upstream(dataset=dataset_urn, type=DatasetLineageType.TRANSFORMED)
                     for dataset_urn in list(upstream_datasets)
                 ],
             )

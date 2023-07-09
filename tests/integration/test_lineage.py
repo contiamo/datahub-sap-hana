@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import pytest
 from datahub.configuration.common import AllowDenyPattern
 from datahub.ingestion.api.common import PipelineContext
@@ -117,7 +118,10 @@ def test_get_column_lineage(config, ctx):
         "free",
     ]
 
-    upstreams = [x[1][0].name for x in column_lineage]
+    upstreams = [
+        x[1][0].name
+        for x in column_lineage
+    ]
     assert upstreams == upstream_field_names, f"here: {upstreams}"
 
     # Now test the more complicated view "latest_maintenance", which has 3 tables + window functions
@@ -155,9 +159,12 @@ def test_get_column_lineage(config, ctx):
         "rank",
         "latest_maintenance",
     ]
-    downstreams = [x[0].name for x in column_lineage]
-    assert downstreams == expected_downstreams, f"check: {downstreams}"
+    downstreams = [
+        x[0].name
+        for x in column_lineage
+    ]
 
+    assert downstreams == expected_downstreams, f"check: {downstreams}"
     # check that the view schema and name are correct
     assert column_lineage[0][0].dataset.schema == "hotel_schema"
     assert column_lineage[0][0].dataset.name == "latest_maintenance"
@@ -173,8 +180,10 @@ def test_get_column_lineage(config, ctx):
         ["description", "name"],  # maintenance description and name of hotel
     ]
     # note that we sort the upstreams because the order is not guaranteed by sqlglot
-    upstreams = [sorted([source.name for source in x[1]])
-                 for x in column_lineage]
+    upstreams = [
+        sorted([source.name for source in x[1]])
+        for x in column_lineage
+    ]
 
     assert upstreams == upstream_field_names, f"found: {upstreams}"
 
@@ -210,9 +219,12 @@ def test_get_column_lineage(config, ctx):
         "num_reservations",
         "rn",
     ]
-    downstreams = [x[0].name for x in column_lineage]
-    assert downstreams == expected_downstreams, f"check: {downstreams}"
+    downstreams = [
+        x[0].name
+        for x in column_lineage
+    ]
 
+    assert downstreams == expected_downstreams, f"check: {downstreams}"
     # check that the view schema and name are correct
     assert column_lineage[0][0].dataset.schema == "hotel_schema"
     assert column_lineage[0][0].dataset.name == "guests"
@@ -223,13 +235,15 @@ def test_get_column_lineage(config, ctx):
         ["type"],  # type of room
         ["price"],  # price of room
         ["free"],  # status of room
-        # columms used in subselect to get num_reservations column
+        # cols used in subselect to get num_reservations column
         ["hno", "hno", "type", "type"],
         ["name", "price"],  # cols from view total_room_price to get rn column
     ]
     # note that we sort the upstreams because the order is not guaranteed by sqlglot
-    upstreams = [sorted([source.name for source in x[1]])
-                 for x in column_lineage]
+    upstreams = [
+        sorted([source.name for source in x[1]])
+        for x in column_lineage
+    ]
 
     assert upstreams == upstream_field_names, f"found: {upstreams}"
 
@@ -283,25 +297,25 @@ def test_cross_schema(testdata: Path, ctx):
 
     view_definitions = source.get_column_lineage_view_definitions(inspector)
 
-    # sql = """SELECT
-    # H.NAME,
-    # R.TYPE,
-    # R.FREE,
-    # COUNT(R.FREE) AS FREE_RM_COUNT
-    # FROM
-    # HOTEL_SCHEMA.ROOM AS R
-    # LEFT JOIN
-    # HOTEL_SCHEMA.HOTEL AS H
-    # ON H.HNO = R.HNO
-    # GROUP BY
-    # H.NAME,
-    # R.TYPE,
-    # R.FREE;"""
-
     for views in view_definitions:
         # pass
         assert views.name == "test_cross_schema"
         assert views.schema == "reservations_schema"
+
+    #   """SELECT
+    #   H.NAME,
+    #   R.TYPE,
+    #   R.FREE,
+    #   COUNT(R.FREE) AS FREE_RM_COUNT
+    #   FROM
+    #   HOTEL_SCHEMA.ROOM AS R
+    #   LEFT JOIN
+    #   HOTEL_SCHEMA.HOTEL AS H
+    #   ON H.HNO = R.HNO
+    #   GROUP BY
+    #   H.NAME,
+    #   R.TYPE,
+    #   R.FREE;"""
 
     lineages = list(source.get_column_view_lineage_elements(inspector))
     assert len(lineages) == 1
@@ -315,7 +329,11 @@ def test_cross_schema(testdata: Path, ctx):
         "free",
         "free_rm_count",
     ]
-    downstreams = [x[0].name for x in column_lineage]
+    downstreams = [
+        x[0].name
+        for x in column_lineage
+    ]
+
     assert (
         downstreams == expected_downstreams
     ), f"cross_schema_downstreams: {downstreams}"
@@ -328,22 +346,30 @@ def test_cross_schema(testdata: Path, ctx):
         ["free"],  # status  of room
     ]
     # note that we sort the upstreams because the order is not guaranteed by sqlglot
-    upstreams = [sorted([source.name for source in x[1]])
-                 for x in column_lineage]
+    upstreams = [
+        sorted([source.name for source in x[1]])
+        for x in column_lineage
+    ]
 
     assert upstreams == upstream_field_names, f"cross_schema_upstreams: {upstreams}"
-
-    # test to see the downstream shema name
+    # test to see the downstream schema name
     assert (
         column_lineage[0][0].dataset.schema == "reservations_schema"
     ), f"cross_schema_upstreams: {column_lineage[0][0].dataset.schema}"
 
-    # test to see the source schema name
+    # test to see the schema name for each source columns
     expected_upstream_schema = [
+        ["hotel_schema"],
+        ["hotel_schema"],
+        ["hotel_schema"],
         ["hotel_schema"],
     ]
 
     upstreams_schema = [
-        sorted([source.dataset.schema for source in x[1]]) for x in column_lineage
+        sorted([source.dataset.schema for source in x[1]])
+        for x in column_lineage
     ]
-    assert upstreams_schema[0] == expected_upstream_schema[0], f"{upstreams_schema[0]}"
+
+    # assert upstreams_schema[0] == expected_upstream_schema[0], f"{upstreams_schema[0]}" # check for 1 column only
+    # tests for all columns
+    assert upstreams_schema == expected_upstream_schema, f"{upstreams_schema}"
