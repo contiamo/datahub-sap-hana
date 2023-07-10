@@ -297,10 +297,10 @@ def test_cross_schema(testdata: Path, ctx):
 
     view_definitions = source.get_column_lineage_view_definitions(inspector)
 
-    for views in view_definitions:
-        # pass
-        assert views.name == "test_cross_schema"
-        assert views.schema == "reservations_schema"
+    assert len(view_definitions) == 1
+    view = view_definitions[0]
+    assert view.name == "test_cross_schema"
+    assert view.schema == "reservations_schema"
 
     #   """SELECT
     #   H.NAME,
