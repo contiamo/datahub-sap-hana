@@ -31,7 +31,7 @@ source:
         allow:
           - "HOTEL"
 sink: 
-  type: console"""
+  type: console
 
 # sink: 
 #   type: file
