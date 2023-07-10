@@ -2,6 +2,13 @@
 
 Add your SAP Hana databases to your Linkedin Datahub!
 
+# Description
+This python package extracts views metadata from SAP Hana db to create table and column lineage to Datahub. 
+The script for the source file supports ingestion of both table and column lineage via the Datahub CLI in one yaml recipe file. 
+The ingestion config file can also specify specific schemas to include/ exclude and allows for the creation of lineage across different schemas in a SAP Hana db. 
+Results can be seen in the Datahub UI or printed in the console, or file. 
+
+
 ## Installing
 
 Pre-built Wheels can be downloaded from the [Releases page](https://github.com/contiamo/datahub-sap-hana/releases/latest)
