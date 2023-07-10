@@ -238,14 +238,14 @@ class HanaSource(SQLAlchemySource):
 
         for schema_name in schema:
             if self.config.schema_pattern.allowed(schema_name):
-
                 views: List[str] = inspector.get_view_names(
                     schema=schema_name
                 )  # returns a list
 
                 for view_name in views:
                     view_sql: str = inspector.get_view_definition(
-                        view_name, schema_name)
+                        view_name, schema_name
+                    )
 
                     if view_sql:
                         yield View(
@@ -281,8 +281,8 @@ class HanaSource(SQLAlchemySource):
         Each tuple contains a downstream field (a column in a view) and a list of
         upstream fields (columns in other views or tables that are used to
         calculate/transform the downstream column).
-        """
 
+        """
         for view in self.get_column_lineage_view_definitions(inspector):
             column_lineage: List[
                 Tuple[DownstreamLineageField, List[UpstreamLineageField]]
@@ -291,8 +291,8 @@ class HanaSource(SQLAlchemySource):
             column_lineages = self._get_column_lineage_for_view(view.sql)
 
             downstream_table_metadata = get_table_schema(
-                inspector, view.name, view.schema)
-
+                inspector, view.name, view.schema
+            )
 
             # lineage_node represents the lineage of 1 column in sqlglot
             # lineage_node.downstream is the datahub upstream each element
