@@ -3548,13 +3548,13 @@ devenv = ["black", "check-manifest", "flake8", "pyroma", "pytest (>=4.3)", "pyte
 
 [[package]]
 name = "unimport"
-version = "0.16.0"
+version = "1.0.0"
 description = "The ultimate linter and formatter for removing unused import statements in your code."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "unimport-0.16.0-py3-none-any.whl", hash = "sha256:91881750b76ef673de3899623b215b47b66671f73d5b94e8b06f5a3942ab5f52"},
-    {file = "unimport-0.16.0.tar.gz", hash = "sha256:cc0c407c33ee680adb4bbea250a41b7b693e3d74916fef1c119040b277249190"},
+    {file = "unimport-1.0.0-py3-none-any.whl", hash = "sha256:7fe121ef4bd0358246adb0b962800f2edba31e681370c063afc56d62ebf370ae"},
+    {file = "unimport-1.0.0.tar.gz", hash = "sha256:c2c3a13a7a7eeefd2b4fb4eb99440a6a872a3f5139d505f2f3fbf03c97b57b1e"},
 ]
 
 [package.dependencies]
@@ -3563,8 +3563,8 @@ pathspec = {version = ">=0.10.1,<1", markers = "python_version >= \"3.7\""}
 toml = ">=0.9.0,<1"
 
 [package.extras]
-docs = ["mike (==1.1.2)", "mkdocs (==1.4.2)", "mkdocs-git-revision-date-localized-plugin (==1.1.0)", "mkdocs-markdownextradata-plugin (==0.2.5)", "mkdocs-material (==8.5.11)", "mkdocs-minify-plugin (==0.6.2)"]
-test = ["pytest (==6.2.4)", "pytest (==7.2.0)", "pytest-cov (==4.0.0)", "semantic-version (==2.10.0)"]
+docs = ["mike (==1.1.2)", "mkdocs (==1.4.3)", "mkdocs-git-revision-date-localized-plugin (==1.2.0)", "mkdocs-markdownextradata-plugin (==0.2.5)", "mkdocs-material (==9.1.18)", "mkdocs-minify-plugin (==0.6.4)"]
+test = ["pytest (==6.2.4)", "pytest (==7.4.0)", "pytest-cov (==4.0.0)", "pytest-cov (==4.1.0)", "semantic-version (==2.10.0)"]
 
 [[package]]
 name = "urllib3"
@@ -3823,4 +3823,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "19a0c107682d04fd823e6085f6c4009bbf402df7ef556f6976eb9cffd5005ece"
+content-hash = "bfbb86a240d60e283b0601e2e03c60dcf146899ed2ef28984a552065a902f479"
