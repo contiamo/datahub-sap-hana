@@ -19,7 +19,7 @@ pyserde = "^0.11.1"
 pyhdb = ["pyhdb"]
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
+black = "^23.7.0"
 pyright = "^1.1.315"
 pytest = "^7.3.1"
 ruff = "^0.0.277"
