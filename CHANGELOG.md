@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.4.0](https://github.com/contiamo/datahub-sap-hana/compare/v0.3.0...v0.4.0) (2023-07-12)
+
+
+### Features
+
+* build column lineage using sqlglot  ([#46](https://github.com/contiamo/datahub-sap-hana/issues/46)) ([fa4cc77](https://github.com/contiamo/datahub-sap-hana/commit/fa4cc77f35becfc666af8ef3ca232eab8854a2b2))
+
+
+### Bug Fixes
+
+* add create method to fix tests ([#57](https://github.com/contiamo/datahub-sap-hana/issues/57)) ([6b35bc8](https://github.com/contiamo/datahub-sap-hana/commit/6b35bc8213d335f37997b046a9bde2b565964cdd))
+* add schema filter ([#53](https://github.com/contiamo/datahub-sap-hana/issues/53)) ([58fe048](https://github.com/contiamo/datahub-sap-hana/commit/58fe048933b21ed39149e167457786be28f1a6b9))
+* correctly parse schema value for cross schema queries ([#62](https://github.com/contiamo/datahub-sap-hana/issues/62)) ([61bcd24](https://github.com/contiamo/datahub-sap-hana/commit/61bcd2439ae4a4c5a8db43e7ced91afbd709422c))
+* make-downstream-lowercase ([#55](https://github.com/contiamo/datahub-sap-hana/issues/55)) ([ed15994](https://github.com/contiamo/datahub-sap-hana/commit/ed159946be8fdd7b7e57f3bc35855b104da17b98))
+
+
+### Miscellaneous
+
+* add description to readme ([#71](https://github.com/contiamo/datahub-sap-hana/issues/71)) ([bbbdbe2](https://github.com/contiamo/datahub-sap-hana/commit/bbbdbe215f3d37fec39a2e55befc6c8eaa79ef04))
+* bump acryl-datahub from 0.10.4.3 to 0.10.5.1 ([44e8864](https://github.com/contiamo/datahub-sap-hana/commit/44e8864098a997e7b2277842e107408bbc590ff1))
+* bump black from 23.3.0 to 23.7.0 ([b836cc9](https://github.com/contiamo/datahub-sap-hana/commit/b836cc931dde04d0fd3e7549c6043b163dbb328f))
+* bump deepdiff from 6.3.0 to 6.3.1 ([#65](https://github.com/contiamo/datahub-sap-hana/issues/65)) ([b54fd2b](https://github.com/contiamo/datahub-sap-hana/commit/b54fd2b773eae25e0e2401ad0d8090ce43c2ed9f))
+* bump hdbcli from 2.17.14 to 2.17.21 ([d94692e](https://github.com/contiamo/datahub-sap-hana/commit/d94692e57dec4b42645d6f09c5996aac07933447))
+* bump pyright from 1.1.314 to 1.1.315 ([#42](https://github.com/contiamo/datahub-sap-hana/issues/42)) ([d3da693](https://github.com/contiamo/datahub-sap-hana/commit/d3da6937a0de71e8e2f702dc36d8f3e084a2b92f))
+* bump ruff from 0.0.272 to 0.0.275 ([#44](https://github.com/contiamo/datahub-sap-hana/issues/44)) ([c743ffe](https://github.com/contiamo/datahub-sap-hana/commit/c743ffe2110a4dca26f0378a27604458d2b1dde3))
+* bump ruff from 0.0.275 to 0.0.277 ([#60](https://github.com/contiamo/datahub-sap-hana/issues/60)) ([3a68ad6](https://github.com/contiamo/datahub-sap-hana/commit/3a68ad66e6b3a1a53ec8a71e601a57d572631c7a))
+* bump sqlglot from 16.7.7 to 16.8.1 ([7f07d6e](https://github.com/contiamo/datahub-sap-hana/commit/7f07d6e8709d462ca7bc65f7973308e39ee569a4))
+* bump unimport from 0.16.0 to 1.0.0 ([3651fa5](https://github.com/contiamo/datahub-sap-hana/commit/3651fa50c46f1573a537a73bbaad540e389496d0))
+* fix a flappy lineage test case ([#58](https://github.com/contiamo/datahub-sap-hana/issues/58)) ([dcf8c36](https://github.com/contiamo/datahub-sap-hana/commit/dcf8c3660cd3698fd784a0d7bc5cb61b1622ec44))
+* fix various linting issues ([f3a9524](https://github.com/contiamo/datahub-sap-hana/commit/f3a952421144553fef563ad0c3c7eee4b261a2d7))
+
 ## [0.3.0](https://github.com/contiamo/datahub-sap-hana/compare/v0.2.3...v0.3.0) (2023-06-19)
 
 
