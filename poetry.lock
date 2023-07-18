@@ -2650,13 +2650,13 @@ files = [
 
 [[package]]
 name = "pyserde"
-version = "0.11.1"
+version = "0.12.1"
 description = "Yet another serialization library on top of dataclasses"
 optional = false
 python-versions = ">=3.7.0,<4.0.0"
 files = [
-    {file = "pyserde-0.11.1-py3-none-any.whl", hash = "sha256:2173f7b9d136884fa4af7dbabe42861727be06db113c64857bac464acc3c9ff8"},
-    {file = "pyserde-0.11.1.tar.gz", hash = "sha256:00a02844dc9ff34cb6423b67f19cc0c0d67ac0f9c281a3f2bd1635f404f4935a"},
+    {file = "pyserde-0.12.1-py3-none-any.whl", hash = "sha256:9229943668758556fcb07e62cca78b6bc95973776a329c5f433d86d18fd89259"},
+    {file = "pyserde-0.12.1.tar.gz", hash = "sha256:ac567b181c3198fbe31dcf7de6da357df44de88d42164b7e24e8513ec41633b3"},
 ]
 
 [package.dependencies]
@@ -3820,4 +3820,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "493297abbfea5b35d83d4813714fb2eaad420056d9cd23614fd8c5e979efc6d7"
+content-hash = "ab811a8685d74d0444a520b7f56f1cc097a9cf0b243c9553737da272c97617a9"
