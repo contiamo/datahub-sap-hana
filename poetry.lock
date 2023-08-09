@@ -3305,13 +3305,13 @@ typing-extensions = ">=3.7.4"
 
 [[package]]
 name = "sqlglot"
-version = "16.8.1"
+version = "17.11.0"
 description = "An easily customizable SQL parser and transpiler"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sqlglot-16.8.1-py3-none-any.whl", hash = "sha256:14dcc4478f220839262172849f0174c6b80f4a8c77f2fb6295c16f2d121f09fa"},
-    {file = "sqlglot-16.8.1.tar.gz", hash = "sha256:2a7451f0ed2feac6e7a832bafee852a25e743c35a637e5020f3235c1feb9b700"},
+    {file = "sqlglot-17.11.0-py3-none-any.whl", hash = "sha256:22f4053c7d745011ca906ed55c9fc3f7d49d9604cb4bf2a124be1147417bb48e"},
+    {file = "sqlglot-17.11.0.tar.gz", hash = "sha256:28a922a05274f03969632ee1a1e37d57fe6a2da30d8ff14090f42e567d30863d"},
 ]
 
 [package.extras]
@@ -3820,4 +3820,4 @@ pyhdb = ["pyhdb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "493297abbfea5b35d83d4813714fb2eaad420056d9cd23614fd8c5e979efc6d7"
+content-hash = "7eaf7c4308bd8f05f479f72cb38c20644a9a85aac57ebeca5d80c6199c146048"
