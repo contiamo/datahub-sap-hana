@@ -13,7 +13,7 @@ hdbcli = "^2.17.21"
 deepdiff = "^6.3.1"
 sqlglot = "^16.8.1"
 pytest = "^7.4.0"
-pyserde = "^0.11.1"
+pyserde = "^0.12.3"
 
 [tool.poetry.extras]
 pyhdb = ["pyhdb"]
